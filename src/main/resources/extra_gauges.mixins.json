@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "mixinextras": {
+    "minVersion": "0.5.0-rc.2"
+  },
+  "minVersion": "0.8",
+  "package": "net.liukrast.eg.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "extra_gauges.refmap.json",
+  "mixins": [
+    "AllIconsMixin",
+    "BlockEntityConfigurationPacketMixin",
+    "FactoryPanelBlockMixin",
+    "FactoryPanelConnectionHandlerAccessor",
+    "FactoryPanelConnectionHandlerMixin",
+    "FactoryPanelConnectionMixin",
+    "FactoryPanelConnectionPacketMixin",
+    "FactoryPanelRendererMixin",
+    "FactoryPanelSupportBehaviourMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

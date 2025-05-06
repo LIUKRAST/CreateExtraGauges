@@ -1,0 +1,13 @@
+{
+  "block.extra_gauges.logic_gauge": "Logic Gauge",
+  "create.logistics.logic_gate": "Logic Gate",
+  "create.logic_gauge.gate.not": "NOT (Invert Signal)",
+  "create.logic_gauge.gate.or": "OR (Activate if any inputs are active)",
+  "create.logic_gauge.gate.and": "AND (Activate if all inputs are active)",
+  "create.gui.logic_gauge.title": "Connection Settings",
+  "create.gui.logic_gauge.save_and_close": "Save and close",
+  "create.gui.logic_gauge.reset": "Reset all settings",
+  "create.gui.logic_gauge.connect_input": "Add new input connection",
+  "create.gui.logic_gauge.connect_output": "Add new output connection",
+  "create.gui.logic_gauge.relocate": "Move this gauge"
+}
