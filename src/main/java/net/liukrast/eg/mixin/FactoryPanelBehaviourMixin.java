@@ -2,10 +2,12 @@ package net.liukrast.eg.mixin;
 
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -13,6 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FactoryPanelBehaviour.class)
@@ -40,4 +43,16 @@ public class FactoryPanelBehaviourMixin {
     private void extra_gauge$cancel(CallbackInfo ci) {
         if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour) ci.cancel();
     }
+
+    @SuppressWarnings("ModifyVariableMayBeArgsOnly")
+    @ModifyVariable(method = "moveTo", at = @At(value = "STORE"))
+    private FactoryPanelBehaviour moveTo(FactoryPanelBehaviour original) {
+        var be = ((FactoryPanelBlockEntity)original.blockEntity);
+        var slot = original.slot;
+        if(be.panels.get(slot) instanceof AbstractPanelBehaviour superOriginal)
+            return superOriginal.getPanelType().create(be, slot);
+        return original;
+    }
+
+    //TODO: Should we remove the shortInteraction? We will see if after release there are bugs with that.
 }

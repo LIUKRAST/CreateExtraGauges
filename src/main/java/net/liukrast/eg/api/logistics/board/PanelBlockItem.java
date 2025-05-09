@@ -20,20 +20,17 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * The Abstract class for a custom panel block item.
+ * The class for a custom panel block item.
  * */
-public abstract class AbstractPanelBlockItem extends BlockItem {
+public class PanelBlockItem extends BlockItem {
 
     private final Supplier<PanelType<?>> type;
 
-    public AbstractPanelBlockItem(Supplier<PanelType<?>> type, Properties properties) {
+    public PanelBlockItem(Supplier<PanelType<?>> type, Properties properties) {
         super(AllBlocks.FACTORY_GAUGE.get(), properties);
         this.type = type;
     }
 
-    /**
-     * @return The instance of your new panel behavior
-     * */
     protected AbstractPanelBehaviour getNewBehaviourInstance(FactoryPanelBlockEntity blockEntity, FactoryPanelBlock.PanelSlot slot) {
         return type.get().create(blockEntity, slot);
     }

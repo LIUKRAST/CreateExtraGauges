@@ -1,5 +1,6 @@
 package net.liukrast.eg.content.logistics.logicBoard;
 
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
@@ -18,6 +19,11 @@ public class LogicPanelBehaviour extends AbstractPanelBehaviour {
     @Override
     public Item getItem() {
         return RegisterItems.LOGIC_GAUGE.get();
+    }
+
+    @Override
+    public boolean mayConnect(FactoryPanelBehaviour other) {
+        return true;
     }
 
     @Override
