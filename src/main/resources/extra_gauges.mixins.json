@@ -8,15 +8,12 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "extra_gauges.refmap.json",
   "mixins": [
-    "AllIconsMixin",
-    "BlockEntityConfigurationPacketMixin",
+    "FactoryPanelBehaviourMixin",
+    "FactoryPanelBlockEntityMixin",
     "FactoryPanelBlockMixin",
-    "FactoryPanelConnectionHandlerAccessor",
-    "FactoryPanelConnectionHandlerMixin",
-    "FactoryPanelConnectionMixin",
-    "FactoryPanelConnectionPacketMixin",
-    "FactoryPanelRendererMixin",
-    "FactoryPanelSupportBehaviourMixin"
+    "FactoryPanelModelMixin",
+    "FilteringBehaviourMixin",
+    "SmartBlockEntityMixin"
   ],
   "client": [
   ],

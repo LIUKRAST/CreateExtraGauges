@@ -1,5 +1,5 @@
 {
-  "block.extra_gauges.logic_gauge": "Logic Gauge",
+  "item.extra_gauges.logic_gauge": "Logic Gauge",
   "create.logistics.logic_gate": "Logic Gate",
   "create.logic_gauge.gate.not": "NOT (Invert Signal)",
   "create.logic_gauge.gate.or": "OR (Activate if any inputs are active)",

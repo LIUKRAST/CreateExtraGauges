@@ -1,17 +1,22 @@
 package net.liukrast.eg;
 
 import com.simibubi.create.AllCreativeModeTabs;
-import net.liukrast.eg.content.block.logic.LogicGaugeRenderer;
-import net.liukrast.eg.registry.RegisterBlockEntityTypes;
-import net.liukrast.eg.registry.RegisterBlocks;
-import net.liukrast.eg.registry.RegisterDisplaySources;
+import net.liukrast.eg.api.GaugeRegistry;
+import net.liukrast.eg.datagen.ExtraGaugesItemModelProvider;
 import net.liukrast.eg.registry.RegisterItems;
+import net.liukrast.eg.registry.RegisterPanels;
+import net.liukrast.eg.registry.RegisterPartialModels;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
 
 @Mod(ExtraGauges.MOD_ID)
 public class ExtraGauges {
@@ -22,20 +27,31 @@ public class ExtraGauges {
     }
 
     public ExtraGauges(IEventBus modEventBus) {
-        RegisterBlocks.register(modEventBus);
         RegisterItems.register(modEventBus);
-        RegisterBlockEntityTypes.register(modEventBus);
-        RegisterDisplaySources.register(modEventBus);
+        RegisterPanels.register(modEventBus);
         modEventBus.register(this);
     }
 
     @SubscribeEvent
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == AllCreativeModeTabs.BASE_CREATIVE_TAB.getKey()) event.accept(RegisterBlocks.LOGIC_GAUGE);
+        if(event.getTabKey() == AllCreativeModeTabs.BASE_CREATIVE_TAB.getKey()) event.accept(RegisterItems.LOGIC_GAUGE);
     }
 
     @SubscribeEvent
-    public void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(RegisterBlockEntityTypes.LOGIC_GAUGE.get(), LogicGaugeRenderer::new);
+    private void fMLClientSetup(FMLClientSetupEvent event) {
+        RegisterPartialModels.init();
+    }
+
+    @SubscribeEvent
+    private void gatherData(GatherDataEvent event) {
+        DataGenerator generator = event.getGenerator();
+        PackOutput packOutput = generator.getPackOutput();
+        ExistingFileHelper helper = event.getExistingFileHelper();
+        generator.addProvider(event.includeClient(), new ExtraGaugesItemModelProvider(packOutput, helper));
+    }
+
+    @SubscribeEvent
+    private void newRegistry(NewRegistryEvent event) {
+        event.register(GaugeRegistry.PANEL_REGISTRY);
     }
 }
