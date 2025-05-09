@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class RegisterPanels {
     public static final DeferredRegister<PanelType<?>> PANELS = DeferredRegister.create(GaugeRegistry.PANEL_REGISTRY, ExtraGauges.MOD_ID);
 
-    public static final DeferredHolder<PanelType<?>, PanelType<LogicPanelBehaviour>> LOGIC = PANELS.register("logic", () -> new PanelType<>(LogicPanelBehaviour::new));
+    public static final DeferredHolder<PanelType<?>, PanelType<LogicPanelBehaviour>> LOGIC = PANELS.register("logic", () -> new PanelType<>(LogicPanelBehaviour::new, LogicPanelBehaviour.class));
 
     public static void register(IEventBus eventBus) {
         PANELS.register(eventBus);

@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -41,7 +42,8 @@ public abstract class FactoryPanelBlockMixin {
 
     @ModifyExpressionValue(method = "getStateForPlacement", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isClientSide()Z"))
     private boolean getStateForPlacement(boolean original, @Local(argsOnly = true) BlockPlaceContext context, @Local FactoryPanelBlockEntity blockEntity, @Local(ordinal = 1) BlockState state, @Local Vec3 location) {
-        if(!(context.getItemInHand().getItem() instanceof AbstractPanelBlockItem panelBlockItem)) return original;
+        if(original) return true;
+        if(!(context.getItemInHand().getItem() instanceof AbstractPanelBlockItem panelBlockItem)) return false;
         panelBlockItem.applyExtraPlacementData(context, blockEntity, getTargetedSlot(context.getClickedPos(), state, location));
         return true;
     }
@@ -105,7 +107,7 @@ public abstract class FactoryPanelBlockMixin {
 
     @WrapOperation(method = "canBeReplaced", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;isActive()Z"))
     private boolean canBeReplaced(FactoryPanelBehaviour instance, Operation<Boolean> original) {
-        if(instance == null) return true;
+        if(instance == null) return false;
         return original.call(instance);
     }
 }

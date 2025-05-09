@@ -1,10 +1,12 @@
 package net.liukrast.eg.api.logistics.board;
 
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
+import com.mojang.serialization.Codec;
+import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.foundation.utility.CreateLang;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.codecs.CatnipCodecUtils;
+import net.createmod.catnip.codecs.CatnipCodecs;
+import net.createmod.catnip.nbt.NBTHelper;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.api.logistics.box.EmptyValueBoxTransform;
 import net.liukrast.eg.api.registry.PanelType;
@@ -19,13 +21,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  * <h1>Abstract Panel Behaviour</h1>
  * Allows to create custom panel behaviors<br>
- * Since {@link FactoryPanelBehaviour} extends {@link com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour},
- * we will need a second behavior to make modifiable options.
  * */
 public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     private final PanelType<?> type;
@@ -65,37 +66,29 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     }
 
 
-    //TODO: REDO THIS!
     @Override
     public void write(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         super.write(nbt, registries, clientPacket);
-        try {
-            CompoundTag special = nbt.contains("CustomPanels") ? nbt.getCompound("CustomPanels") : new CompoundTag();
-            if (!active) return;
-            //Save Custom panel data
-
-            special.putString(CreateLang.asId(slot.name()), Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.getKey(type)).toString());
-            nbt.put("CustomPanels", special);
-            //Save your data from here
-
-            CompoundTag panelTag = new CompoundTag();
-            //TODO: ADD DEFAULT DATA!
-            nbt.put(CreateLang.asId(slot.name()), panelTag);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //TODO: REDO THIS!
-    @Override
-    public void read(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.read(nbt, registries, clientPacket);
-        CompoundTag panelTag = nbt.getCompound(CreateLang.asId(slot.name()));
-        if(panelTag.isEmpty()) {
-            active = false;
+        CompoundTag special = nbt.contains("CustomPanels") ? nbt.getCompound("CustomPanels") : new CompoundTag();
+        special.putString(CreateLang.asId(slot.name()), Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.getKey(type)).toString());
+        nbt.put("CustomPanels", special);
+        //We avoid adding some of the data from the original behaviour.
+        if (!active)
             return;
-        }
 
-        //TODO: ADD DEFAULT DATA!
+        CompoundTag panelTag = new CompoundTag();
+        super.write(panelTag, registries, clientPacket);
+
+        panelTag.putBoolean("Satisfied", satisfied);
+        panelTag.putBoolean("PromisedSatisfied", promisedSatisfied);
+        panelTag.putBoolean("RedstonePowered", redstonePowered);
+        panelTag.put("Targeting", CatnipCodecUtils.encode(CatnipCodecs.set(FactoryPanelPosition.CODEC), targeting).orElseThrow());
+        panelTag.put("TargetedBy", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(targetedBy.values())).orElseThrow());
+        panelTag.put("TargetedByLinks", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(targetedByLinks.values())).orElseThrow());
+
+        if (panelBE().restocker && !clientPacket)
+            panelTag.put("Promises", restockerPromises.write());
+
+        nbt.put(CreateLang.asId(slot.name()), panelTag);
     }
 }

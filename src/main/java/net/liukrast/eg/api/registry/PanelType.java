@@ -6,8 +6,10 @@ import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 
 public class PanelType<T extends AbstractPanelBehaviour> {
     private final Constructor<T> constructor;
-    public PanelType(Constructor<T> constructor) {
+    private final Class<T> clazz;
+    public PanelType(Constructor<T> constructor, Class<T> clazz) {
         this.constructor = constructor;
+        this.clazz = clazz;
     }
 
     public AbstractPanelBehaviour create(FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
