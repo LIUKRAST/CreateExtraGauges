@@ -5,13 +5,19 @@
   "create.logic_gauge.gate.and": "AND (Activate if all inputs are active)",
   "create.logic_gauge.gate.nor": "NOR (Activate if all inputs are inactive)",
   "create.logic_gauge.gate.nand": "NAND (Activate if any inputs are inactive)",
-  "create.logic_gauge.gate.xor": "XOR (Activate if all inputs are different)",
-  "create.logic_gauge.gate.xnor": "XNOR (Activate if all inputs are the same)",
+  "create.logic_gauge.gate.xor": "XOR (Activate if active inputs are odd)",
+  "create.logic_gauge.gate.xnor": "XNOR (Activate if active inputs are even)",
   "create.gui.logic_gauge.title": "Connection Settings",
   "create.gui.logic_gauge.save_and_close": "Save and close",
   "create.gui.logic_gauge.reset": "Reset all settings",
   "create.gui.logic_gauge.connect_input": "Add new input connection",
   "create.gui.logic_gauge.connect_output": "Add new output connection",
   "create.gui.logic_gauge.relocate": "Move this gauge",
-  "create.factory_panel.custom_panel_on_restocker": "Cannot put custom gauges on packager"
+  "create.factory_panel.custom_panel_on_restocker": "Cannot put custom gauges on packager",
+  "extra_gauges.ponder.logic_gauge.header": "Compact Logical Instructions with Logic Gauges",
+  "extra_gauges.ponder.logic_gauge.text_1": "Logic Gauges can read redstone information of panel elements...",
+  "extra_gauges.ponder.logic_gauge.text_2": "And transmit it over to other panel elements",
+  "extra_gauges.ponder.logic_gauge.text_3": "Reaction to multiple information can be changed by holding right-click",
+  "extra_gauges.ponder.logic_gauge.text_4": "The logic gate will now output redstone only if all links are active",
+  "extra_gauges.ponder.logic_gauge.text_5": "Logic gauges can interact with factory gauges as well"
 }

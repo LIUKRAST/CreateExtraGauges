@@ -1,0 +1,17 @@
+{
+  "item.extra_gauges.logic_gauge": "Misuratore Logico",
+  "create.logistics.logic_gate": "Misuratore Logico",
+  "create.logic_gauge.gate.or": "OR (Attiva se almeno un input è attivo)",
+  "create.logic_gauge.gate.and": "AND (Attiva se tutti gli input lo sono)",
+  "create.logic_gauge.gate.nor": "NOR (Attiva se tutti gli input sono spenti)",
+  "create.logic_gauge.gate.nand": "NAND (Attiva se almeno un input è spento)",
+  "create.logic_gauge.gate.xor": "XOR (Attiva se gli input accesi sono dispari)",
+  "create.logic_gauge.gate.xnor": "XNOR (Attiva se gli input accesi sono pari)",
+  "create.factory_panel.custom_panel_on_restocker": "Non si possono mettere dei gauge custom su un packager",
+  "extra_gauges.ponder.logic_gauge.header": "Compatta Istruzioni Logiche con un Misuratore Logico",
+  "extra_gauges.ponder.logic_gauge.text_1": "I Misuratori Logici leggono le informazioni di redstone dai pannelli...",
+  "extra_gauges.ponder.logic_gauge.text_2": "E le trasmettono su di altri",
+  "extra_gauges.ponder.logic_gauge.text_3": "La reazione ai diversi input può essere cambiata tenendo il tasto destro premuto",
+  "extra_gauges.ponder.logic_gauge.text_4": "Il misuratore logico farà ora uscire il segnale solo se tutti i link sono attivi",
+  "extra_gauges.ponder.logic_gauge.text_5": "I Misuratori Logici possono interagire anche con i Misuratori di Fabbrica"
+}

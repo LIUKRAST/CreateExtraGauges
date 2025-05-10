@@ -1,6 +1,7 @@
 package net.liukrast.eg;
 
 import com.simibubi.create.AllCreativeModeTabs;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.datagen.ExtraGaugesItemModelProvider;
 import net.liukrast.eg.registry.RegisterItems;
@@ -40,6 +41,7 @@ public class ExtraGauges {
     @SubscribeEvent
     private void fMLClientSetup(FMLClientSetupEvent event) {
         RegisterPartialModels.init();
+        PonderIndex.addPlugin(new ExtraGaugesPonderPlugin());
     }
 
     @SubscribeEvent
