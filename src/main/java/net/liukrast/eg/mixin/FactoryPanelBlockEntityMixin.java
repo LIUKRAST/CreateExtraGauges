@@ -26,12 +26,10 @@ import java.util.Objects;
 
 @Mixin(FactoryPanelBlockEntity.class)
 public abstract class FactoryPanelBlockEntityMixin {
-    @Shadow public boolean redraw;
 
     @Shadow public EnumMap<PanelSlot, FactoryPanelBehaviour> panels;
 
-    @Shadow public VoxelShape lastShape;
-
+    /*
     @ModifyExpressionValue(method = "addBehaviours", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlock$PanelSlot;values()[Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlock$PanelSlot;"))
     private PanelSlot[] addBehaviours(PanelSlot[] original) {
         return new PanelSlot[0];
@@ -45,7 +43,7 @@ public abstract class FactoryPanelBlockEntityMixin {
             return behaviour;
         }
         return original;
-    }
+    }*/
 
     @Inject(method = "read", at = @At("HEAD"))
     private void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci) {
@@ -57,7 +55,9 @@ public abstract class FactoryPanelBlockEntityMixin {
                 var customPanels = tag.getCompound("CustomPanels");
                 if(customPanels.contains(key)) {
                     ResourceLocation id = ResourceLocation.parse(customPanels.getString(key));
-                    behaviour = Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.get(id)).create(instance, slot);
+                    var type = Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.get(id));
+                    if(type.asClass().equals(panels.get(slot).getClass())) continue; //No need to re-create the behavior
+                    behaviour = type.create(instance, slot);
                 }
             }
             if(behaviour == null) behaviour = new FactoryPanelBehaviour(instance, slot);

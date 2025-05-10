@@ -17,6 +17,12 @@ public class FactoryPanelConnectionHandlerMixin {
             cancellable = true)
     private static void checkForIssues(FactoryPanelBehaviour from, FactoryPanelBehaviour to, CallbackInfoReturnable<String> cir) {
         @Nullable String returnValue = cir.getReturnValue();
-        if(returnValue != null && (returnValue.equals("factory_panel.no_item") || returnValue.equals("factory_panel.input_in_restock_mode")) && from instanceof AbstractPanelBehaviour panel && panel.mayConnect(to)) cir.setReturnValue(null);
+        if(
+                returnValue != null
+                        && (returnValue.equals("factory_panel.no_item") || returnValue.equals("factory_panel.input_in_restock_mode"))
+                        //TODO: ALLOW GAUGES TO CONNECT UNDER SPECIAL CONDITIONS && true
+        ) {
+            cir.setReturnValue(null);
+        }
     }
 }

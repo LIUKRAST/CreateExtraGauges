@@ -16,6 +16,10 @@ public class PanelType<T extends AbstractPanelBehaviour> {
         return constructor.apply(this, be, slot);
     }
 
+    public Class<T> asClass() {
+        return clazz;
+    }
+
     public interface Constructor<T extends AbstractPanelBehaviour> {
         T apply(PanelType<T> panelType, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot);
     }

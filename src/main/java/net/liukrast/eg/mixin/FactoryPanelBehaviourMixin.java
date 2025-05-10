@@ -2,15 +2,17 @@ package net.liukrast.eg.mixin;
 
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import net.liukrast.eg.api.logistics.board.PanelConnections;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Debug(export = true)
 @Mixin(FactoryPanelBehaviour.class)
 public class FactoryPanelBehaviourMixin {
 
@@ -55,4 +58,43 @@ public class FactoryPanelBehaviourMixin {
     }
 
     //TODO: Should we remove the shortInteraction? We will see if after release there are bugs with that.
+
+
+
+    // Remove abstract panels from failing a request
+    /*@Definition(id = "failed", local = @Local(type = boolean.class))
+    @Expression("failed = true")
+    @WrapWithCondition(method = "tickRequests", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private boolean tickRequests() {
+        return extra_gauges$shouldSkipFilter();
+    }*/
+
+    //TODO: Replace with a better operation!
+    @Unique
+    private boolean extra_gauges$failed;
+
+    @WrapWithCondition(
+            method = "tickRequests",
+            at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;sendEffect(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelPosition;Z)V", ordinal = 0)
+    )
+    private boolean tickRequests(FactoryPanelBehaviour instance, FactoryPanelPosition factoryPanelPosition, boolean fromPos, @Local boolean failed) {
+        boolean should = !extra_gauges$shouldSkipFilter() || failed;
+        extra_gauges$failed = should;
+        return should;
+    }
+
+    @Definition(id = "failed", local = @Local(type = boolean.class))
+    @Expression("failed = true")
+    @Inject(method = "tickRequests", at = @At(value = "MIXINEXTRAS:EXPRESSION", shift = At.Shift.AFTER))
+    private void tickRequests(CallbackInfo ci, @Local LocalBooleanRef failed) {
+        failed.set(this.extra_gauges$failed);
+    }
+
+
+    @Unique
+    private boolean extra_gauges$shouldSkipFilter() {
+        if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour abstractPanelBehaviour) return abstractPanelBehaviour.hasConnection(PanelConnections.FILTER);
+        return true;
+    }
+
 }

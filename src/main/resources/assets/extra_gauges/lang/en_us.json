@@ -9,5 +9,6 @@
   "create.gui.logic_gauge.reset": "Reset all settings",
   "create.gui.logic_gauge.connect_input": "Add new input connection",
   "create.gui.logic_gauge.connect_output": "Add new output connection",
-  "create.gui.logic_gauge.relocate": "Move this gauge"
+  "create.gui.logic_gauge.relocate": "Move this gauge",
+  "create.factory_panel.custom_panel_on_restocker": "Cannot put custom gauges on packager"
 }

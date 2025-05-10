@@ -5,9 +5,11 @@ import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelBlockItem;
 import net.minecraft.core.BlockPos;
@@ -60,6 +62,24 @@ public abstract class FactoryPanelBlockMixin {
         return false;
     }
 
+    @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/BlockHitResult;getLocation()Lnet/minecraft/world/phys/Vec3;"), cancellable = true)
+    private void useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<ItemInteractionResult> cir) {
+        if(!(stack.getItem() instanceof PanelBlockItem panelBlockItem)) return;
+        if(level.getBlockEntity(pos) instanceof FactoryPanelBlockEntity panel && panel.restocker) {
+            AllSoundEvents.DENY.playOnServer(level, pos);
+            player.displayClientMessage(CreateLang.translate("factory_panel.custom_panel_on_restocker")
+                    .component(), true);
+            cir.setReturnValue(ItemInteractionResult.FAIL);
+            return;
+        }
+        var error = panelBlockItem.isReadyForPlacement(stack, level, pos, player);
+        if(error != null) {
+            AllSoundEvents.DENY.playOnServer(level, pos);
+            player.displayClientMessage(error, true);
+            cir.setReturnValue(ItemInteractionResult.FAIL);
+        }
+    }
+
     @ModifyExpressionValue(method = "useItemOn", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"))
     private boolean useItemOn(boolean original, @Local(argsOnly = true) ItemStack stack) {
         return original || stack.getItem() instanceof PanelBlockItem;
@@ -68,11 +88,6 @@ public abstract class FactoryPanelBlockMixin {
     @ModifyExpressionValue(method = "useItemOn", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlockItem;isTuned(Lnet/minecraft/world/item/ItemStack;)Z"))
     private boolean useItemOn$$1(boolean original, @Local(argsOnly = true) ItemStack stack) {
         return original || stack.getItem() instanceof PanelBlockItem;
-    }
-
-    @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlock;getTargetedSlot(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/Vec3;)Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlock$PanelSlot;"), cancellable = true)
-    private void useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<ItemInteractionResult> cir) {
-        if(stack.getItem() instanceof PanelBlockItem blockItem && !blockItem.isReadyForPlacement(stack, level, pos, player)) cir.setReturnValue(ItemInteractionResult.FAIL);
     }
 
     @ModifyExpressionValue(method = "lambda$useItemOn$2", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlockEntity;addPanel(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlock$PanelSlot;Ljava/util/UUID;)Z"))

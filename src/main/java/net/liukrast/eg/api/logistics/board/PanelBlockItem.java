@@ -1,11 +1,13 @@
 package net.liukrast.eg.api.logistics.board;
 
+import com.mojang.datafixers.util.Pair;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import net.liukrast.eg.api.registry.PanelType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -13,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -44,21 +47,34 @@ public class PanelBlockItem extends BlockItem {
     }
 
     public boolean applyToSlot(FactoryPanelBlockEntity blockEntity, FactoryPanelBlock.PanelSlot slot) {
-        var newBehaviour = getNewBehaviourInstance(blockEntity, slot);
-        newBehaviour.active = true;
-        blockEntity.attachBehaviourLate(newBehaviour);
-        blockEntity.panels.put(slot, newBehaviour);
-        blockEntity.redraw = true;
-        blockEntity.lastShape = null;
-        blockEntity.notifyUpdate();
-        return true;
+        var oldBehaviour = blockEntity.panels.get(slot);
+        if(oldBehaviour == null || !oldBehaviour.isActive()) {
+            var newBehaviour = getNewBehaviourInstance(blockEntity, slot);
+            newBehaviour.active = true;
+            blockEntity.attachBehaviourLate(newBehaviour);
+            blockEntity.panels.put(slot, newBehaviour);
+            blockEntity.redraw = true;
+            blockEntity.lastShape = null;
+            blockEntity.notifyUpdate();
+
+            if (blockEntity.activePanels() > 1) {
+                //noinspection deprecation
+                SoundType soundType = blockEntity.getBlockState().getSoundType();
+                //noinspection DataFlowIssue
+                blockEntity.getLevel().playSound(null, blockEntity.getBlockPos(), soundType.getPlaceSound(), SoundSource.BLOCKS,
+                        (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
      * Whether the itemStack is ready to be placed. For instance, the default Factory Gauge cannot be placed unless it's tuned to a network
+     * @return A Component with the error message. If the message is null, the gauge can be placed
      * */
-    public boolean isReadyForPlacement(ItemStack stack, Level level, BlockPos pos, Player player) {
-        return true;
+    public Component isReadyForPlacement(ItemStack stack, Level level, BlockPos pos, Player player) {
+        return null;
     }
 
     /**
