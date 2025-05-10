@@ -3,11 +3,24 @@ package net.liukrast.eg.api.logistics.board;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class PanelConnections {
-    public static final PanelConnection<ItemStack> FILTER = new PanelConnection<>();
-    public  static final PanelConnection<Boolean> REDSTONE = new PanelConnection<>();
+    public static final PanelConnection<ItemStack> FILTER = new PanelConnection<>() {
+        @Override
+        public int getColor(Supplier<ItemStack> informationA, Supplier<ItemStack> informationB) {
+            return 0; //IGNORED
+        }
+    };
+    public  static final PanelConnection<Boolean> REDSTONE = new PanelConnection<>() {
+        @Override
+        public int getColor(Supplier<Boolean> informationA, Supplier<Boolean> informationB) {
+            return informationB.get() ? 0xEF0000 : 0x580101; //TODO: CHECK THIS SHIT LIKE SO MUCH
+        }
+    };
 
     public static <T> Optional<T> getConnectionValue(FactoryPanelBehaviour behaviour, PanelConnection<T> panelConnection) {
         if(behaviour instanceof AbstractPanelBehaviour abstractPanelBehaviour) return abstractPanelBehaviour.getConnectionValue(panelConnection);
@@ -18,4 +31,11 @@ public class PanelConnections {
         return Optional.empty();
     }
 
+    public static Map<PanelConnection<?>, Supplier<?>> getConnections(FactoryPanelBehaviour behaviour) {
+        if(behaviour instanceof AbstractPanelBehaviour ab) return ab.getConnections();
+        Map<PanelConnection<?>, Supplier<?>> connectionMap = new HashMap<>();
+        connectionMap.put(FILTER, behaviour::getFilter);
+        connectionMap.put(REDSTONE, () -> behaviour.satisfied && behaviour.count != 0);
+        return connectionMap;
+    }
 }

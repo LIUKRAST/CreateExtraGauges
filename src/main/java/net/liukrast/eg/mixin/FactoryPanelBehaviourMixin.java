@@ -9,9 +9,11 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.simibubi.create.content.logistics.factoryBoard.*;
+import com.simibubi.create.content.logistics.packagerLink.LogisticallyLinkedBlockItem;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
@@ -81,10 +83,6 @@ public abstract class FactoryPanelBehaviourMixin {
         return original;
     }
 
-    //TODO: Should we remove the shortInteraction? We will see if after release there are bugs with that.
-
-
-
     // Remove abstract panels from failing a request
     /*
     @Definition(id = "failed", local = @Local(type = boolean.class))
@@ -93,6 +91,19 @@ public abstract class FactoryPanelBehaviourMixin {
     private boolean tickRequests() {
         return extra_gauges$shouldSkipFilter();
     }*/
+
+    @ModifyVariable(method = "tickRequests", at = @At("STORE"))
+    private boolean tickRequests$1(boolean value) {
+        var instance = FactoryPanelBehaviour.class.cast(this);
+        //Intellij DUMB L
+        //noinspection ConstantValue
+        return targetedBy.values().stream().noneMatch(connection -> {
+            FactoryPanelBehaviour source = at(instance.getWorld(), connection);
+            if(source == null) return true;
+            if(!(source instanceof AbstractPanelBehaviour ab)) return true;
+            return ab.hasConnection(PanelConnections.FILTER);
+        });
+    }
 
     //TODO: Replace with a better operation!
     @Unique
@@ -201,10 +212,19 @@ public abstract class FactoryPanelBehaviourMixin {
     private void notifyRedstoneOutputs(CallbackInfo ci) {
     }
 
-    @ModifyExpressionValue(method = "onShortInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z"))
+    @ModifyExpressionValue(method = "onShortInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0))
     private boolean onShortInteract(boolean original) {
         var instance = FactoryPanelBehaviour.class.cast(this);
-        return !(instance instanceof AbstractPanelBehaviour) && original;
+        return instance instanceof AbstractPanelBehaviour panel ? panel.shouldAllowFilteringBehaviour() && original : original;
     }
 
+    @Definition(id = "heldItem", local = @Local(type = ItemStack.class))
+    @Definition(id = "getItem", method = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;")
+    @Definition(id = "LogisticallyLinkedBlockItem", type = LogisticallyLinkedBlockItem.class)
+    @Expression("heldItem.getItem() instanceof LogisticallyLinkedBlockItem")
+    @ModifyExpressionValue(method = "onShortInteract", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private boolean onShortInteract$1(boolean original) {
+        var instance = FactoryPanelBehaviour.class.cast(this);
+        return original && !(instance instanceof AbstractPanelBehaviour);
+    }
 }

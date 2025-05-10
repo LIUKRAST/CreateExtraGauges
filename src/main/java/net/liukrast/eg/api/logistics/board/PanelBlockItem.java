@@ -1,6 +1,5 @@
 package net.liukrast.eg.api.logistics.board;
 
-import com.mojang.datafixers.util.Pair;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
@@ -43,6 +42,10 @@ public class PanelBlockItem extends BlockItem {
         var message = getPlacedMessage();
         var player = context.getPlayer();
         if(player == null) return;
+        var stack = context.getItemInHand();
+        stack.shrink(1);
+        if(stack.isEmpty())
+            player.setItemInHand(context.getHand(), ItemStack.EMPTY);
         if(message != null) player.displayClientMessage(message, true);
     }
 

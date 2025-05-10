@@ -9,9 +9,12 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public enum LogicalMode implements INamedIconOptions {
-    NOT(EGIcons.I_NOT_GATE, stream -> stream.noneMatch(e -> e)),
-    OR(EGIcons.I_OR_GATE, stream -> stream.anyMatch(e -> e)),
-    AND(EGIcons.I_AND_GATE, stream -> stream.allMatch(e -> e))
+    OR(EGIcons.I_OR, stream -> stream.anyMatch(e -> e)),
+    AND(EGIcons.I_AND, stream -> stream.allMatch(e -> e)),
+    NAND(EGIcons.I_NAND, stream -> !stream.allMatch(e -> e)),
+    NOR(EGIcons.I_NOR, stream -> stream.noneMatch(e -> e)),
+    XOR(EGIcons.I_XOR, stream -> stream.reduce(false, (a, b) -> a ^ b)),
+    XNOR(EGIcons.I_XNOR, stream -> !stream.reduce(false, (a, b) -> a ^ b)) //TODO: Fix later
     ;
 
     private final String translationKey;

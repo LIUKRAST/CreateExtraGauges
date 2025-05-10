@@ -10,6 +10,7 @@
   "mixins": [
     "AllIconsMixin",
     "ClientEventsMixin",
+    "FactoryGaugeDisplaySourceMixin",
     "FactoryPanelBehaviourIMixin",
     "FactoryPanelBehaviourMixin",
     "FactoryPanelBlockEntityMixin",

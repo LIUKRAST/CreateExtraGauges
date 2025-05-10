@@ -8,21 +8,20 @@ import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.createmod.catnip.codecs.CatnipCodecUtils;
 import net.createmod.catnip.codecs.CatnipCodecs;
+import net.createmod.catnip.data.IntAttached;
 import net.liukrast.eg.api.GaugeRegistry;
-import net.liukrast.eg.api.logistics.box.EmptyValueBoxTransform;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.mixin.FactoryPanelBehaviourIMixin;
 import net.liukrast.eg.mixin.FilteringBehaviourMixin;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -37,13 +36,10 @@ import java.util.function.Supplier;
 public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     private final PanelType<?> type;
     private final Map<PanelConnection<?>, Supplier<?>> connections = new Reference2ObjectArrayMap<>();
-    /**
-     * Constructor with the possibility to change the value box.
-     * */
-    @SuppressWarnings("unused")
+
     public AbstractPanelBehaviour(ValueBoxTransform valueBoxTransform, PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         this(type, be, slot);
-        ((FilteringBehaviourMixin)this).setValueBoxTransform(new EmptyValueBoxTransform());
+        ((FilteringBehaviourMixin)this).setValueBoxTransform(valueBoxTransform);
     }
 
     public AbstractPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
@@ -53,12 +49,6 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         connections.putAll(builder.map);
         this.type = type;
     }
-
-    /**
-     * Invoked on client tick when we are looking at the block.
-     * */
-    @OnlyIn(Dist.CLIENT)
-    public void hoverTick() {}
 
     /**
      * Adds new connections to the panel. See more in {@link PanelConnection}
@@ -80,6 +70,17 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
      * */
     public boolean hasConnection(PanelConnection<?> connection) {
         return connections.containsKey(connection);
+    }
+
+    /**
+     * @return The component for display links
+     * */
+    public IntAttached<MutableComponent> getDisplayLinkComponent() {
+        return IntAttached.withZero(Component.empty());
+    }
+
+    public Map<PanelConnection<?>, Supplier<?>> getConnections() {
+        return connections;
     }
 
     public static class PanelConnectionBuilder {
@@ -115,12 +116,6 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
      * @return The item associated with this behaviour. Used for drops and more.
      * */
     public abstract Item getItem();
-
-    /**
-     * @return Whether another gauge can connect with this one. Remember that {@link AbstractPanelBehaviour} is an instance of {@link FactoryPanelBehaviour}.
-     * For instance, the default gauge cannot connect with another if their item filters are empty.
-     * */
-    public abstract boolean mayConnect(FactoryPanelBehaviour other);
 
     /**
      * @return the model for your custom gauge. Will automatically be used for rendering.
@@ -234,5 +229,10 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     // We invoke the private function through mixin. Create, why are you making this method private...
     public void notifyRedstoneOutputs() {
         ((FactoryPanelBehaviourIMixin)this).extra_gauges$notifyRedstoneOutputs();
+    }
+
+    @Override
+    public boolean acceptsValueSettings() {
+        return true;
     }
 }

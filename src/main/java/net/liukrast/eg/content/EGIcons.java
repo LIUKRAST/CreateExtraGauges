@@ -24,9 +24,12 @@ public class EGIcons extends AllIcons {
     private static int x = 0, y = -1;
 
     public static final EGIcons
-            I_NOT_GATE = newRow(),
-            I_OR_GATE = next(),
-            I_AND_GATE = next();
+            I_OR = newRow(),
+            I_AND = next(),
+            I_NAND = next(),
+            I_NOR = next(),
+            I_XOR = newRow(),
+            I_XNOR = next();
 
     private static EGIcons next() {
         return new EGIcons(++x, y);
