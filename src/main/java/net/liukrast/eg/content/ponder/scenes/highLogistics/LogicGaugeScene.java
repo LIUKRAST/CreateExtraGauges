@@ -13,9 +13,6 @@ import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.liukrast.eg.content.logistics.logicBoard.LogicPanelBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.LeverBlock;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Consumer;
 
@@ -82,9 +79,7 @@ public class LogicGaugeScene {
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(gaugePos.getCenter().add(0, 0.5f, 0));
-        withGaugeDo(builder, gaugePos, PanelSlot.TOP_LEFT, be -> {
-            ((LogicPanelBehaviour)be).setValue(1);
-        });
+        withGaugeDo(builder, gaugePos, PanelSlot.TOP_LEFT, be -> ((LogicPanelBehaviour)be).setValue(1));
         scene.world().toggleRedstonePower(util.select().fromTo(2, 3, 3, 2, 4, 5));
         scene.idle(120);
         scene.overlay()
@@ -126,16 +121,9 @@ public class LogicGaugeScene {
                 .placeNearTarget()
                 .pointAt(gaugePos.getCenter().add(-.5f, 0, 0));
         scene.idle(70);
-        withGaugeDo(builder, util.grid().at(3, 4, 3), PanelSlot.BOTTOM_RIGHT, be -> {
-
-        });
-        withGaugeDo(builder, util.grid().at(3, 4, 3), PanelSlot.BOTTOM_RIGHT, be -> {
-
-        });
-
     }
 
-    private static void withGaugeDo(SceneBuilder builder, BlockPos gauge, PanelSlot slot,
+    private static void withGaugeDo(SceneBuilder builder, BlockPos gauge, @SuppressWarnings("SameParameterValue") PanelSlot slot,
                                     Consumer<FactoryPanelBehaviour> call) {
         builder.world()
                 .modifyBlockEntity(gauge, FactoryPanelBlockEntity.class, be -> call.accept(be.panels.get(slot)));

@@ -2,7 +2,6 @@ package net.liukrast.eg.mixin;
 
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelConnectionHandler;
-import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -14,7 +14,7 @@ public enum LogicalMode implements INamedIconOptions {
     NAND(EGIcons.I_NAND, stream -> !stream.allMatch(e -> e)),
     NOR(EGIcons.I_NOR, stream -> stream.noneMatch(e -> e)),
     XOR(EGIcons.I_XOR, stream -> stream.reduce(false, (a, b) -> a ^ b)),
-    XNOR(EGIcons.I_XNOR, stream -> !stream.reduce(false, (a, b) -> a ^ b)) //TODO: Fix later
+    XNOR(EGIcons.I_XNOR, stream -> !stream.reduce(false, (a, b) -> a ^ b))
     ;
 
     private final String translationKey;

@@ -34,6 +34,7 @@ public class LogicPanelRenderer {
         Direction face = result.getDirection();
         boolean highlightFound = false;
 
+        assert world != null;
         if (!(world.getBlockEntity(pos) instanceof SmartBlockEntity sbe))
             return;
 
@@ -46,8 +47,9 @@ public class LogicPanelRenderer {
                 continue;
             }
 
-            ItemStack mainhandItem = mc.player.getItemInHand(InteractionHand.MAIN_HAND);
-            boolean clipboard = behaviour.bypassesInput(mainhandItem);
+            assert mc.player != null;
+            ItemStack mainHandItem = mc.player.getItemInHand(InteractionHand.MAIN_HAND);
+            boolean clipboard = behaviour.bypassesInput(mainHandItem);
             boolean highlight = behaviour.testHit(target.getLocation()) && !clipboard && !highlightFound;
 
             addBox(pos, face, behaviour, highlight);

@@ -12,12 +12,10 @@ import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelConnection;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Debug(export = true)
 @Mixin(FactoryPanelRenderer.class)
 public class FactoryPanelRendererMixin {
 

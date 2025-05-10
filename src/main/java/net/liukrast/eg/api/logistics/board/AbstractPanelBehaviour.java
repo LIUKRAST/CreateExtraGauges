@@ -106,14 +106,14 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
 
     /**
      * Since original class extends {@link com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour},
-     * return true if you want this gauge to have the render from filtering behaviour.
+     * return true if you want this gauge to have the render from filtering behavior.
      * */
     public boolean shouldAllowFilteringBehaviour() {
         return false;
     }
 
     /**
-     * @return The item associated with this behaviour. Used for drops and more.
+     * @return The item associated with this behavior. Used for drops and more.
      * */
     public abstract Item getItem();
 
@@ -192,7 +192,7 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         CompoundTag special = nbt.contains("CustomPanels") ? nbt.getCompound("CustomPanels") : new CompoundTag();
         special.putString(CreateLang.asId(slot.name()), Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.getKey(type)).toString());
         nbt.put("CustomPanels", special);
-        //We avoid adding some data which is pointless in a generic gauge.
+        //We avoid adding some data that is pointless in a generic gauge.
         // You can re-add it in your custom write method though
         //NOTE: If you feel like some data should not be avoided, please open a GitHub issue to report this.
         // This API is still very WIP and support is very well accepted

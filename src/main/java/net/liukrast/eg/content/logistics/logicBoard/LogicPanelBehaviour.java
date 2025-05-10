@@ -39,7 +39,7 @@ public class LogicPanelBehaviour extends AbstractPanelBehaviour {
     private final LogicalMode[] options = LogicalMode.class.getEnumConstants();
     public int value;
     public Component label;
-    protected int max = 1;
+    protected int max;
     int min = 0;
 
     @Override

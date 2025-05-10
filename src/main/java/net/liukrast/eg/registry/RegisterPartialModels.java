@@ -6,7 +6,7 @@ import net.liukrast.eg.ExtraGauges;
 public class RegisterPartialModels {
     public static final PartialModel LOGIC_PANEL = block("logic_gauge/panel");
 
-    private static PartialModel block(String path) {
+    private static PartialModel block(@SuppressWarnings("SameParameterValue") String path) {
         return PartialModel.of(ExtraGauges.id("block/" + path));
     }
 

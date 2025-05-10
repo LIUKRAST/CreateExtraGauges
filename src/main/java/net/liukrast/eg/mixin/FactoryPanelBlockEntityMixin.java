@@ -10,7 +10,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,7 +21,6 @@ import java.util.Objects;
 
 import static com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock.PanelSlot;
 
-@Debug(export = true)
 @Mixin(FactoryPanelBlockEntity.class)
 public abstract class FactoryPanelBlockEntityMixin {
 

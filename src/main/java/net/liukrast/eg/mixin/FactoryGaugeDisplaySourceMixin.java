@@ -1,6 +1,5 @@
 package net.liukrast.eg.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.api.behaviour.display.DisplaySource;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
