@@ -11,14 +11,18 @@ import net.createmod.catnip.codecs.CatnipCodecs;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.api.logistics.box.EmptyValueBoxTransform;
 import net.liukrast.eg.api.registry.PanelType;
+import net.liukrast.eg.mixin.FactoryPanelBehaviourIMixin;
 import net.liukrast.eg.mixin.FilteringBehaviourMixin;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -64,13 +68,16 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     /**
      * Please use {@link PanelConnections}
      * */
-    <T> Optional<T> getConnectionValue(PanelConnection<T> panelConnection) {
+    public <T> Optional<T> getConnectionValue(PanelConnection<T> panelConnection) {
         if(!connections.containsKey(panelConnection)) return Optional.empty();
         // We can safely cast here.
         //noinspection unchecked
         return Optional.ofNullable((T) connections.get(panelConnection).get());
     }
 
+    /**
+     * @return Whether this behavior has a precise connection
+     * */
     public boolean hasConnection(PanelConnection<?> connection) {
         return connections.containsKey(connection);
     }
@@ -86,6 +93,14 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
             return this;
         }
 
+    }
+
+
+    /**
+     * @return Whether the block entity should render its bulb
+     * */
+    public boolean shouldRenderBulb() {
+        return true;
     }
 
     /**
@@ -123,6 +138,18 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
      * @param nbt The compound tag of the single gauge slot. Read your data from this slot
      * */
     public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {}
+
+    /**
+     * Used for abstract panels which have both {@link PanelConnections#FILTER} & {@link PanelConnections#REDSTONE}.
+     * In those cases, the factory gauge will try to interact with them based on this value:
+     * If the return value is true,
+     * it will get the filter information from your custom gauge and update their recipe and so on.
+     * Else, if the return value is false,
+     * it will use the redstone information from your custom gauge and update their blocked/unblocked state.
+     * */
+    public boolean shouldUseRedstoneInsteadOfFilter() {
+        return false;
+    }
 
     public PanelType<?> getPanelType() {
         return type;
@@ -202,5 +229,10 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     @Override
     public ItemStack getFilter() {
         return getConnectionValue(PanelConnections.FILTER).orElse(ItemStack.EMPTY);
+    }
+
+    // We invoke the private function through mixin. Create, why are you making this method private...
+    public void notifyRedstoneOutputs() {
+        ((FactoryPanelBehaviourIMixin)this).extra_gauges$notifyRedstoneOutputs();
     }
 }

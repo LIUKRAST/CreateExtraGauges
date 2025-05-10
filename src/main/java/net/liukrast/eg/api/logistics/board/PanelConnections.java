@@ -14,7 +14,7 @@ public class PanelConnections {
         if(panelConnection == FILTER) //noinspection unchecked
             return Optional.of((T)behaviour.getFilter());
         if(panelConnection == REDSTONE) //noinspection unchecked
-            return (Optional<T>) Optional.of(behaviour.satisfied); //TODO: is this right?
+            return (Optional<T>) Optional.of(behaviour.satisfied && behaviour.count != 0); //TODO: CHECK THIS PRETTY PLS
         return Optional.empty();
     }
 
