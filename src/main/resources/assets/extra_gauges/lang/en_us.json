@@ -19,5 +19,6 @@
   "extra_gauges.ponder.logic_gauge.text_2": "And transmit it over to other panel elements",
   "extra_gauges.ponder.logic_gauge.text_3": "Reaction to multiple information can be changed by holding right-click",
   "extra_gauges.ponder.logic_gauge.text_4": "The logic gate will now output redstone only if all links are active",
-  "extra_gauges.ponder.logic_gauge.text_5": "Logic gauges can interact with factory gauges as well"
+  "extra_gauges.ponder.logic_gauge.text_5": "Logic gauges can interact with factory gauges as well",
+  "extra_gauges.panel.panels_connected": "Panels connected"
 }
