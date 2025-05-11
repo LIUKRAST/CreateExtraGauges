@@ -22,6 +22,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +116,7 @@ public class LogicPanelBehaviour extends AbstractPanelBehaviour {
         return RegisterPartialModels.LOGIC_PANEL;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void displayScreen(Player player) {
         if (player instanceof LocalPlayer)
