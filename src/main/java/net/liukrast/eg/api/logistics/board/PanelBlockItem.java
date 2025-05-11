@@ -43,9 +43,11 @@ public class PanelBlockItem extends BlockItem {
         var player = context.getPlayer();
         if(player == null) return;
         var stack = context.getItemInHand();
-        stack.shrink(1);
-        if(stack.isEmpty())
-            player.setItemInHand(context.getHand(), ItemStack.EMPTY);
+        if(!context.getPlayer().isCreative()) {
+            stack.shrink(1);
+            if(stack.isEmpty())
+                player.setItemInHand(context.getHand(), ItemStack.EMPTY);
+        }
         if(message != null) player.displayClientMessage(message, true);
     }
 
