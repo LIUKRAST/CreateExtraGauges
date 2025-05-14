@@ -5,7 +5,6 @@ import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.data.IntAttached;
 import net.createmod.catnip.gui.ScreenOpener;
-import net.liukrast.eg.api.logistics.board.BasicPanelScreen;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;

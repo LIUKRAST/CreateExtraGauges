@@ -1,15 +1,12 @@
 package net.liukrast.eg.content.logistics.board;
 
 import com.simibubi.create.AllKeys;
-import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsPacket;
 import com.simibubi.create.foundation.gui.widget.IconButton;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.eg.ExtraGauges;
-import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.BasicPanelScreen;
-import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
