@@ -1,18 +1,22 @@
 package net.liukrast.eg.api.logistics.board;
 
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
+import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class PanelConnections {
     public static final PanelConnection<ItemStack> FILTER = new PanelConnection<>() {
         @Override
         public int getColor(ItemStack from, ItemStack to) {
-            return 0; //TODO: This should return the actual connection color
+            return 0; //TODO: This should return the actual connection color?
         }
     };
     public static final PanelConnection<Integer> REDSTONE = new PanelConnection<>() {
@@ -28,24 +32,28 @@ public class PanelConnections {
         }
     };
 
+    static final Map<PanelConnection<?>, Function<FactoryPanelBehaviour, ?>> FACTORY_CONNECTIONS = new Reference2ObjectArrayMap<>();
+
     public static <T> Optional<T> getConnectionValue(FactoryPanelBehaviour behaviour, PanelConnection<T> panelConnection) {
         if(behaviour instanceof AbstractPanelBehaviour abstractPanelBehaviour) return abstractPanelBehaviour.getConnectionValue(panelConnection);
-        if(panelConnection == FILTER) //noinspection unchecked
-            return Optional.of((T)behaviour.getFilter());
-        if(panelConnection == INTEGER)
-            //noinspection unchecked
-            return (Optional<T>) Optional.of(behaviour.count); //TODO: Doesnt work
-        if(panelConnection == REDSTONE) //noinspection unchecked
-            return (Optional<T>) Optional.of(behaviour.satisfied && behaviour.count != 0 ? 15 : 0);
-        return Optional.empty();
+        if(!FACTORY_CONNECTIONS.containsKey(panelConnection)) return Optional.empty();
+        //noinspection unchecked
+        return (Optional<T>) Optional.of(FACTORY_CONNECTIONS.get(panelConnection).apply(behaviour));
     }
 
     public static Map<PanelConnection<?>, Supplier<?>> getConnections(FactoryPanelBehaviour behaviour) {
         if(behaviour instanceof AbstractPanelBehaviour ab) return ab.getConnections();
-        Map<PanelConnection<?>, Supplier<?>> connectionMap = new HashMap<>();
-        connectionMap.put(FILTER, behaviour::getFilter);
-        connectionMap.put(INTEGER, () -> behaviour.count);
-        connectionMap.put(REDSTONE, () -> behaviour.satisfied && behaviour.count != 0 ? 15 : 0);
-        return connectionMap;
+        Map<PanelConnection<?>, Supplier<?>> map = new HashMap<>();
+        for(var key : FACTORY_CONNECTIONS.keySet()) {
+            map.put(key, () -> FACTORY_CONNECTIONS.get(key).apply(behaviour));
+        }
+        return map;
+    }
+
+    static {
+        FACTORY_CONNECTIONS.put(FILTER, FilteringBehaviour::getFilter);
+        FACTORY_CONNECTIONS.put(INTEGER, FactoryPanelBehaviour::getLevelInStorage);
+        FACTORY_CONNECTIONS.put(REDSTONE, b -> b.satisfied && b.count != 0 ? 15 : 0);
+        NeoForge.EVENT_BUS.post(new AddFactoryConnectionEvent());
     }
 }
