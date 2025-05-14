@@ -1,24 +1,31 @@
 package net.liukrast.eg.content.logistics.board;
 
 import com.simibubi.create.content.logistics.factoryBoard.*;
+import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.data.IntAttached;
+import net.createmod.catnip.gui.ScreenOpener;
+import net.liukrast.eg.api.logistics.board.BasicPanelScreen;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
 import net.liukrast.eg.registry.RegisterPartialModels;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
+    int comparatorMode = 0;
 
-public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode> {
-
-    public LogicPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super(type, be, slot, LogicalMode.class);
-
+    public ComparatorPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
+        super(type, be, slot);
     }
 
     @Override
@@ -27,44 +34,67 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
     }
 
     @Override
+    public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
+        super.easyWrite(nbt, registries, clientPacket);
+        nbt.putInt("ComparatorMode", comparatorMode);
+    }
+
+    @Override
+    public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
+        super.easyRead(nbt, registries, clientPacket);
+        comparatorMode = nbt.getInt("ComparatorMode");
+    }
+
+    @Override
     public Item getItem() {
-        return RegisterItems.LOGIC_GAUGE.get();
+        return RegisterItems.COMPARATOR_GAUGE.get();
     }
 
     @Override
     public PartialModel getModel(FactoryPanelBlock.PanelState panelState, FactoryPanelBlock.PanelType panelType) {
-        return RegisterPartialModels.LOGIC_PANEL;
+        return RegisterPartialModels.COMPARATOR_PANEL;
     }
 
     @Override
-    public void lazyTick() {
-        super.lazyTick();
-        if(!getWorld().isClientSide())
+    public void setValueSettings(Player player, ValueSettings valueSetting, boolean ctrlHeld) {
+        if(valueSetting.row() == 2) {
+            comparatorMode = Mth.clamp(valueSetting.value(), 0, ComparatorMode.values().length-1);
             checkForRedstoneInput();
+        }
+        else super.setValueSettings(player, valueSetting, ctrlHeld);
+
+    }
+
+    @Override
+    public ValueSettings getValueSettings() {
+        return super.getValueSettings();
     }
 
     @Override
     public void checkForRedstoneInput() {
         if(!active)
             return;
-        List<Boolean> powerList = new ArrayList<>();
+        int result = 0;
         for(FactoryPanelConnection connection : targetedByLinks.values()) {
             if(!getWorld().isLoaded(connection.from.pos())) return;
             FactoryPanelSupportBehaviour linkAt = linkAt(getWorld(), connection);
             if(linkAt == null) return;
             if(!linkAt.isOutput()) continue;
-            powerList.add(linkAt.shouldPanelBePowered());
+            if(linkAt.shouldPanelBePowered() && linkAt.blockEntity instanceof RedstoneLinkBlockEntity redstoneLink) {
+                result += redstoneLink.getReceivedSignal();
+            } else result += linkAt.shouldPanelBePowered() ? 1 : 0;
         }
         for(FactoryPanelConnection connection : targetedBy.values()) {
             if(!getWorld().isLoaded(connection.from.pos())) return;
             FactoryPanelBehaviour at = at(getWorld(), connection);
             if(at == null) return;
-            var opt = PanelConnections.getConnectionValue(at, PanelConnections.REDSTONE);
+            var opt = PanelConnections.getConnectionValue(at, PanelConnections.INTEGER);
             if(opt.isEmpty()) continue;
-            powerList.add(opt.get() > 0);
+            result += opt.get();
         }
 
-        boolean shouldPower = get().test(powerList.stream());
+        boolean shouldPower = ComparatorMode.class.getEnumConstants()[comparatorMode]
+                .test(result, value);
         //End logical mode
         if(shouldPower == redstonePowered)
             return;
@@ -78,11 +108,19 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
             behaviour.checkForRedstoneInput();
         }
         notifyRedstoneOutputs();
+
     }
 
     @Override
     public IntAttached<MutableComponent> getDisplayLinkComponent() {
         boolean active = getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
         return IntAttached.with(active ? 1 : 0, Component.literal(active ? "✔ True" : "✖ False"));
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void displayScreen(Player player) {
+        if (player instanceof LocalPlayer)
+            ScreenOpener.open(new ComparatorPanelScreen(this));
     }
 }

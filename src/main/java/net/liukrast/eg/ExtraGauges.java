@@ -41,6 +41,7 @@ public class ExtraGauges {
         if(event.getTabKey() == AllCreativeModeTabs.BASE_CREATIVE_TAB.getKey()) {
             event.accept(RegisterItems.LOGIC_GAUGE);
             event.accept(RegisterItems.INT_GAUGE);
+            event.accept(RegisterItems.COMPARATOR_GAUGE);
         }
     }
 

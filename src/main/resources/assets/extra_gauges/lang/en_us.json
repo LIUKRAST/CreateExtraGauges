@@ -1,6 +1,7 @@
 {
   "item.extra_gauges.logic_gauge": "Logic Gauge",
   "item.extra_gauges.integer_gauge": "Integer Gauge",
+  "item.extra_gauges.comparator_gauge": "Comparator Gauge",
   "create.logistics.logic_gate": "Logic Gate",
   "create.logistics.int_gate": "Int Gate",
   "create.logic_gauge.gate.or": "OR (Activate if any inputs are active)",
@@ -25,5 +26,13 @@
   "extra_gauges.panel.panels_connected": "Panels connected",
   "create.integer_gauge.mode.add": "ADD (Sums all inputs)",
   "create.integer_gauge.mode.subtract": "SUBTRACT (Sums all inputs but gives negative result)",
-  "create.integer_gauge.mode.multiply": "MULTIPLY (Multiplies all inputs)"
+  "create.integer_gauge.mode.multiply": "MULTIPLY (Multiplies all inputs)",
+  "create.logistics.comparator_gate": "Choose the comparing value",
+  "create.comparator_gauge.mode.equals": "Input equals Value",
+  "create.comparator_gauge.mode.different": "Input differs Value",
+  "create.comparator_gauge.mode.greater": "Input is greater than Value",
+  "create.comparator_gauge.mode.greater_equals": "Input is greater than or equals Value",
+  "create.comparator_gauge.mode.less": "Input is less than Value",
+  "create.comparator_gauge.mode.less_equals": "Input is less than or equals Value",
+  "create.logistics.comparator_gauge.title": "§lInputs will be summed"
 }

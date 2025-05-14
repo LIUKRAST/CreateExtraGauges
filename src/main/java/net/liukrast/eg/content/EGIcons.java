@@ -28,12 +28,19 @@ public class EGIcons extends AllIcons {
             I_AND = next(),
             I_NAND = next(),
             I_NOR = next(),
+
             I_XOR = newRow(),
             I_XNOR = next(),
-
-
             I_SUBTRACT = next(),
-            I_MULTIPLY = next();
+            I_MULTIPLY = next(),
+
+            I_EQUALS = newRow(),
+            I_DIFFERENT = next(),
+            I_GREATER = next(),
+            I_GREATER_EQUALS = next(),
+
+            I_LESS = newRow(),
+            I_LESS_EQUALS = next();
 
     private static EGIcons next() {
         return new EGIcons(++x, y);
