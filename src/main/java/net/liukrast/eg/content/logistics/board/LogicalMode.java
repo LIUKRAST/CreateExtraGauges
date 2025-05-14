@@ -1,4 +1,4 @@
-package net.liukrast.eg.content.logistics.logicBoard;
+package net.liukrast.eg.content.logistics.board;
 
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIconOptions;
 import com.simibubi.create.foundation.gui.AllIcons;

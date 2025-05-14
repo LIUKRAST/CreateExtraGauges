@@ -1,4 +1,4 @@
-package net.liukrast.eg.content.logistics.logicBoard;
+package net.liukrast.eg.content.logistics.board;
 
 import com.google.common.collect.Lists;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
@@ -20,13 +20,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
-public class LogicPanelScreen extends AbstractSimiScreen {
+public class BasicPanelScreen extends AbstractSimiScreen {
     public static final ResourceLocation TEXTURE = ExtraGauges.id("textures/gui/logic_gauge.png");
 
     private final FactoryPanelBehaviour behaviour;
     private boolean sendReset;
 
-    public LogicPanelScreen(FactoryPanelBehaviour behaviour) {
+    public BasicPanelScreen(FactoryPanelBehaviour behaviour) {
         this.behaviour = behaviour;
     }
 

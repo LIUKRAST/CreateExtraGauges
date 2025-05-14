@@ -46,5 +46,6 @@ public class ExtraGaugesItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         createGauge(RegisterItems.LOGIC_GAUGE.get());
+        createGauge(RegisterItems.INT_GAUGE.get());
     }
 }

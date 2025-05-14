@@ -29,7 +29,11 @@ public class EGIcons extends AllIcons {
             I_NAND = next(),
             I_NOR = next(),
             I_XOR = newRow(),
-            I_XNOR = next();
+            I_XNOR = next(),
+
+
+            I_SUBTRACT = next(),
+            I_MULTIPLY = next();
 
     private static EGIcons next() {
         return new EGIcons(++x, y);

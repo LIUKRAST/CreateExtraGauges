@@ -9,10 +9,13 @@ import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.createmod.catnip.codecs.CatnipCodecUtils;
 import net.createmod.catnip.codecs.CatnipCodecs;
 import net.createmod.catnip.data.IntAttached;
+import net.createmod.catnip.gui.ScreenOpener;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.api.registry.PanelType;
+import net.liukrast.eg.content.logistics.board.BasicPanelScreen;
 import net.liukrast.eg.mixin.FactoryPanelBehaviourIMixin;
 import net.liukrast.eg.mixin.FilteringBehaviourMixin;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -95,7 +98,6 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         }
 
     }
-
 
     /**
      * @return Whether the block entity should render its bulb
@@ -214,7 +216,10 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void displayScreen(Player player) {}
+    public void displayScreen(Player player) {
+        if (player instanceof LocalPlayer)
+            ScreenOpener.open(new BasicPanelScreen(this));
+    }
 
     @Override
     public boolean canShortInteract(ItemStack toApply) {

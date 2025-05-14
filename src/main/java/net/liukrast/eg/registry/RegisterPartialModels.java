@@ -4,9 +4,10 @@ import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.liukrast.eg.ExtraGauges;
 
 public class RegisterPartialModels {
-    public static final PartialModel LOGIC_PANEL = block("logic_gauge/panel");
+    public static final PartialModel LOGIC_PANEL = block("logic_gauge");
+    public static final PartialModel INT_PANEL = block("integer_gauge");
 
-    private static PartialModel block(@SuppressWarnings("SameParameterValue") String path) {
+    private static PartialModel block(String path) {
         return PartialModel.of(ExtraGauges.id("block/" + path));
     }
 

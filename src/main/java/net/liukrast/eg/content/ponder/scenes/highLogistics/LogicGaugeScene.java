@@ -10,7 +10,7 @@ import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.WorldSectionElement;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
-import net.liukrast.eg.content.logistics.logicBoard.LogicPanelBehaviour;
+import net.liukrast.eg.content.logistics.board.LogicPanelBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 

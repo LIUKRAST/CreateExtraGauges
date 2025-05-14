@@ -4,14 +4,15 @@ import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelConnection;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelRenderer;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelSupportBehaviour;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
+import net.liukrast.eg.api.event.AbstractPanelRenderEvent;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelConnection;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.neoforged.neoforge.common.NeoForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -22,8 +23,14 @@ public class FactoryPanelRendererMixin {
     @ModifyExpressionValue(
             method = "renderSafe(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
             at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;getAmount()I"))
-    private int renderSafe(int original, @Local FactoryPanelBehaviour behaviour) {
-        return behaviour instanceof AbstractPanelBehaviour abstractPanel ? abstractPanel.shouldRenderBulb() ? 1 : 0 : original;
+    private int renderSafe(int original, @Local FactoryPanelBehaviour behaviour, @Local(argsOnly = true) float partialTicks, @Local(argsOnly = true)PoseStack ms, @Local(argsOnly = true)MultiBufferSource buffer, @Local(argsOnly = true, ordinal = 0) int light, @Local(argsOnly = true, ordinal = 1) int overlay) {
+        if (behaviour instanceof AbstractPanelBehaviour abstractPanel) {
+            ms.pushPose();
+
+            NeoForge.EVENT_BUS.post(new AbstractPanelRenderEvent(abstractPanel, partialTicks, ms, buffer, light, overlay));
+            ms.popPose();
+            return abstractPanel.shouldRenderBulb() ? 1 : 0;
+        } else return original;
     }
 
     @ModifyArg(method = "renderPath", at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/render/SuperByteBuffer;color(I)Lnet/createmod/catnip/render/SuperByteBuffer;"))
@@ -64,7 +71,7 @@ public class FactoryPanelRendererMixin {
     @ModifyExpressionValue(method = "renderPath", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 0))
     private static boolean renderPath$1(boolean original, @Local(argsOnly = true) FactoryPanelBehaviour behaviour) {
         if(behaviour instanceof AbstractPanelBehaviour ab) {
-            return ab.getConnectionValue(PanelConnections.REDSTONE).orElse(false);
+            return ab.getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
         }
         return original;
     }

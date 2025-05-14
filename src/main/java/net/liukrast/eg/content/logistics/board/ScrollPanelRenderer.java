@@ -1,4 +1,4 @@
-package net.liukrast.eg.content.logistics.logicBoard;
+package net.liukrast.eg.content.logistics.board;
 
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
@@ -22,7 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogicPanelRenderer {
+public class ScrollPanelRenderer {
     public static void tick() {
         Minecraft mc = Minecraft.getInstance();
         HitResult target = mc.hitResult;
@@ -39,7 +39,7 @@ public class LogicPanelRenderer {
             return;
 
         for (BlockEntityBehaviour blockEntityBehaviour : sbe.getAllBehaviours()) {
-            if (!(blockEntityBehaviour instanceof LogicPanelBehaviour behaviour))
+            if (!(blockEntityBehaviour instanceof ScrollPanelBehaviour<?> behaviour))
                 continue;
 
             if (!behaviour.isActive()) {
@@ -66,7 +66,7 @@ public class LogicPanelRenderer {
         }
     }
 
-    protected static void addBox(BlockPos pos, Direction face, LogicPanelBehaviour behaviour,
+    protected static void addBox(BlockPos pos, Direction face, ScrollPanelBehaviour<?> behaviour,
                                  boolean highlight) {
         AABB bb = new AABB(Vec3.ZERO, Vec3.ZERO).inflate(.5f)
                 .contract(0, 0, -.5f)

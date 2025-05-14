@@ -173,9 +173,9 @@ public abstract class FactoryPanelBehaviourMixin {
             }
             if(panel.hasConnection(PanelConnections.REDSTONE)) {
                 if(panel.hasConnection(PanelConnections.FILTER)) {
-                    if(panel.shouldUseRedstoneInsteadOfFilter()) shouldPower |= panel.getConnectionValue(PanelConnections.REDSTONE).orElse(false);
+                    if(panel.shouldUseRedstoneInsteadOfFilter()) shouldPower |= panel.getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
                 } else {
-                    shouldPower |= panel.getConnectionValue(PanelConnections.REDSTONE).orElse(false);
+                    shouldPower |= panel.getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
                 }
             }
         }
