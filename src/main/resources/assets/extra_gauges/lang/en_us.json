@@ -34,5 +34,14 @@
   "create.comparator_gauge.mode.greater_equals": "Input is greater than or equals Value",
   "create.comparator_gauge.mode.less": "Input is less than Value",
   "create.comparator_gauge.mode.less_equals": "Input is less than or equals Value",
-  "create.logistics.comparator_gauge.title": "§lInputs will be summed"
+  "create.logistics.comparator_gauge.title": "§lInputs will be summed",
+  "extra_gauges.ponder.integer_gauge_redstone.header": "Using Integer Gauges to read redstone signals",
+  "extra_gauges.ponder.integer_gauge_redstone.text_1": "Integer Gauges can read integer information from other panel elements...",
+  "extra_gauges.ponder.integer_gauge_redstone.text_2": "And transmit it over to other panel elements, after summing them up",
+  "extra_gauges.ponder.integer_gauge_redstone.text_3": "Connections between elements can be created via the + button in the GUI by right-clicking the gauge",
+  "extra_gauges.ponder.integer_gauge_redstone.text_4": "Mathematical operations (+, -, x) can be changed by holding right-click",
+  "extra_gauges.ponder.integer_gauge_factory.header": "Using Integer Gauges to read Factory Gauges",
+  "extra_gauges.ponder.integer_gauge_factory.text_1":"Integer Gauges can read integer information from Factory Gauges...",
+  "extra_gauges.ponder.integer_gauge_factory.text_2":"And transmit it over to other panel elements, after summing them up"
+
 }
