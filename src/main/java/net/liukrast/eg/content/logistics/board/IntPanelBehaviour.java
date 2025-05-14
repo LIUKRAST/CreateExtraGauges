@@ -17,7 +17,7 @@ import net.minecraft.world.item.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IntPanelBehaviour extends ScrollPanelBehaviour<IntOperationMode> {
+public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMode> {
     public IntPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot, IntOperationMode.class);
     }
@@ -68,6 +68,7 @@ public class IntPanelBehaviour extends ScrollPanelBehaviour<IntOperationMode> {
             FactoryPanelSupportBehaviour linkAt = linkAt(getWorld(), connection);
             if(linkAt == null) return;
             if(!linkAt.isOutput()) continue;
+            //TODO: Replace instanceof redstonelink with a better way of connection
             if(linkAt.shouldPanelBePowered() && linkAt.blockEntity instanceof RedstoneLinkBlockEntity redstoneLink) {
                 countList.add(redstoneLink.getReceivedSignal());
             } else countList.add(linkAt.shouldPanelBePowered() ? 1 : 0);
@@ -77,7 +78,7 @@ public class IntPanelBehaviour extends ScrollPanelBehaviour<IntOperationMode> {
             FactoryPanelBehaviour at = at(getWorld(), connection);
             if(at == null) return;
             var opt = PanelConnections.getConnectionValue(at, PanelConnections.INTEGER);
-            if(opt.isEmpty()) return;
+            if(opt.isEmpty()) continue;
             countList.add(opt.get());
         }
 

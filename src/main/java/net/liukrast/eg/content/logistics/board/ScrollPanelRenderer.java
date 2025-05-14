@@ -39,7 +39,7 @@ public class ScrollPanelRenderer {
             return;
 
         for (BlockEntityBehaviour blockEntityBehaviour : sbe.getAllBehaviours()) {
-            if (!(blockEntityBehaviour instanceof ScrollPanelBehaviour<?> behaviour))
+            if (!(blockEntityBehaviour instanceof ScrollOptionPanelBehaviour<?> behaviour))
                 continue;
 
             if (!behaviour.isActive()) {
@@ -66,7 +66,7 @@ public class ScrollPanelRenderer {
         }
     }
 
-    protected static void addBox(BlockPos pos, Direction face, ScrollPanelBehaviour<?> behaviour,
+    protected static void addBox(BlockPos pos, Direction face, ScrollOptionPanelBehaviour<?> behaviour,
                                  boolean highlight) {
         AABB bb = new AABB(Vec3.ZERO, Vec3.ZERO).inflate(.5f)
                 .contract(0, 0, -.5f)

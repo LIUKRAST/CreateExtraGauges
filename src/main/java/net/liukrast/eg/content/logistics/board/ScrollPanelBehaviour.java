@@ -1,11 +1,7 @@
 package net.liukrast.eg.content.logistics.board;
 
-import com.google.common.collect.ImmutableList;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
-import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
-import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
-import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIconOptions;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.registry.PanelType;
 import net.minecraft.core.HolderLookup;
@@ -13,21 +9,39 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.BlockHitResult;
 
-public abstract class ScrollPanelBehaviour<E extends Enum<E> & INamedIconOptions> extends AbstractPanelBehaviour {
-    private final E[] options;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+public abstract class ScrollPanelBehaviour extends AbstractPanelBehaviour {
     public int value;
     public Component label;
-    protected int max;
-    int min = 0;
+    protected int min,max = 1;
+    Consumer<Integer> callback;
+    Consumer<Integer> clientCallback;
+    Function<Integer, String> formatter;
+    private Supplier<Boolean> isActive;
 
-    public ScrollPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot,Class<E> enum_) {
+    public ScrollPanelBehaviour(Component label, PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);
-        this.label = Component.translatable("create.logistics.logic_gate");
+        this.setLabel(label);
+        callback = i -> {
+        };
+        clientCallback = i -> {
+        };
+        formatter = i -> Integer.toString(i);
         value = 0;
-        options = enum_.getEnumConstants();
-        max = options.length - 1;
+        isActive = () -> true;
+    }
+
+    public void between(int min, int max) {
+        this.min = min;
+        this.max = max;
+    }
+
+    public void withFormatter(Function<Integer, String> formatter) {
+        this.formatter = formatter;
     }
 
     @Override
@@ -42,26 +56,22 @@ public abstract class ScrollPanelBehaviour<E extends Enum<E> & INamedIconOptions
         super.easyRead(nbt, registries, clientPacket);
     }
 
-    @Override
-    public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
-        return new ValueSettingsBoard(label, max, 1, ImmutableList.of(Component.literal("Select")),
-                new ValueSettingsFormatter.ScrollOptionSettingsFormatter(options));
-    }
-
-    @Override
-    public String getClipboardKey() {
-        return options[0].getClass().getSimpleName();
-    }
-
     public void setValue(int value) {
         value = Mth.clamp(value, min, max);
         if (value == this.value)
             return;
         this.value = value;
-        //TODO: Necessary? callback.accept(value);
-        checkForRedstoneInput();
+        callback.accept(value);
         blockEntity.setChanged();
         blockEntity.sendData();
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String formatValue() {
+        return formatter.apply(value);
     }
 
     @Override
@@ -70,6 +80,11 @@ public abstract class ScrollPanelBehaviour<E extends Enum<E> & INamedIconOptions
             return;
         setValue(settings.value());
         playFeedbackSound(this);
+        checkForRedstoneInput();
+    }
+
+    public void setLabel(Component label) {
+        this.label = label;
     }
 
     @Override
@@ -77,11 +92,4 @@ public abstract class ScrollPanelBehaviour<E extends Enum<E> & INamedIconOptions
         return new ValueSettings(0, value);
     }
 
-    INamedIconOptions getIconForSelected() {
-        return get();
-    }
-
-    public E get() {
-        return options[value];
-    }
 }
