@@ -12,7 +12,6 @@ import net.createmod.catnip.data.IntAttached;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.api.registry.PanelType;
-import net.liukrast.eg.content.logistics.board.BasicPanelScreen;
 import net.liukrast.eg.mixin.FactoryPanelBehaviourIMixin;
 import net.liukrast.eg.mixin.FilteringBehaviourMixin;
 import net.minecraft.client.player.LocalPlayer;

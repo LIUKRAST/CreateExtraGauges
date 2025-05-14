@@ -1,7 +1,6 @@
-package net.liukrast.eg.content.logistics.board;
+package net.liukrast.eg.api.logistics.board;
 
 import com.google.common.collect.Lists;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelConfigurationPacket;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelConnectionHandler;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
@@ -12,8 +11,8 @@ import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.gui.element.GuiGameElement;
 import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.eg.ExtraGauges;
-import net.liukrast.eg.registry.RegisterItems;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,20 +20,33 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 
 public class BasicPanelScreen extends AbstractSimiScreen {
-    public static final ResourceLocation TEXTURE = ExtraGauges.id("textures/gui/logic_gauge.png");
+    public static final ResourceLocation TEXTURE = ExtraGauges.id("textures/gui/generic_gauge.png");
 
-    private final FactoryPanelBehaviour behaviour;
+    public final AbstractPanelBehaviour behaviour;
     private boolean sendReset;
 
-    public BasicPanelScreen(FactoryPanelBehaviour behaviour) {
+    public BasicPanelScreen(Component component, AbstractPanelBehaviour behaviour) {
+        super(component);
         this.behaviour = behaviour;
+    }
+
+    public BasicPanelScreen(AbstractPanelBehaviour behaviour) {
+        this.behaviour = behaviour;
+    }
+
+    public int getWindowWidth() {
+        return 112;
+    }
+
+    public int getWindowHeight() {
+        return 32;
     }
 
     @Override
     protected void init() {
-        int sizeX = 112;
-        int sizeY = 32;
-        setWindowSize(112, 32);
+        setWindowSize(getWindowWidth(), getWindowHeight());
+        int sizeX = windowWidth;
+        int sizeY = windowHeight;
         super.init();
         clearWidgets();
 
@@ -80,11 +92,16 @@ public class BasicPanelScreen extends AbstractSimiScreen {
     protected void renderWindow(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         int x = guiLeft;
         int y = guiTop;
-        graphics.blit(TEXTURE, x, y, 0,0, 112, 32);
-        GuiGameElement.of(RegisterItems.LOGIC_GAUGE.toStack())
+        graphics.drawCenteredString(font, title, x+windowWidth/2, y + 4, -1);
+        graphics.blit(getTexture(), x, y, 0,0, windowWidth, windowHeight);
+        GuiGameElement.of(behaviour.getItem().getDefaultInstance())
                 .scale(4)
                 .at(0, 0, -200)
-                .render(graphics, x + 100, y-16);
+                .render(graphics, x + windowWidth, y+windowHeight-48);
+    }
+
+    public ResourceLocation getTexture() {
+        return TEXTURE;
     }
 
     @Override
