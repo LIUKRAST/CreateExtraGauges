@@ -1,7 +1,6 @@
 package net.liukrast.eg.datagen;
 
 import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.liukrast.eg.registry.RegisterItems;
 import net.minecraft.core.registries.BuiltInRegistries;
