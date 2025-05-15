@@ -51,12 +51,6 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
         return RegisterPartialModels.LOGIC_PANEL;
     }
 
-    @Override
-    public void lazyTick() {
-        super.lazyTick();
-        if(!getWorld().isClientSide())
-            checkForRedstoneInput();
-    }
 
     @Override
     public void checkForRedstoneInput() {

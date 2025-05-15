@@ -50,14 +50,6 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
         return RegisterPartialModels.INT_PANEL;
     }
 
-    //TODO: Same as original???
-    @Override
-    public void lazyTick() {
-        super.lazyTick();
-        if(!getWorld().isClientSide())
-            checkForRedstoneInput();
-    }
-
     @Override
     public void checkForRedstoneInput() {
         if(!active)
