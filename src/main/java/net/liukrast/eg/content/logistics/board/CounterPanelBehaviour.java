@@ -20,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
+    private boolean power;
     public CounterPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);
         between(0, 256);
@@ -45,12 +46,14 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         super.easyWrite(nbt, registries, clientPacket);
         nbt.putInt("Count", count);
+        nbt.putBoolean("Power", power);
     }
 
     @Override
     public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         super.easyRead(nbt, registries, clientPacket);
         count = nbt.getInt("Count");
+        power = nbt.getBoolean("Power");
     }
 
     @Override
@@ -90,9 +93,9 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
             shouldPower |= opt.get() > 0;
         }
         //End logical mode
-        if(shouldPower == redstonePowered)
+        if(shouldPower == power)
             return;
-        redstonePowered = shouldPower;
+        power = shouldPower;
         if(shouldPower) {
             if (count >= value) count = 0;
             else count++;

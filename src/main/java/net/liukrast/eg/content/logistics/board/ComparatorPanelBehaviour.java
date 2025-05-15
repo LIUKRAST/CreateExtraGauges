@@ -27,6 +27,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     int comparatorMode = 0;
+    boolean power = false;
 
     public ComparatorPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);
@@ -58,19 +59,21 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(PanelConnections.REDSTONE, () -> redstonePowered ? 15 : 0);
+        builder.put(PanelConnections.REDSTONE, () -> power ? 15 : 0);
     }
 
     @Override
     public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         super.easyWrite(nbt, registries, clientPacket);
         nbt.putInt("ComparatorMode", comparatorMode);
+        nbt.putBoolean("Power", power);
     }
 
     @Override
     public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         super.easyRead(nbt, registries, clientPacket);
         comparatorMode = nbt.getInt("ComparatorMode");
+        power = nbt.getBoolean("Power");
     }
 
     @Override
@@ -98,6 +101,7 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
             FactoryPanelSupportBehaviour linkAt = linkAt(getWorld(), connection);
             if(linkAt == null) return;
             if(!linkAt.isOutput()) continue;
+            //TODO: add better compatibility with other mods
             if(linkAt.shouldPanelBePowered() && linkAt.blockEntity instanceof RedstoneLinkBlockEntity redstoneLink) {
                 result += redstoneLink.getReceivedSignal();
             } else result += linkAt.shouldPanelBePowered() ? 1 : 0;
@@ -114,9 +118,9 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
         boolean shouldPower = ComparatorMode.class.getEnumConstants()[comparatorMode]
                 .test(result, value);
         //End logical mode
-        if(shouldPower == redstonePowered)
+        if(shouldPower == power)
             return;
-        redstonePowered = shouldPower;
+        power = shouldPower;
         blockEntity.notifyUpdate();
         for(FactoryPanelPosition panelPos : targeting) {
             if(!getWorld().isLoaded(panelPos.pos()))
