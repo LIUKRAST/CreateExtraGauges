@@ -9,6 +9,7 @@ import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Items;
 
 public class IntGaugeScene {
 
@@ -126,14 +127,15 @@ public class IntGaugeScene {
         var factGauge2 = util.grid().at(3,2,1);
         var outLink = util.grid().at(1,4,1);
         var nixie = util.grid().at(1,5,2);
+        var chest = util.grid().at(1,1,1);
 
         scene.overlay()
-                .showText(40)
+                .showText(50)
                 .text("Integer Gauges can read integer information from Factory Gauges...")
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(factGauge1.getCenter().add(-0.25f, 0.25f,0));
-        scene.idle(50);
+        scene.idle(60);
 
         scene.world().flashDisplayLink(outLink);
         scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
@@ -143,11 +145,23 @@ public class IntGaugeScene {
         });
 
         scene.overlay()
-                .showText(40)
+                .showText(50)
                 .text("And transmit it over to other panel elements, after summing them up")
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(outLink.getCenter());
         scene.idle(60);
+
+        scene.overlay()
+                .showControls(chest.getCenter(), Pointing.DOWN, 50)
+                .withItem(Items.DIAMOND.getDefaultInstance());
+        scene.idle(70);
+
+        scene.world().flashDisplayLink(outLink);
+        scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
+            Component text = Component.literal("97");
+            nbt.putString("RawCustomText", text.getString());
+            nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
+        });
     }
 }
