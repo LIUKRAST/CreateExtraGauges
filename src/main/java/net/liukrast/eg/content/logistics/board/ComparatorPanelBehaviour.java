@@ -27,7 +27,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     int comparatorMode = 0;
-    boolean power = false;
+    public boolean power = false;
 
     public ComparatorPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);

@@ -3,6 +3,7 @@ package net.liukrast.eg;
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
+import net.liukrast.eg.content.ponder.scenes.highLogistics.ComparatorGaugeScene;
 import net.liukrast.eg.content.ponder.scenes.highLogistics.CounterGaugeScene;
 import net.liukrast.eg.content.ponder.scenes.highLogistics.IntGaugeScene;
 import net.liukrast.eg.content.ponder.scenes.highLogistics.LogicGaugeScene;
@@ -31,6 +32,9 @@ public class ExtraGaugesPonderPlugin implements PonderPlugin {
                 .addStoryBoard("high_logistics/integer_gauge_factory", IntGaugeScene::intGaugeFactory);
         HELPER.forComponents(RegisterItems.COUNTER_GAUGE.get())
                 .addStoryBoard("high_logistics/counter_gauge", CounterGaugeScene::countGauge);
+        HELPER.forComponents(RegisterItems.COMPARATOR_GAUGE.get())
+                .addStoryBoard("high_logistics/comparator_gauge_redstone", ComparatorGaugeScene::compGaugeRedstone)
+                .addStoryBoard("high_logistics/comparator_gauge_factory", ComparatorGaugeScene::compGaugeFactory);
     }
 
     @Override

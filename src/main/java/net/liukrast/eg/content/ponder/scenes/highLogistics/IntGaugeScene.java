@@ -120,6 +120,7 @@ public class IntGaugeScene {
         scene.world().showSection(util.select().fromTo(3, 1, 2, 1, 1, 2), Direction.DOWN);
         scene.idle(5);
         scene.world().showSection(util.select().fromTo(3, 5, 2, 1, 2, 0), Direction.DOWN);
+        scene.world().showSection(util.select().fromTo(3, 1, 1, 1, 1, 1), Direction.DOWN);
         scene.idle(25);
 
         var intGauge = util.grid().at(2,2,1);

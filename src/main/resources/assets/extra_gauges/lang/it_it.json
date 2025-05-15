@@ -40,7 +40,7 @@
   "extra_gauges.ponder.integer_gauge_redstone.header": "Usare i Misuratori Interi per leggere i segnali di redstone",
   "extra_gauges.ponder.integer_gauge_redstone.text_1": "I Misuratori Interi possono leggere valori interi dai pannelli...",
   "extra_gauges.ponder.integer_gauge_redstone.text_2": "E trasmetterli ad altri pannelli, dopo averli sommati",
-  "extra_gauges.ponder.integer_gauge_redstone.text_3": "Le connessioni trai pannelli possono essere create col bottone + nella GUI che si apre facendo tasto destro sul Misuratore",
+  "extra_gauges.ponder.integer_gauge_redstone.text_3": "Le connessioni tra i pannelli possono essere create col bottone + nella GUI che si apre facendo tasto destro sul Misuratore",
   "extra_gauges.ponder.integer_gauge_redstone.text_4": "Le operazioni matematiche (+, -, x) possono essere cambiate tenendo premuto tasto destro sul Misuratore",
   "extra_gauges.ponder.integer_gauge_factory.header": "Usare i Misuratori Interi per leggere i Misuratori di Fabbrica",
   "extra_gauges.ponder.integer_gauge_factory.text_1": "I Misuratori Interi possono leggere valori interi dai Misuratori di Fabbrica...",
@@ -48,7 +48,15 @@
   "extra_gauges.ponder.counter_gauge.header": "Usare i Misuratori Contatori per leggere i segnali di redstone",
   "extra_gauges.ponder.counter_gauge.text_1": "I Misuratori Contatori possono contare il numero di segnali di redstone in entrata...",
   "extra_gauges.ponder.counter_gauge.text_2": "E trasmetterne il numero ad altri pannelli",
-  "extra_gauges.ponder.counter_gauge.text_3": "Le connessioni trai pannelli possono essere create col bottone + nella GUI che si apre facendo tasto destro sul Misuratore",
+  "extra_gauges.ponder.counter_gauge.text_3": "Le connessioni tra i pannelli possono essere create col bottone + nella GUI che si apre facendo tasto destro sul Misuratore",
   "extra_gauges.ponder.counter_gauge.text_4": "Il limite del contatore può essere cambiato tenendo premuto tasto destro sul Misuratore",
-  "extra_gauges.ponder.counter_gauge.text_5": "Quando viene raggiunto il limite (in questo esempio è 3), il contatore tornerà a 0 col prossimo segnale in entrata"
+  "extra_gauges.ponder.counter_gauge.text_5": "Quando viene raggiunto il limite (in questo esempio è 3), il contatore tornerà a 0 col prossimo segnale in entrata",
+  "extra_gauges.ponder.comparator_gauge_redstone.header": "Usare il Misuratore Comparazioni per leggere i segnali di redstone",
+  "extra_gauges.ponder.comparator_gauge_redstone.text_1": "I Misuratori Comparazioni possono leggere dati numerici da altri pannelli, sommandoli...",
+  "extra_gauges.ponder.comparator_gauge_redstone.text_2": "E trasmette il risultato della comparazione (in questo caso \"segnale in entrata = 15\") ad altri pannelli",
+  "extra_gauges.ponder.comparator_gauge_redstone.text_3": "Le connessioni tra i pannelli possono essere create col bottone + nella GUI che si apre facendo tasto destro sul Misuratore",
+  "extra_gauges.ponder.comparator_gauge_redstone.text_4": "Il valore di comparazione può essere modificato tenendo premuto tasto destro sul Misuratore",
+  "extra_gauges.ponder.comparator_gauge_factory.header": "Usare il Misuratore Comparazioni per leggere il Misuratore di Fabbrica",
+  "extra_gauges.ponder.comparator_gauge_factory.text_1": "I Misuratori Comparazioni possono leggere valori numerici dai Misuratori di Fabbrica",
+  "extra_gauges.ponder.comparator_gauge_factory.text_2": "E trasmettere il risultato della comparazione (in questo caso \"segnale in entrata = 96\") ad altri pannelli"
 }

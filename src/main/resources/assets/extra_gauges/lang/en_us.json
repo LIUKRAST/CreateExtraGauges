@@ -50,5 +50,13 @@
   "extra_gauges.ponder.counter_gauge.text_2": "And transmit it over to other panel elements",
   "extra_gauges.ponder.counter_gauge.text_3": "Connections between elements can be created via the + button in the GUI by right-clicking the gauge",
   "extra_gauges.ponder.counter_gauge.text_4": "The counter threshold can be changed by holding right-click",
-  "extra_gauges.ponder.counter_gauge.text_5": "Once the threshold is reached (in this example it's 3), the counter will reset to 0 with the next input signal"
+  "extra_gauges.ponder.counter_gauge.text_5": "Once the threshold is reached (in this example it's 3), the counter will reset to 0 with the next input signal",
+  "extra_gauges.ponder.comparator_gauge_redstone.header": "Using Comparator Gauges to read redstone signals",
+  "extra_gauges.ponder.comparator_gauge_redstone.text_1": "Comparator Gauges can read numerical information from other panel elements, sum them up...",
+  "extra_gauges.ponder.comparator_gauge_redstone.text_2": "And transmit the result of the comparison (in this case \"input signal = 15\") to other panel elements",
+  "extra_gauges.ponder.comparator_gauge_redstone.text_3": "Connections between elements can be created via the + button in the GUI by right-clicking the gauge",
+  "extra_gauges.ponder.comparator_gauge_redstone.text_4": "The comparing value can be changed by holding right-click",
+  "extra_gauges.ponder.comparator_gauge_factory.header": "Using Comparator Gauges to read Factory Gauges",
+  "extra_gauges.ponder.comparator_gauge_factory.text_1": "Comparator Gauges can read numerical information from Factory Gauges...",
+  "extra_gauges.ponder.comparator_gauge_factory.text_2": "And transmit the result of the comparison (in this case \"input signal = 96\") to other panel elements"
 }
