@@ -7,6 +7,8 @@ import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
 import net.liukrast.eg.registry.RegisterPartialModels;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode> {
+    private boolean power;
 
     public LogicPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot, LogicalMode.class);
@@ -23,7 +26,19 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(PanelConnections.REDSTONE, () -> redstonePowered ? 15 : 0);
+        builder.put(PanelConnections.REDSTONE, () -> power ? 15 : 0);
+    }
+
+    @Override
+    public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
+        super.easyWrite(nbt, registries, clientPacket);
+        nbt.putBoolean("Power", power);
+    }
+
+    @Override
+    public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
+        super.easyRead(nbt, registries, clientPacket);
+        power = nbt.getBoolean("Power");
     }
 
     @Override
@@ -66,9 +81,9 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
 
         boolean shouldPower = get().test(powerList.stream());
         //End logical mode
-        if(shouldPower == redstonePowered)
+        if(shouldPower == power)
             return;
-        redstonePowered = shouldPower;
+        power = shouldPower;
         blockEntity.notifyUpdate();
         /*for(FactoryPanelPosition panelPos : targeting) {
             if(!getWorld().isLoaded(panelPos.pos()))
