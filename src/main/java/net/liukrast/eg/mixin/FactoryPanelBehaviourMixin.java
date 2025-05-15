@@ -72,6 +72,7 @@ public abstract class FactoryPanelBehaviourMixin {
         if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour) ci.cancel();
     }
 
+    @SuppressWarnings("ModifyVariableMayBeArgsOnly")
     @ModifyVariable(method = "moveTo", at = @At(value = "STORE", ordinal = 0))
     private FactoryPanelBehaviour moveTo(FactoryPanelBehaviour original) {
         var be = ((FactoryPanelBlockEntity)original.blockEntity);
@@ -139,7 +140,7 @@ public abstract class FactoryPanelBehaviourMixin {
     @Definition(id = "failed", local = @Local(type = boolean.class))
     @Expression("failed = true")
     @Inject(method = "tickRequests", at = @At(value = "MIXINEXTRAS:EXPRESSION", shift = At.Shift.AFTER))
-    private void tickRequests(CallbackInfo ci, @Local LocalBooleanRef failed) {
+    private void tickRequests(CallbackInfo ci, @SuppressWarnings("LocalMayBeArgsOnly") @Local LocalBooleanRef failed) {
         failed.set(this.extra_gauges$failed);
     }
 

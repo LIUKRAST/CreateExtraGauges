@@ -53,7 +53,7 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
             int value = valueSetting.value();
             if (!valueSetting.equals(getValueSettings()))
                 playFeedbackSound(this);
-            setValue(valueSetting.row() == 0 ? -value : value);
+            setValue(valueSetting.row() == 0 ? value : -value);
         }
     }
 
