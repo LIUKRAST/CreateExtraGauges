@@ -3,6 +3,7 @@
   "item.extra_gauges.logic_gauge": "Logic Gauge",
   "item.extra_gauges.integer_gauge": "Integer Gauge",
   "item.extra_gauges.comparator_gauge": "Comparator Gauge",
+  "item.extra_gauges.counter_gauge": "Counter Gauge",
   "create.logistics.logic_gate": "Logic Gate",
   "create.logistics.int_gate": "Int Gate",
   "create.logic_gauge.gate.or": "OR (Activate if any inputs are active)",

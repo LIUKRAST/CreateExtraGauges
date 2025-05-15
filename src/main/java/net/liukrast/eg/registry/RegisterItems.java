@@ -13,6 +13,7 @@ public class RegisterItems {
     public static final DeferredItem<PanelBlockItem> LOGIC_GAUGE = ITEMS.register("logic_gauge", () -> new PanelBlockItem(RegisterPanels.LOGIC::get, new Item.Properties()));
     public static final DeferredItem<PanelBlockItem> INT_GAUGE = ITEMS.register("integer_gauge", () -> new PanelBlockItem(RegisterPanels.INT::get, new Item.Properties()));
     public static final DeferredItem<PanelBlockItem> COMPARATOR_GAUGE = ITEMS.register("comparator_gauge", () -> new PanelBlockItem(RegisterPanels.COMPARATOR::get, new Item.Properties()));
+    public static final DeferredItem<PanelBlockItem> COUNTER_GAUGE = ITEMS.register("counter_gauge", () -> new PanelBlockItem(RegisterPanels.COUNTER::get, new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
