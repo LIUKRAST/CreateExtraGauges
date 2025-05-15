@@ -72,7 +72,7 @@ public abstract class FactoryPanelBehaviourMixin {
         if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour) ci.cancel();
     }
 
-    @ModifyVariable(method = "moveTo", at = @At(value = "STORE", ordinal = 0), argsOnly = true)
+    @ModifyVariable(method = "moveTo", at = @At(value = "STORE", ordinal = 0))
     private FactoryPanelBehaviour moveTo(FactoryPanelBehaviour original) {
         var be = ((FactoryPanelBlockEntity)original.blockEntity);
         var slot = original.slot;
