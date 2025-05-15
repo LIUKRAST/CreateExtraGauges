@@ -1,9 +1,11 @@
 {
+  "itemGroup.extra_gauges": "Create: Extra Gauges",
   "item.extra_gauges.logic_gauge": "Misuratore Logico",
   "item.extra_gauges.integer_gauge": "Misuratore Interi",
   "item.extra_gauges.comparator_gauge": "Misuratore Comparazioni",
   "create.logistics.logic_gate": "Misuratore Logico",
   "create.logistics.int_gate": "Misuratore Int",
+  "item.extra_gauges.counter_gauge": "Misuratore Contatore",
   "create.logic_gauge.gate.or": "OR (Attiva se almeno un input è attivo)",
   "create.logic_gauge.gate.and": "AND (Attiva se tutti gli input lo sono)",
   "create.logic_gauge.gate.nor": "NOR (Attiva se tutti gli input sono spenti)",
