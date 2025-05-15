@@ -96,6 +96,7 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
         if(shouldPower == power)
             return;
         power = shouldPower;
+        System.err.println(power);
         if(shouldPower) {
             if (count >= value) count = 0;
             else count++;

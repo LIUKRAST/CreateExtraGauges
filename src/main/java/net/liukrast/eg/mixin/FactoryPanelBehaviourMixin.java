@@ -51,8 +51,9 @@ public abstract class FactoryPanelBehaviourMixin {
     /* We don't want our panels to tick the default panel logic */
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;tick()V", shift = At.Shift.AFTER), cancellable = true)
     private void tick(CallbackInfo ci) {extra_gauge$cancel(ci);}
+    /*
     @Inject(method = "lazyTick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;lazyTick()V", shift = At.Shift.AFTER), cancellable = true)
-    private void lazyTick(CallbackInfo ci) {extra_gauge$cancel(ci);}
+    private void lazyTick(CallbackInfo ci) {extra_gauge$cancel(ci);}*/
 
     /* We want the class to safely handle null values in the panel slot */
     @Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class))
@@ -71,7 +72,7 @@ public abstract class FactoryPanelBehaviourMixin {
         if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour) ci.cancel();
     }
 
-    @ModifyVariable(method = "moveTo", at = @At(value = "STORE", ordinal = 0))
+    @ModifyVariable(method = "moveTo", at = @At(value = "STORE", ordinal = 0), argsOnly = true)
     private FactoryPanelBehaviour moveTo(FactoryPanelBehaviour original) {
         var be = ((FactoryPanelBlockEntity)original.blockEntity);
         var slot = original.slot;

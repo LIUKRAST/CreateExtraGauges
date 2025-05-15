@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.api.logistics.board.BasicPanelScreen;
+import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
@@ -81,7 +82,7 @@ public class ComparatorPanelScreen extends BasicPanelScreen {
     protected void renderWindow(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         super.renderWindow(graphics, mouseX, mouseY, partialTicks);
         //ChatFormatting.RED
-        var value = behaviour.redstonePowered;
+        var value = behaviour.getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
         graphics.drawCenteredString(font, Component.literal("input " + ComparatorMode.values()[current].character() + " value").withStyle(value ? ChatFormatting.DARK_GREEN : ChatFormatting.RED), guiLeft + windowWidth/2-3, guiTop+windowHeight-21, -1);
     }
 }
