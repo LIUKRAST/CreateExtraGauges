@@ -24,7 +24,7 @@ public class IntGaugeScene {
 
         scene.world().showSection(util.select().fromTo(5, 1, 3, 1, 1, 3), Direction.DOWN);
         scene.idle(5);
-        scene.world().showSection(util.select().fromTo(5, 5, 4, 1, 1, 2), Direction.DOWN);
+        scene.world().showSection(util.select().fromTo(5, 5, 4, 1, 2, 2), Direction.DOWN);
         scene.idle(25);
 
         var intGauge1 = util.grid().at(4, 2, 2);
@@ -119,7 +119,7 @@ public class IntGaugeScene {
 
         scene.world().showSection(util.select().fromTo(3, 1, 2, 1, 1, 2), Direction.DOWN);
         scene.idle(5);
-        scene.world().showSection(util.select().fromTo(3, 5, 2, 1, 1, 0), Direction.DOWN);
+        scene.world().showSection(util.select().fromTo(3, 5, 2, 1, 2, 0), Direction.DOWN);
         scene.idle(25);
 
         var intGauge = util.grid().at(2,2,1);
