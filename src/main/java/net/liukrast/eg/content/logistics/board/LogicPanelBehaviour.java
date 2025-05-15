@@ -70,13 +70,15 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
             return;
         redstonePowered = shouldPower;
         blockEntity.notifyUpdate();
-        for(FactoryPanelPosition panelPos : targeting) {
+        /*for(FactoryPanelPosition panelPos : targeting) {
             if(!getWorld().isLoaded(panelPos.pos()))
                 return;
             FactoryPanelBehaviour behaviour = FactoryPanelBehaviour.at(getWorld(), panelPos);
             if(behaviour == null) continue;
             behaviour.checkForRedstoneInput();
-        }
+        } TODO: Update instantly?
+
+        */
         notifyRedstoneOutputs();
     }
 
