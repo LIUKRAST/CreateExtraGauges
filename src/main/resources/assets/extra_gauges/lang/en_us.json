@@ -1,4 +1,5 @@
 {
+  "itemGroup.extra_gauges": "Create: Extra Gauges",
   "item.extra_gauges.logic_gauge": "Logic Gauge",
   "item.extra_gauges.integer_gauge": "Integer Gauge",
   "item.extra_gauges.comparator_gauge": "Comparator Gauge",
