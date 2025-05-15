@@ -1,21 +1,44 @@
 package net.liukrast.eg.content.logistics.board;
 
+import com.google.common.collect.ImmutableList;
 import com.simibubi.create.content.logistics.factoryBoard.*;
+import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
+import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.data.IntAttached;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
 import net.liukrast.eg.registry.RegisterPartialModels;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     public CounterPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);
+        between(0, 256);
+    }
+
+    @Override
+    public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
+        ImmutableList<Component> rows = ImmutableList.of(Component.literal("Positive")
+                        .withStyle(ChatFormatting.BOLD));
+        ValueSettingsFormatter formatter = new ValueSettingsFormatter(this::formatSettings);
+        return new ValueSettingsBoard(label, 256, 32, rows, formatter);
+    }
+
+    @Override
+    public void setValueSettings(Player player, ValueSettings valueSetting, boolean ctrlHeld) {
+        int value = valueSetting.value();
+        if (!valueSetting.equals(getValueSettings()))
+            playFeedbackSound(this);
+        setValue(value);
     }
 
     @Override
@@ -71,7 +94,7 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
             return;
         redstonePowered = shouldPower;
         if(shouldPower) {
-            if (count == value) count = 0;
+            if (count >= value) count = 0;
             else count++;
         }
         blockEntity.notifyUpdate();
@@ -82,7 +105,6 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
             if(behaviour == null) continue;
             behaviour.checkForRedstoneInput();
         } TODO: Update instantly?
-
         */
         notifyRedstoneOutputs();
     }
