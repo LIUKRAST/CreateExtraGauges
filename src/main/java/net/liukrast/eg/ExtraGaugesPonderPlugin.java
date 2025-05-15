@@ -2,8 +2,10 @@ package net.liukrast.eg;
 
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
+import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.liukrast.eg.content.ponder.scenes.highLogistics.IntGaugeScene;
 import net.liukrast.eg.content.ponder.scenes.highLogistics.LogicGaugeScene;
+import net.liukrast.eg.datagen.ExtraGaugesPonderTagProvider;
 import net.liukrast.eg.registry.RegisterItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -26,5 +28,10 @@ public class ExtraGaugesPonderPlugin implements PonderPlugin {
         HELPER.forComponents(RegisterItems.INT_GAUGE.get())
                 .addStoryBoard("high_logistics/integer_gauge_redstone", IntGaugeScene::intGaugeRedstone)
                 .addStoryBoard("high_logistics/integer_gauge_factory", IntGaugeScene::intGaugeFactory);
+    }
+
+    @Override
+    public void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
+        ExtraGaugesPonderTagProvider.register(helper);
     }
 }
