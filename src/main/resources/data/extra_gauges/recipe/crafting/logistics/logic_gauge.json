@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "create:transmitter"
+      "item": "minecraft:redstone_torch"
     },
     {
       "item": "create:precision_mechanism"

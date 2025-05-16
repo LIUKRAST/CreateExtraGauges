@@ -41,7 +41,7 @@ public class IntGaugeScene {
 
         scene.overlay()
                 .showText(40)
-                .text("Integer Gauges can read integer information from other panel elements...")
+                .text("Integer Gauges can read integer information from panel elements...")
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(link2_1.getCenter().add(-0.25f, 0.25f,0));

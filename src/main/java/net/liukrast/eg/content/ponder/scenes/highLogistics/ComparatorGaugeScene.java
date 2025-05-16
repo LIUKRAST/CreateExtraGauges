@@ -41,7 +41,7 @@ public class ComparatorGaugeScene {
 
         scene.overlay()
                 .showText(40)
-                .text("Comparator Gauges can read numerical information from other panel elements, sum them up...")
+                .text("Comparator Gauges can read numerical information from panel elements, sum them up...")
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(link1_2.getCenter().add(-0.25f, 0.25f,0));
@@ -101,7 +101,7 @@ public class ComparatorGaugeScene {
                 .rightClick();
         scene.overlay()
                 .showText(40)
-                .text("Comparison operations (=, !=, >, >=, <, <=) can be changed by holding right-click")
+                .text("The comparing value can be changed by holding right-click")
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(comparator.getCenter().add(0, 0.53f, 0));

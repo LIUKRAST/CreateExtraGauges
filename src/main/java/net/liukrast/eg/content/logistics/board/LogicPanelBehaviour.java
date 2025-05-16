@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode> {
-    private boolean power;
+    public boolean power;
 
     public LogicPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot, LogicalMode.class);
