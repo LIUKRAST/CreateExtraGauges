@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "minecraft:redstone_comparator"
+      "item": "minecraft:comparator"
     },
     {
       "item": "create:precision_mechanism"
