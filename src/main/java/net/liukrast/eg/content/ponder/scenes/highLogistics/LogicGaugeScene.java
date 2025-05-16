@@ -1,22 +1,14 @@
 package net.liukrast.eg.content.ponder.scenes.highLogistics;
 
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock.PanelSlot;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import net.createmod.catnip.math.Pointing;
-import net.createmod.ponder.api.element.ElementLink;
-import net.createmod.ponder.api.element.WorldSectionElement;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
-import net.liukrast.eg.content.logistics.board.ComparatorPanelBehaviour;
 import net.liukrast.eg.content.logistics.board.LogicPanelBehaviour;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-
-import java.util.function.Consumer;
 
 public class LogicGaugeScene {
 
