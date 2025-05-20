@@ -68,12 +68,12 @@ public class ComparatorGaugeScene {
         scene.idle(40);
 
         scene.overlay()
-                .showText(40)
+                .showText(70)
                 .text("And transmit the result of the comparison (in this case \"input signal = 15\") to other panel elements")
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(link3_1.getCenter().add(-0.25f, 0.25f,0));
-        scene.idle(60);
+        scene.idle(100);
 
         scene.world().toggleRedstonePower(util.select().position(link3_1));
         scene.world().toggleRedstonePower(util.select().position(link3_2));

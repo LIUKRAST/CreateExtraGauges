@@ -1,11 +1,15 @@
 package net.liukrast.eg.content.ponder.scenes.highLogistics;
 
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlockEntity;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
+import net.liukrast.eg.content.logistics.board.CounterPanelBehaviour;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 
@@ -137,8 +141,24 @@ public class CounterGaugeScene {
         scene.idle(20);
 
         scene.overlay()
+                .showText(70)
+                .text("Once the threshold is reached (in this example it's 3), the counter will output redstone power")
+                .attachKeyFrame()
+                .placeNearTarget()
+                .pointAt(new BlockPos(1, 2, 1).getCenter());
+        scene.idle(100);
+
+        scene.world().modifyBlockEntity(counter, FactoryPanelBlockEntity.class, be -> {
+            CounterPanelBehaviour panel = (CounterPanelBehaviour) be.panels.get(FactoryPanelBlock.PanelSlot.BOTTOM_RIGHT);
+            panel.value = 3;
+        });
+        scene.world().toggleRedstonePower(util.select().fromTo(1,2, 1, 1, 2, 3));
+        scene.effects().indicateRedstone(new BlockPos(1, 2, 1));
+        scene.idle(15);
+
+        scene.overlay()
                 .showText(40)
-                .text("Once the threshold is reached (in this example it's 3), the counter will reset to 0 with the next input signal")
+                .text("Triggering the counter another time will reset the counter to 0")
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(outLink.getCenter());
@@ -164,6 +184,7 @@ public class CounterGaugeScene {
             nbt.putString("RawCustomText", text.getString());
             nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
         });
+        scene.world().toggleRedstonePower(util.select().fromTo(1,2, 1, 1, 2, 3));
         scene.idle(20);
     }
 }
