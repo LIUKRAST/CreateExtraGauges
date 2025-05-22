@@ -15,6 +15,7 @@ import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -51,8 +52,9 @@ public abstract class FactoryPanelBehaviourMixin {
     /* We don't want our panels to tick the default panel logic */
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;tick()V", shift = At.Shift.AFTER), cancellable = true)
     private void tick(CallbackInfo ci) {extra_gauge$cancel(ci);}
+    /*
     @Inject(method = "lazyTick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;lazyTick()V", shift = At.Shift.AFTER), cancellable = true)
-    private void lazyTick(CallbackInfo ci) {extra_gauge$cancel(ci);}
+    private void lazyTick(CallbackInfo ci) {extra_gauge$cancel(ci);}*/
 
     /* We want the class to safely handle null values in the panel slot */
     @Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class))
@@ -71,6 +73,7 @@ public abstract class FactoryPanelBehaviourMixin {
         if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour) ci.cancel();
     }
 
+    @SuppressWarnings("ModifyVariableMayBeArgsOnly")
     @ModifyVariable(method = "moveTo", at = @At(value = "STORE", ordinal = 0))
     private FactoryPanelBehaviour moveTo(FactoryPanelBehaviour original) {
         var be = ((FactoryPanelBlockEntity)original.blockEntity);
@@ -80,73 +83,23 @@ public abstract class FactoryPanelBehaviourMixin {
         return original;
     }
 
-    // Remove abstract panels from failing a request
-    /*
-    @Definition(id = "failed", local = @Local(type = boolean.class))
-    @Expression("failed = true")
-    @WrapWithCondition(method = "tickRequests", at = @At("MIXINEXTRAS:EXPRESSION"))
-    private boolean tickRequests() {
-        return extra_gauges$shouldSkipFilter();
-    }*/
-
-    @ModifyVariable(method = "tickRequests", at = @At("STORE"))
-    private boolean tickRequests$1(boolean value) {
-        var instance = FactoryPanelBehaviour.class.cast(this);
-        //Intellij DUMB L
-        //noinspection ConstantValue
-        return targetedBy.values().stream().noneMatch(connection -> {
-            FactoryPanelBehaviour source = at(instance.getWorld(), connection);
-            if(source == null) return true;
-            if(!(source instanceof AbstractPanelBehaviour ab)) return true;
-            return ab.hasConnection(PanelConnections.FILTER);
-        });
-    }
-
-    //TODO: Replace with a better operation!
-    @Unique
-    private boolean extra_gauges$failed;
-
-    @ModifyExpressionValue(method = "tickRequests", at = @At(value = "INVOKE", target = "Ljava/util/Map;isEmpty()Z"))
-    private boolean tickRequests(boolean original) {
-        var instance = FactoryPanelBehaviour.class.cast(this);
-        //noinspection ConstantValue
-        return original || targetedBy
-                .values()
-                .stream()
-                .map(c -> at(instance.getWorld(), c))
-                .allMatch(source -> {
-                    if(source == null) return false;
-                    if(!(source instanceof AbstractPanelBehaviour panel)) return false;
-                    if(panel.hasConnection(PanelConnections.FILTER)) {
-                        if(panel.hasConnection(PanelConnections.REDSTONE)) return !panel.shouldUseRedstoneInsteadOfFilter();
-                        else return true;
-                    } else return false;
-                });
-    }
-
     @WrapWithCondition(
             method = "tickRequests",
-            at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;sendEffect(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelPosition;Z)V", ordinal = 0)
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;sendEffect(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelPosition;Z)V"
+            )
     )
-    private boolean tickRequests(FactoryPanelBehaviour instance, FactoryPanelPosition factoryPanelPosition, boolean fromPos, @Local boolean failed) {
-        boolean should = !extra_gauges$shouldSkipFilter() || failed;
-        extra_gauges$failed = should;
-        return should;
+    private boolean tickRequests(FactoryPanelBehaviour instance, FactoryPanelPosition factoryPanelPosition, boolean fromPos) {
+        return !(instance instanceof AbstractPanelBehaviour ab) || ab.hasConnection(PanelConnections.FILTER);
     }
 
-    @SuppressWarnings("DiscouragedShift")
     @Definition(id = "failed", local = @Local(type = boolean.class))
-    @Expression("failed = true")
-    @Inject(method = "tickRequests", at = @At(value = "MIXINEXTRAS:EXPRESSION", shift = At.Shift.AFTER))
-    private void tickRequests(CallbackInfo ci, @Local LocalBooleanRef failed) {
-        failed.set(this.extra_gauges$failed);
-    }
-
-
-    @Unique
-    private boolean extra_gauges$shouldSkipFilter() {
-        if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour abstractPanelBehaviour) return abstractPanelBehaviour.hasConnection(PanelConnections.FILTER);
-        return true;
+    @Expression("failed = @(true)")
+    @ModifyExpressionValue(method = "tickRequests", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private int tickRequests$1(int original) {
+        var instance = FactoryPanelBehaviour.class.cast(this);
+        return (!(instance instanceof AbstractPanelBehaviour ab) || ab.hasConnection(PanelConnections.FILTER)) ? 1 : 0;
     }
 
     //TODO: Might be a bad idea to rewrite the whole code.
@@ -199,7 +152,6 @@ public abstract class FactoryPanelBehaviourMixin {
             return;
         }
 
-        //noinspection ConstantValue
         redstonePowered = shouldPower;
         i.blockEntity.notifyUpdate();
         timer = 1;

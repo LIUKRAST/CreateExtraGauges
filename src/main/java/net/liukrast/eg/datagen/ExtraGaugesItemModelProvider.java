@@ -48,5 +48,6 @@ public class ExtraGaugesItemModelProvider extends ItemModelProvider {
         createGauge(RegisterItems.LOGIC_GAUGE.get());
         createGauge(RegisterItems.INT_GAUGE.get());
         createGauge(RegisterItems.COMPARATOR_GAUGE.get());
+        createGauge(RegisterItems.COUNTER_GAUGE.get());
     }
 }

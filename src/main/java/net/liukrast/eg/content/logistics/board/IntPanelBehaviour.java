@@ -50,14 +50,6 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
         return RegisterPartialModels.INT_PANEL;
     }
 
-    //TODO: Same as original???
-    @Override
-    public void lazyTick() {
-        super.lazyTick();
-        if(!getWorld().isClientSide())
-            checkForRedstoneInput();
-    }
-
     @Override
     public void checkForRedstoneInput() {
         if(!active)
@@ -68,7 +60,7 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
             FactoryPanelSupportBehaviour linkAt = linkAt(getWorld(), connection);
             if(linkAt == null) return;
             if(!linkAt.isOutput()) continue;
-            //TODO: Replace instanceof redstonelink with a better way of connection
+            //TODO: Replace instanceof redstone link with a better way of connection
             if(linkAt.shouldPanelBePowered() && linkAt.blockEntity instanceof RedstoneLinkBlockEntity redstoneLink) {
                 countList.add(redstoneLink.getReceivedSignal());
             } else countList.add(linkAt.shouldPanelBePowered() ? 1 : 0);
@@ -90,13 +82,15 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
 
         count = result;
         blockEntity.notifyUpdate();
+        /*
         for(FactoryPanelPosition panelPos : targeting) {
             if(!getWorld().isLoaded(panelPos.pos()))
                 return;
             FactoryPanelBehaviour behaviour = FactoryPanelBehaviour.at(getWorld(), panelPos);
             if(behaviour == null) continue;
             behaviour.checkForRedstoneInput();
-        }
+        } TODO: Update instantly?
+        */
         notifyRedstoneOutputs();
     }
 

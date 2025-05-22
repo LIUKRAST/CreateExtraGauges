@@ -5,6 +5,7 @@ import net.createmod.ponder.foundation.PonderIndex;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.api.event.AbstractPanelRenderEvent;
 import net.liukrast.eg.datagen.ExtraGaugesItemModelProvider;
+import net.liukrast.eg.registry.RegisterCreativeModeTabs;
 import net.liukrast.eg.registry.RegisterItems;
 import net.liukrast.eg.registry.RegisterPanels;
 import net.liukrast.eg.registry.RegisterPartialModels;
@@ -32,17 +33,9 @@ public class ExtraGauges {
     public ExtraGauges(IEventBus modEventBus) {
         RegisterItems.register(modEventBus);
         RegisterPanels.register(modEventBus);
+        RegisterCreativeModeTabs.register(modEventBus);
         modEventBus.register(this);
         NeoForge.EVENT_BUS.addListener(this::abstractPanelRender);
-    }
-
-    @SubscribeEvent
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == AllCreativeModeTabs.BASE_CREATIVE_TAB.getKey()) {
-            event.accept(RegisterItems.LOGIC_GAUGE);
-            event.accept(RegisterItems.INT_GAUGE);
-            event.accept(RegisterItems.COMPARATOR_GAUGE);
-        }
     }
 
     @SubscribeEvent
