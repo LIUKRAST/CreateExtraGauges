@@ -167,6 +167,7 @@ public abstract class FactoryPanelBehaviourMixin {
         return instance instanceof AbstractPanelBehaviour panel ? panel.shouldAllowFilteringBehaviour() && original : original;
     }
 
+    @SuppressWarnings("DefaultAnnotationParam")
     @Definition(id = "heldItem", local = @Local(type = ItemStack.class), remap = true)
     @Definition(id = "getItem", method = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;", remap = true)
     @Definition(id = "LogisticallyLinkedBlockItem", type = LogisticallyLinkedBlockItem.class)
