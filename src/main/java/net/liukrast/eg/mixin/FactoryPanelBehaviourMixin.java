@@ -39,11 +39,11 @@ public abstract class FactoryPanelBehaviourMixin {
     }
 
 
-    @Shadow public Map<FactoryPanelPosition, FactoryPanelConnection> targetedBy;
-    @Shadow public boolean active;
-    @Shadow public Map<BlockPos, FactoryPanelConnection> targetedByLinks;
-    @Shadow public boolean redstonePowered;
-    @Shadow private int timer;
+    @Shadow(remap = false) public Map<FactoryPanelPosition, FactoryPanelConnection> targetedBy;
+    @Shadow(remap = false) public boolean active;
+    @Shadow(remap = false) public Map<BlockPos, FactoryPanelConnection> targetedByLinks;
+    @Shadow(remap = false) public boolean redstonePowered;
+    @Shadow(remap = false) private int timer;
 
     /* We don't want our panels to tick the default panel logic */
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;tick()V", shift = At.Shift.AFTER), cancellable = true, remap = false)
