@@ -10,7 +10,7 @@
     }
   ],
   "result": {
-    "count": 2,
-    "id": "extra_gauges:counter_gauge"
+    "item": "extra_gauges:counter_gauge",
+    "count": 2
   }
 }
