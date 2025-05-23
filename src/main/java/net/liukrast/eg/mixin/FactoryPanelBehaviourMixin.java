@@ -4,10 +4,7 @@ import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.logistics.packagerLink.LogisticallyLinkedBlockItem;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
@@ -15,7 +12,6 @@ import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -27,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-@Mixin(FactoryPanelBehaviour.class)
+@Mixin(value = FactoryPanelBehaviour.class)
 public abstract class FactoryPanelBehaviourMixin {
 
     @Shadow
@@ -50,14 +46,14 @@ public abstract class FactoryPanelBehaviourMixin {
     @Shadow private int timer;
 
     /* We don't want our panels to tick the default panel logic */
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;tick()V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;tick()V", shift = At.Shift.AFTER), cancellable = true, remap = false)
     private void tick(CallbackInfo ci) {extra_gauge$cancel(ci);}
     /*
     @Inject(method = "lazyTick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;lazyTick()V", shift = At.Shift.AFTER), cancellable = true)
     private void lazyTick(CallbackInfo ci) {extra_gauge$cancel(ci);}*/
 
     /* We want the class to safely handle null values in the panel slot */
-    @Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class))
+    /*@Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class))
     @Definition(id = "active", field = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;active:Z")
     @Expression("behaviour.active")
     @WrapOperation(
@@ -66,7 +62,7 @@ public abstract class FactoryPanelBehaviourMixin {
     private static boolean at(FactoryPanelBehaviour instance, Operation<Boolean> original) {
         if(instance == null) return true;
         return original.call(instance);
-    }
+    }*/
 
     @Unique
     private void extra_gauge$cancel(CallbackInfo ci) {
@@ -74,7 +70,7 @@ public abstract class FactoryPanelBehaviourMixin {
     }
 
     @SuppressWarnings("ModifyVariableMayBeArgsOnly")
-    @ModifyVariable(method = "moveTo", at = @At(value = "STORE", ordinal = 0))
+    @ModifyVariable(method = "moveTo", at = @At(value = "STORE", ordinal = 0), remap = false)
     private FactoryPanelBehaviour moveTo(FactoryPanelBehaviour original) {
         var be = ((FactoryPanelBlockEntity)original.blockEntity);
         var slot = original.slot;
@@ -87,8 +83,10 @@ public abstract class FactoryPanelBehaviourMixin {
             method = "tickRequests",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;sendEffect(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelPosition;Z)V"
-            )
+                    target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;sendEffect(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelPosition;Z)V",
+                    ordinal = 0
+            ),
+            remap = false
     )
     private boolean tickRequests(FactoryPanelBehaviour instance, FactoryPanelPosition factoryPanelPosition, boolean fromPos) {
         return !(instance instanceof AbstractPanelBehaviour ab) || ab.hasConnection(PanelConnections.FILTER);
@@ -96,7 +94,7 @@ public abstract class FactoryPanelBehaviourMixin {
 
     @Definition(id = "failed", local = @Local(type = boolean.class))
     @Expression("failed = @(true)")
-    @ModifyExpressionValue(method = "tickRequests", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = "tickRequests", at = @At("MIXINEXTRAS:EXPRESSION"), remap = false)
     private int tickRequests$1(int original) {
         var instance = FactoryPanelBehaviour.class.cast(this);
         return (!(instance instanceof AbstractPanelBehaviour ab) || ab.hasConnection(PanelConnections.FILTER)) ? 1 : 0;
@@ -104,7 +102,7 @@ public abstract class FactoryPanelBehaviourMixin {
 
     //TODO: Might be a bad idea to rewrite the whole code.
     // But I didnt find any other solution and my brain is collapsing ngl
-    @Inject(method = "checkForRedstoneInput", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "checkForRedstoneInput", at = @At("HEAD"), cancellable = true, remap = false)
     private void checkForRedstoneInput(CallbackInfo ci) {
         var i = FactoryPanelBehaviour.class.cast(this);
         if (!active) {
@@ -159,21 +157,21 @@ public abstract class FactoryPanelBehaviourMixin {
     }
 
     // TODO: Should we implement something here?
-    @Inject(method = "notifyRedstoneOutputs", at = @At("TAIL"))
+    @Inject(method = "notifyRedstoneOutputs", at = @At("TAIL"), remap = false)
     private void notifyRedstoneOutputs(CallbackInfo ci) {
     }
 
-    @ModifyExpressionValue(method = "onShortInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0))
+    @ModifyExpressionValue(method = "onShortInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0, remap = true), remap = false)
     private boolean onShortInteract(boolean original) {
         var instance = FactoryPanelBehaviour.class.cast(this);
         return instance instanceof AbstractPanelBehaviour panel ? panel.shouldAllowFilteringBehaviour() && original : original;
     }
 
-    @Definition(id = "heldItem", local = @Local(type = ItemStack.class))
-    @Definition(id = "getItem", method = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;")
+    @Definition(id = "heldItem", local = @Local(type = ItemStack.class), remap = true)
+    @Definition(id = "getItem", method = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;", remap = true)
     @Definition(id = "LogisticallyLinkedBlockItem", type = LogisticallyLinkedBlockItem.class)
     @Expression("heldItem.getItem() instanceof LogisticallyLinkedBlockItem")
-    @ModifyExpressionValue(method = "onShortInteract", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = "onShortInteract", at = @At(value = "MIXINEXTRAS:EXPRESSION", remap = true), remap = false)
     private boolean onShortInteract$1(boolean original) {
         var instance = FactoryPanelBehaviour.class.cast(this);
         return original && !(instance instanceof AbstractPanelBehaviour);

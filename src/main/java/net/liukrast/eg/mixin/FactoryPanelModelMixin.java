@@ -10,8 +10,8 @@ import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.data.ModelProperty;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.ModelProperty;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.EnumMap;
 
-@Mixin(FactoryPanelModel.class)
+@Mixin(value = FactoryPanelModel.class, remap = false)
 public class FactoryPanelModelMixin {
     @Unique
     private static final ModelProperty<EnumMap<FactoryPanelBlock.PanelSlot, AbstractPanelBehaviour>> PANEL_MODEL = new ModelProperty<>();

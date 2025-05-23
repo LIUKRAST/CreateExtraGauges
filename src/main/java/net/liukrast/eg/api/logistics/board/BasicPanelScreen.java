@@ -1,6 +1,7 @@
 package net.liukrast.eg.api.logistics.board;
 
 import com.google.common.collect.Lists;
+import com.simibubi.create.AllPackets;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelConfigurationPacket;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelConnectionHandler;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
@@ -9,7 +10,6 @@ import com.simibubi.create.foundation.gui.widget.IconButton;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.gui.element.GuiGameElement;
-import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.eg.ExtraGauges;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -124,6 +124,6 @@ public class BasicPanelScreen extends AbstractSimiScreen {
                 false,
                 sendReset,
                 false);
-        CatnipServices.NETWORK.sendToServer(packet);
+        AllPackets.getChannel().sendToServer(packet);
     }
 }

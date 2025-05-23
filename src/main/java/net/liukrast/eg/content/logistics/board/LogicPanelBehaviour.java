@@ -7,7 +7,6 @@ import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
 import net.liukrast.eg.registry.RegisterPartialModels;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -30,14 +29,14 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
     }
 
     @Override
-    public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyWrite(nbt, registries, clientPacket);
+    public void easyWrite(CompoundTag nbt, boolean clientPacket) {
+        super.easyWrite(nbt, clientPacket);
         nbt.putBoolean("Power", power);
     }
 
     @Override
-    public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyRead(nbt, registries, clientPacket);
+    public void easyRead(CompoundTag nbt, boolean clientPacket) {
+        super.easyRead(nbt, clientPacket);
         power = nbt.getBoolean("Power");
     }
 

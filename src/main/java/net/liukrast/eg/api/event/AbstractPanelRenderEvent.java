@@ -3,7 +3,7 @@ package net.liukrast.eg.api.event;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.neoforged.bus.api.Event;
+import net.minecraftforge.eventbus.api.Event;
 
 public class AbstractPanelRenderEvent extends Event {
     public final AbstractPanelBehaviour behaviour;

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(FactoryPanelConnectionHandler.class)
+@Mixin(value = FactoryPanelConnectionHandler.class, remap = false)
 public class FactoryPanelConnectionHandlerMixin {
     @Inject(
             method = "checkForIssues(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;)Ljava/lang/String;",
@@ -31,7 +31,7 @@ public class FactoryPanelConnectionHandlerMixin {
 
     @ModifyArg(
             method = "panelClicked",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V", remap = true)
     )
     private static Component panelClicked(Component chatComponent, @Local(ordinal = 0, argsOnly = true) FactoryPanelBehaviour panel, @Local(ordinal = 1) FactoryPanelBehaviour at) {
         if(!(panel instanceof AbstractPanelBehaviour) && !(at instanceof AbstractPanelBehaviour)) return chatComponent;

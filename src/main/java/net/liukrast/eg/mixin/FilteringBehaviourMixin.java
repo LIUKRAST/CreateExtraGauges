@@ -5,7 +5,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringB
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(FilteringBehaviour.class)
+@Mixin(value = FilteringBehaviour.class, remap = false)
 public interface FilteringBehaviourMixin {
     @Accessor("slotPositioning")
     void setValueBoxTransform(ValueBoxTransform value);

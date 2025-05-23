@@ -11,7 +11,7 @@ import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(FilteringRenderer.class)
+@Mixin(value = FilteringRenderer.class, remap = false)
 public class FilteringRendererMixin {
 
     @Definition(id = "b", local = @Local(type = BlockEntityBehaviour.class))

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-@Mixin(AllIcons.class)
+@Mixin(value = AllIcons.class, remap = false)
 public interface AllIconsMixin {
 
     @Accessor("iconX") int getIconX();

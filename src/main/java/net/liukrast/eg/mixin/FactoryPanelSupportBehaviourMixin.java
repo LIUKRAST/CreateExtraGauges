@@ -11,7 +11,7 @@ import net.liukrast.eg.api.logistics.board.PanelConnections;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(FactoryPanelSupportBehaviour.class)
+@Mixin(value = FactoryPanelSupportBehaviour.class, remap = false)
 public class FactoryPanelSupportBehaviourMixin {
     @Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class))
     @Definition(id = "satisfied", field = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;satisfied:Z")

@@ -8,10 +8,10 @@ import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
 import net.liukrast.eg.registry.RegisterPartialModels;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 
 import java.util.ArrayList;
@@ -25,18 +25,18 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
         builder.put(PanelConnections.INTEGER, () -> count);
-        builder.put(PanelConnections.REDSTONE, () -> Math.clamp(count, 0, 15));
+        builder.put(PanelConnections.REDSTONE, () -> Mth.clamp(count, 0, 15));
     }
 
     @Override
-    public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyWrite(nbt, registries, clientPacket);
+    public void easyWrite(CompoundTag nbt, boolean clientPacket) {
+        super.easyWrite(nbt, clientPacket);
         nbt.putInt("Count", count);
     }
 
     @Override
-    public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyRead(nbt, registries, clientPacket);
+    public void easyRead(CompoundTag nbt, boolean clientPacket) {
+        super.easyRead(nbt, clientPacket);
         count = nbt.getInt("Count");
     }
 

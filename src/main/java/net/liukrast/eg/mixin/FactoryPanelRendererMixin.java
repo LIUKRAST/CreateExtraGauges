@@ -12,12 +12,12 @@ import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelConnection;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.neoforged.neoforge.common.NeoForge;
+import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Mixin(FactoryPanelRenderer.class)
+@Mixin(value = FactoryPanelRenderer.class, remap = false)
 public class FactoryPanelRendererMixin {
 
     @ModifyExpressionValue(
@@ -27,7 +27,7 @@ public class FactoryPanelRendererMixin {
         if (behaviour instanceof AbstractPanelBehaviour abstractPanel) {
             ms.pushPose();
 
-            NeoForge.EVENT_BUS.post(new AbstractPanelRenderEvent(abstractPanel, partialTicks, ms, buffer, light, overlay));
+            MinecraftForge.EVENT_BUS.post(new AbstractPanelRenderEvent(abstractPanel, partialTicks, ms, buffer, light, overlay));
             ms.popPose();
             return abstractPanel.shouldRenderBulb() ? 1 : 0;
         } else return original;

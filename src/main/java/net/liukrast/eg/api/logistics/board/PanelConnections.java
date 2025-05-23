@@ -4,7 +4,7 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.common.NeoForge;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +54,6 @@ public class PanelConnections {
         FACTORY_CONNECTIONS.put(FILTER, FilteringBehaviour::getFilter);
         FACTORY_CONNECTIONS.put(INTEGER, FactoryPanelBehaviour::getLevelInStorage);
         FACTORY_CONNECTIONS.put(REDSTONE, b -> b.satisfied && b.count != 0 ? 15 : 0);
-        NeoForge.EVENT_BUS.post(new AddFactoryConnectionEvent());
+        MinecraftForge.EVENT_BUS.post(new AddFactoryConnectionEvent());
     }
 }

@@ -47,22 +47,16 @@ public class IntGaugeScene {
                 .pointAt(link2_1.getCenter().add(-0.25f, 0.25f,0));
         scene.idle(50);
 
-        scene.world().modifyBlockEntityNBT(util.select().position(lever1), AnalogLeverBlockEntity.class, nbt -> {
-            nbt.putInt("State", 7);
-        });
+        scene.world().modifyBlockEntityNBT(util.select().position(lever1), AnalogLeverBlockEntity.class, nbt -> nbt.putInt("State", 7));
         scene.effects().indicateRedstone(lever1);
         scene.world().toggleRedstonePower(util.select().position(link1_1));
         scene.world().toggleRedstonePower(util.select().position(link1_2));
-        scene.world().modifyBlockEntityNBT(util.select().position(nixie1), NixieTubeBlockEntity.class, nbt -> {
-            nbt.putInt("RedstoneStrength", 7);
-        });
+        scene.world().modifyBlockEntityNBT(util.select().position(nixie1), NixieTubeBlockEntity.class, nbt -> nbt.putInt("RedstoneStrength", 7));
         scene.world().toggleRedstonePower(util.select().position(lever2));
         scene.effects().indicateRedstone(lever2);
         scene.world().toggleRedstonePower(util.select().position(link2_1));
         scene.world().toggleRedstonePower(util.select().position(link2_2));
-        scene.world().modifyBlockEntityNBT(util.select().position(nixie2), NixieTubeBlockEntity.class, nbt -> {
-            nbt.putInt("RedstoneStrength", 15);
-        });
+        scene.world().modifyBlockEntityNBT(util.select().position(nixie2), NixieTubeBlockEntity.class, nbt -> nbt.putInt("RedstoneStrength", 15));
 
         builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(7));
         builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(7));
@@ -82,7 +76,7 @@ public class IntGaugeScene {
         scene.world().modifyBlockEntityNBT(util.select().position(nixie3), NixieTubeBlockEntity.class, nbt -> {
             Component text = Component.literal("21");
             nbt.putString("RawCustomText", text.getString());
-            nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
+            nbt.putString("CustomText", Component.Serializer.toJson(text));
         });
 
         scene.overlay()
@@ -142,7 +136,7 @@ public class IntGaugeScene {
         scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
             Component text = Component.literal("96");
             nbt.putString("RawCustomText", text.getString());
-            nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
+            nbt.putString("CustomText", Component.Serializer.toJson(text));
         });
 
         scene.overlay()
@@ -162,7 +156,7 @@ public class IntGaugeScene {
         scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
             Component text = Component.literal("97");
             nbt.putString("RawCustomText", text.getString());
-            nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
+            nbt.putString("CustomText", Component.Serializer.toJson(text));
         });
     }
 }

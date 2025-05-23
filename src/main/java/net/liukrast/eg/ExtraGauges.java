@@ -1,6 +1,5 @@
 package net.liukrast.eg;
 
-import com.simibubi.create.AllCreativeModeTabs;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.api.event.AbstractPanelRenderEvent;
@@ -12,15 +11,15 @@ import net.liukrast.eg.registry.RegisterPartialModels;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.registries.NewRegistryEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.NewRegistryEvent;
+import net.minecraftforge.registries.RegistryBuilder;
 
 @Mod(ExtraGauges.MOD_ID)
 public class ExtraGauges {
@@ -30,22 +29,23 @@ public class ExtraGauges {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
-    public ExtraGauges(IEventBus modEventBus) {
+    public ExtraGauges() {
+        @SuppressWarnings("removal") var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         RegisterItems.register(modEventBus);
         RegisterPanels.register(modEventBus);
         RegisterCreativeModeTabs.register(modEventBus);
         modEventBus.register(this);
-        NeoForge.EVENT_BUS.addListener(this::abstractPanelRender);
+        MinecraftForge.EVENT_BUS.addListener(this::abstractPanelRender);
     }
 
     @SubscribeEvent
-    private void fMLClientSetup(FMLClientSetupEvent event) {
+    public void fMLClientSetup(FMLClientSetupEvent event) {
         RegisterPartialModels.init();
         PonderIndex.addPlugin(new ExtraGaugesPonderPlugin());
     }
 
     @SubscribeEvent
-    private void gatherData(GatherDataEvent event) {
+    public void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper helper = event.getExistingFileHelper();
@@ -53,11 +53,11 @@ public class ExtraGauges {
     }
 
     @SubscribeEvent
-    private void newRegistry(NewRegistryEvent event) {
-        event.register(GaugeRegistry.PANEL_REGISTRY);
+    public void newRegistry(NewRegistryEvent event) {
+        GaugeRegistry.PANEL_REGISTRY = event.create(RegistryBuilder.of(ExtraGauges.id("panels"))); //TODO: Is this correct?
     }
 
-    //Using NeoForge event bus
+    //Using Forge event bus
     public void abstractPanelRender(AbstractPanelRenderEvent event) {
         var ms = event.poseStack;
         var buffer = event.bufferSource;

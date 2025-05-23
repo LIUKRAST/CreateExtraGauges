@@ -4,7 +4,6 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.registry.PanelType;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -45,15 +44,15 @@ public abstract class ScrollPanelBehaviour extends AbstractPanelBehaviour {
     }
 
     @Override
-    public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
+    public void easyWrite(CompoundTag nbt, boolean clientPacket) {
         nbt.putInt("ScrollValue", value);
-        super.easyWrite(nbt, registries, clientPacket);
+        super.easyWrite(nbt, clientPacket);
     }
 
     @Override
-    public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
+    public void easyRead(CompoundTag nbt, boolean clientPacket) {
         value = nbt.contains("ScrollValue") ? nbt.getInt("ScrollValue") : 0;
-        super.easyRead(nbt, registries, clientPacket);
+        super.easyRead(nbt, clientPacket);
     }
 
     public void setValue(int value) {

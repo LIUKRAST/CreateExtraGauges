@@ -1,10 +1,10 @@
 package net.liukrast.eg.content.logistics.board;
 
 import com.simibubi.create.AllKeys;
+import com.simibubi.create.AllPackets;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsPacket;
 import com.simibubi.create.foundation.gui.widget.IconButton;
 import com.simibubi.create.foundation.utility.CreateLang;
-import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.api.logistics.board.BasicPanelScreen;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
@@ -48,7 +48,7 @@ public class ComparatorPanelScreen extends BasicPanelScreen {
     }
 
     private void activateButton(int i) {
-        CatnipServices.NETWORK
+        AllPackets.getChannel()
                 .sendToServer(
                         new ValueSettingsPacket(
                                 behaviour.blockEntity.getBlockPos(),

@@ -6,7 +6,6 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntit
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -21,13 +20,13 @@ import java.util.Objects;
 
 import static com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock.PanelSlot;
 
-@Mixin(FactoryPanelBlockEntity.class)
+@Mixin(value = FactoryPanelBlockEntity.class, remap = false)
 public abstract class FactoryPanelBlockEntityMixin {
 
     @Shadow public EnumMap<PanelSlot, FactoryPanelBehaviour> panels;
 
     @Inject(method = "read", at = @At("HEAD"))
-    private void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci) {
+    private void read(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
         var instance = FactoryPanelBlockEntity.class.cast(this);
         for(PanelSlot slot : PanelSlot.values()) {
             String key = CreateLang.asId(slot.name());
@@ -36,7 +35,7 @@ public abstract class FactoryPanelBlockEntityMixin {
                 var customPanels = tag.getCompound("CustomPanels");
                 if(customPanels.contains(key)) {
                     ResourceLocation id = ResourceLocation.parse(customPanels.getString(key));
-                    var type = Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.get(id));
+                    var type = Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.get().getValue(id));
                     if(type.asClass().equals(panels.get(slot).getClass())) continue; //No need to re-create the behavior
                     behaviour = type.create(instance, slot);
                 }

@@ -70,7 +70,7 @@ public class CounterGaugeScene {
         scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
             Component text = Component.literal("1");
             nbt.putString("RawCustomText", text.getString());
-            nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
+            nbt.putString("CustomText", Component.Serializer.toJson(text));
         });
         scene.idle(20);
 
@@ -114,7 +114,7 @@ public class CounterGaugeScene {
         scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
             Component text = Component.literal("2");
             nbt.putString("RawCustomText", text.getString());
-            nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
+            nbt.putString("CustomText", Component.Serializer.toJson(text));
         });
         scene.idle(20);
 
@@ -136,7 +136,7 @@ public class CounterGaugeScene {
         scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
             Component text = Component.literal("3");
             nbt.putString("RawCustomText", text.getString());
-            nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
+            nbt.putString("CustomText", Component.Serializer.toJson(text));
         });
         scene.idle(20);
 
@@ -182,7 +182,7 @@ public class CounterGaugeScene {
         scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
             Component text = Component.literal("0");
             nbt.putString("RawCustomText", text.getString());
-            nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
+            nbt.putString("CustomText", Component.Serializer.toJson(text));
         });
         scene.world().toggleRedstonePower(util.select().fromTo(1,2, 1, 1, 2, 3));
         scene.idle(20);

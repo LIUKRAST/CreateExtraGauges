@@ -14,7 +14,6 @@ import net.liukrast.eg.registry.RegisterItems;
 import net.liukrast.eg.registry.RegisterPartialModels;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -22,8 +21,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     int comparatorMode = 0;
@@ -63,15 +62,15 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     }
 
     @Override
-    public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyWrite(nbt, registries, clientPacket);
+    public void easyWrite(CompoundTag nbt, boolean clientPacket) {
+        super.easyWrite(nbt, clientPacket);
         nbt.putInt("ComparatorMode", comparatorMode);
         nbt.putBoolean("Power", power);
     }
 
     @Override
-    public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyRead(nbt, registries, clientPacket);
+    public void easyRead(CompoundTag nbt, boolean clientPacket) {
+        super.easyRead(nbt, clientPacket);
         comparatorMode = nbt.getInt("ComparatorMode");
         power = nbt.getBoolean("Power");
     }

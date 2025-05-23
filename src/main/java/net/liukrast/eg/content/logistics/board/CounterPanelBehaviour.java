@@ -11,7 +11,6 @@ import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
 import net.liukrast.eg.registry.RegisterPartialModels;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -43,15 +42,15 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     }
 
     @Override
-    public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyWrite(nbt, registries, clientPacket);
+    public void easyWrite(CompoundTag nbt, boolean clientPacket) {
+        super.easyWrite(nbt, clientPacket);
         nbt.putInt("Count", count);
         nbt.putBoolean("Power", power);
     }
 
     @Override
-    public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyRead(nbt, registries, clientPacket);
+    public void easyRead(CompoundTag nbt, boolean clientPacket) {
+        super.easyRead(nbt, clientPacket);
         count = nbt.getInt("Count");
         power = nbt.getBoolean("Power");
     }
@@ -64,7 +63,7 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
 
     @Override
     public Item getItem() {
-        return RegisterItems.COUNTER_GAUGE.asItem();
+        return RegisterItems.COUNTER_GAUGE.get();
     }
 
     @Override

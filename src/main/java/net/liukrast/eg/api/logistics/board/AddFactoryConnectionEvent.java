@@ -1,7 +1,7 @@
 package net.liukrast.eg.api.logistics.board;
 
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
-import net.neoforged.bus.api.Event;
+import net.minecraftforge.eventbus.api.Event;
 
 import java.util.function.Function;
 

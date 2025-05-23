@@ -1,21 +1,18 @@
 package net.liukrast.eg.api.logistics.board;
 
-import com.mojang.serialization.Codec;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.utility.CreateLang;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
-import net.createmod.catnip.codecs.CatnipCodecUtils;
-import net.createmod.catnip.codecs.CatnipCodecs;
 import net.createmod.catnip.data.IntAttached;
 import net.createmod.catnip.gui.ScreenOpener;
+import net.createmod.catnip.nbt.NBTHelper;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.mixin.FactoryPanelBehaviourIMixin;
 import net.liukrast.eg.mixin.FilteringBehaviourMixin;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -24,8 +21,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -124,16 +121,16 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     public abstract PartialModel getModel(FactoryPanelBlock.PanelState panelState, FactoryPanelBlock.PanelType panelType);
 
     /**
-     * An easier extension of {@link AbstractPanelBehaviour#write(CompoundTag, HolderLookup.Provider, boolean)}.
+     * An easier extension of {@link AbstractPanelBehaviour#write(CompoundTag, boolean)}.
      * @param nbt The compound tag of the single gauge slot. Save your data into this
      * */
-    public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {}
+    public void easyWrite(CompoundTag nbt, boolean clientPacket) {}
 
     /**
-     * An easier extension of {@link AbstractPanelBehaviour#read(CompoundTag, HolderLookup.Provider, boolean)}.
+     * An easier extension of {@link AbstractPanelBehaviour#read(CompoundTag, boolean)}.
      * @param nbt The compound tag of the single gauge slot. Read your data from this slot
      * */
-    public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {}
+    public void easyRead(CompoundTag nbt, boolean clientPacket) {}
 
     /**
      * Used for abstract panels which have both {@link PanelConnections#FILTER} & {@link PanelConnections#REDSTONE}.
@@ -176,22 +173,22 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     }
 
     @Override
-    public void read(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
+    public void read(CompoundTag nbt, boolean clientPacket) {
         //TODO: Should we avoid calling super?
-        super.read(nbt, registries, clientPacket);
+        super.read(nbt, clientPacket);
         CompoundTag panelTag = nbt.getCompound(CreateLang.asId(slot.name()));
         if (panelTag.isEmpty()) {
             active = false;
             return;
         }
-        easyRead(panelTag, registries, clientPacket);
+        easyRead(panelTag, clientPacket);
     }
 
     @Override
-    public void write(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.write(nbt, registries, clientPacket);
+    public void write(CompoundTag nbt, boolean clientPacket) {
+        super.write(nbt, clientPacket);
         CompoundTag special = nbt.contains("CustomPanels") ? nbt.getCompound("CustomPanels") : new CompoundTag();
-        special.putString(CreateLang.asId(slot.name()), Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.getKey(type)).toString());
+        special.putString(CreateLang.asId(slot.name()), Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.get().getKey(type)).toString());
         nbt.put("CustomPanels", special);
         //We avoid adding some data that is pointless in a generic gauge.
         // You can re-add it in your custom write method though
@@ -204,11 +201,12 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         panelTag.putBoolean("Satisfied", satisfied);
         panelTag.putBoolean("PromisedSatisfied", promisedSatisfied);
         panelTag.putBoolean("RedstonePowered", redstonePowered);
-        panelTag.put("Targeting", CatnipCodecUtils.encode(CatnipCodecs.set(FactoryPanelPosition.CODEC), targeting).orElseThrow());
-        panelTag.put("TargetedBy", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(targetedBy.values())).orElseThrow());
-        panelTag.put("TargetedByLinks", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(targetedByLinks.values())).orElseThrow());
+        panelTag.put("Targeting", NBTHelper.writeCompoundList(targeting, FactoryPanelPosition::write));
+        panelTag.put("TargetedBy", NBTHelper.writeCompoundList(targetedBy.values(), FactoryPanelConnection::write));
+        panelTag.put("TargetedByLinks",
+                NBTHelper.writeCompoundList(targetedByLinks.values(), FactoryPanelConnection::write));
 
-        easyWrite(panelTag, registries, clientPacket);
+        easyWrite(panelTag, clientPacket);
 
         nbt.put(CreateLang.asId(slot.name()), panelTag);
     }
