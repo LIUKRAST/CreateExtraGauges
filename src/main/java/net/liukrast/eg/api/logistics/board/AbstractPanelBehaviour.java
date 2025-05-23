@@ -99,10 +99,10 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     }
 
     /**
-     * @return Whether the block entity should render its bulb
+     * @return Whether the panel should render its bulb
      * */
     public boolean shouldRenderBulb() {
-        return true;
+        return false;
     }
 
     /**
