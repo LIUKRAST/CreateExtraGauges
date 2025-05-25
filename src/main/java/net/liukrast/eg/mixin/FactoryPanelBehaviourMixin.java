@@ -27,10 +27,6 @@ import java.util.Map;
 @Mixin(FactoryPanelBehaviour.class)
 public abstract class FactoryPanelBehaviourMixin {
 
-    protected FactoryPanelBehaviourMixin(int timer) {
-        this.timer = timer;
-    }
-
     @Shadow
     @Nullable
     public static FactoryPanelBehaviour at(BlockAndTintGetter world, FactoryPanelConnection connection) {
@@ -40,7 +36,6 @@ public abstract class FactoryPanelBehaviourMixin {
 
     @Shadow public Map<FactoryPanelPosition, FactoryPanelConnection> targetedBy;
     @Shadow public boolean active;
-    @Shadow private int timer;
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;tick()V", shift = At.Shift.AFTER), cancellable = true)
     private void tick(CallbackInfo ci) {
