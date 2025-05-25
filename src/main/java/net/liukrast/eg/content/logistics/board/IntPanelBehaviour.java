@@ -18,7 +18,7 @@ import java.util.List;
 
 public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMode> {
     public IntPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super("create.logistics.int_operation", type, be, slot, IntOperationMode.class);
+        super(Component.translatable("create.logistics.int_operation"), type, be, slot, IntOperationMode.class);
     }
 
     @Override

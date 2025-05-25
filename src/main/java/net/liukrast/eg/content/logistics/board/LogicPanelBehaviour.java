@@ -19,7 +19,7 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
     public boolean power;
 
     public LogicPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super("create.logistics.logic_gate", type, be, slot, LogicalMode.class);
+        super(Component.translatable("create.logistics.logic_gate"), type, be, slot, LogicalMode.class);
 
     }
 
