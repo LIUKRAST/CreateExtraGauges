@@ -95,9 +95,16 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
 
     @Override
     public MutableComponent getDisplayLinkComponent(boolean shortened) {
-        //TODO: Use shortened mode to format numbers
-        // Per francy: qui sotto fai che ritorna text = shortened ? [testo corto] : [testo lungo]
-        String text = String.valueOf(getConnectionValue(PanelConnections.INTEGER).orElse(0));
+        int n = getConnectionValue(PanelConnections.INTEGER).orElse(0);
+        String text = shortened ? formatNumber(n) : String.valueOf(n);
         return Component.literal(text);
+    }
+
+    private static String formatNumber(int number){
+        boolean negative = number < 0;
+        number = Math.abs(number);
+        if (number >= 1000000) return (negative ? "-":"") + String.format("%.1fM", number / 1000000f);
+        if (number >=1000) return (negative ? "-":"") + String.format("%.1fK", number / 1000f);
+        return (negative ? "-":"") + number;
     }
 }
