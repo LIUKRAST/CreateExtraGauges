@@ -11,7 +11,6 @@ public abstract class NumericalScrollPanelBehaviour extends ScrollPanelBehaviour
     public NumericalScrollPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(Component.translatable("create.logistics.comparator_gate"), type, be, slot);
         withFormatter(String::valueOf);
-
     }
 
     @Override
