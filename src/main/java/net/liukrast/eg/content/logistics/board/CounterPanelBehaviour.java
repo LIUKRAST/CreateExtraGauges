@@ -21,7 +21,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     private boolean power;
     public CounterPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super(type, be, slot);
+        super(Component.translatable("create.logistics.counter_threshold"), type, be, slot);
         between(0, 256);
     }
 

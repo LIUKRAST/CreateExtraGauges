@@ -39,7 +39,7 @@ public class ScrollPanelRenderer {
             return;
 
         for (BlockEntityBehaviour blockEntityBehaviour : sbe.getAllBehaviours()) {
-            if (!(blockEntityBehaviour instanceof ScrollOptionPanelBehaviour<?> behaviour))
+            if (!(blockEntityBehaviour instanceof ScrollPanelBehaviour behaviour))
                 continue;
 
             if (!behaviour.isActive()) {
@@ -66,13 +66,16 @@ public class ScrollPanelRenderer {
         }
     }
 
-    protected static void addBox(BlockPos pos, Direction face, ScrollOptionPanelBehaviour<?> behaviour,
+    protected static void addBox(BlockPos pos, Direction face, ScrollPanelBehaviour behaviour,
                                  boolean highlight) {
         AABB bb = new AABB(Vec3.ZERO, Vec3.ZERO).inflate(.5f)
                 .contract(0, 0, -.5f)
                 .move(0, 0, -.125f);
         Component label = behaviour.label;
-        ValueBox box = new ValueBox.IconValueBox(label, behaviour.getIconForSelected(), bb, pos);
+        ValueBox box;
+        if (behaviour instanceof ScrollOptionPanelBehaviour) {
+            box = new ValueBox.IconValueBox(label, ((ScrollOptionPanelBehaviour<?>) behaviour).getIconForSelected(), bb, pos);
+        } else box = new ValueBox.TextValueBox(label, bb, pos, Component.literal(behaviour.formatValue()));
 
         box.passive(!highlight)
                 .wideOutline();

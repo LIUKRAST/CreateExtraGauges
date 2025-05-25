@@ -8,8 +8,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
 public abstract class NumericalScrollPanelBehaviour extends ScrollPanelBehaviour {
-    public NumericalScrollPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super(Component.translatable("create.logistics.comparator_gate"), type, be, slot);
+    public NumericalScrollPanelBehaviour(Component label, PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
+        super(label, type, be, slot);
         withFormatter(String::valueOf);
     }
 

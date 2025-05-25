@@ -30,7 +30,7 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     public boolean power = false;
 
     public ComparatorPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super(type, be, slot);
+        super(Component.translatable("create.logistics.comparator_value"), type, be, slot);
         between(-256, 256);
     }
 
