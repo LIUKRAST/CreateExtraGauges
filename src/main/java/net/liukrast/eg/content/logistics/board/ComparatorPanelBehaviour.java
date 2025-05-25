@@ -6,7 +6,6 @@ import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.createmod.catnip.data.IntAttached;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
@@ -29,7 +28,7 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     public boolean power = false;
 
     public ComparatorPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super(type, be, slot);
+        super(Component.translatable("create.logistics.comparator_value"), type, be, slot);
         between(-256, 256);
     }
 
@@ -133,9 +132,15 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     }
 
     @Override
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
+    public MutableComponent getDisplayLinkComponent(boolean shortened) {
         boolean active = getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
-        return IntAttached.with(active ? 1 : 0, Component.literal(active ? "✔ True" : "✖ False"));
+        String t = "✔";
+        String f = "✖";
+        if(!shortened) {
+            t += " True";
+            f += " False";
+        }
+        return Component.literal(active ? t : f);
     }
 
     @OnlyIn(Dist.CLIENT)

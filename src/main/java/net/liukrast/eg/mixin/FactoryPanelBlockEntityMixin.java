@@ -54,12 +54,4 @@ public abstract class FactoryPanelBlockEntityMixin {
             Block.popResource(Objects.requireNonNull(instance.getLevel()), instance.getBlockPos(), panel instanceof AbstractPanelBehaviour ab ? ab.getItem().getDefaultInstance() : AllBlocks.FACTORY_GAUGE.asStack());
         }
     }
-
-    /*
-    @Definition(id = "panelCount", local = @Local(type = int.class))
-    @Expression("panelCount > 1")
-    @ModifyExpressionValue(method = "destroy", at = @At("MIXINEXTRAS:EXPRESSION"))
-    private boolean destroy(boolean original) {
-        return false;
-    }*/
 }

@@ -14,8 +14,8 @@ import net.minecraft.world.phys.BlockHitResult;
 public abstract class ScrollOptionPanelBehaviour<E extends Enum<E> & INamedIconOptions> extends ScrollPanelBehaviour {
     private final E[] options;
 
-    public ScrollOptionPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot, Class<E> enum_) {
-        super(Component.translatable("create.logistics.logic_gate"), type, be, slot);
+    public ScrollOptionPanelBehaviour(Component label, PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot, Class<E> enum_) {
+        super(label, type, be, slot);
         options = enum_.getEnumConstants();
         between(0, options.length - 1);
     }

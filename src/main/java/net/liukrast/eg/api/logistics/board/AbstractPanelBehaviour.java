@@ -5,7 +5,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.utility.CreateLang;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
-import net.createmod.catnip.data.IntAttached;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.liukrast.eg.api.GaugeRegistry;
@@ -30,7 +29,7 @@ import java.util.function.Supplier;
 
 /**
  * <h1>Abstract Panel Behaviour</h1>
- * Allows to create custom panel behaviors<br>
+ * Allows creating custom panel behaviors<br>
  * */
 public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     private final PanelType<?> type;
@@ -74,8 +73,8 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     /**
      * @return The component for display links
      * */
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
-        return IntAttached.withZero(Component.empty());
+    public MutableComponent getDisplayLinkComponent(boolean shortenNumbers) {
+        return Component.empty();
     }
 
     public Map<PanelConnection<?>, Supplier<?>> getConnections() {
@@ -96,7 +95,7 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     }
 
     /**
-     * @return Whether the block entity should render its bulb
+     * @return Whether the panel should render its bulb
      * */
     public boolean shouldRenderBulb() {
         return true;
@@ -174,7 +173,6 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
 
     @Override
     public void read(CompoundTag nbt, boolean clientPacket) {
-        //TODO: Should we avoid calling super?
         super.read(nbt, clientPacket);
         CompoundTag panelTag = nbt.getCompound(CreateLang.asId(slot.name()));
         if (panelTag.isEmpty()) {

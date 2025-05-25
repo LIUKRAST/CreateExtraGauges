@@ -110,7 +110,7 @@ public class BasicPanelScreen extends AbstractSimiScreen {
         super.removed();
     }
 
-    //TODO: Add connection removal option?
+    // Add connection removal option?
     private void sendIt(@SuppressWarnings("SameParameterValue") @Nullable FactoryPanelPosition toRemove) {
         FactoryPanelPosition pos = behaviour.getPanelPosition();
         FactoryPanelConfigurationPacket packet = new FactoryPanelConfigurationPacket(

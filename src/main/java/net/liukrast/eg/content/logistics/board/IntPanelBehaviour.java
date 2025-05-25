@@ -3,7 +3,6 @@ package net.liukrast.eg.content.logistics.board;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.createmod.catnip.data.IntAttached;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMode> {
     public IntPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super(type, be, slot, IntOperationMode.class);
+        super(Component.translatable("create.logistics.int_operation"), type, be, slot, IntOperationMode.class);
     }
 
     @Override
@@ -82,21 +81,22 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
 
         count = result;
         blockEntity.notifyUpdate();
-        /*
-        for(FactoryPanelPosition panelPos : targeting) {
-            if(!getWorld().isLoaded(panelPos.pos()))
-                return;
-            FactoryPanelBehaviour behaviour = FactoryPanelBehaviour.at(getWorld(), panelPos);
-            if(behaviour == null) continue;
-            behaviour.checkForRedstoneInput();
-        } TODO: Update instantly?
-        */
         notifyRedstoneOutputs();
     }
 
     @Override
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
-        int count = getConnectionValue(PanelConnections.INTEGER).orElse(0);
-        return IntAttached.with(count, Component.empty());
+    public MutableComponent getDisplayLinkComponent(boolean shortened) {
+        int n = getConnectionValue(PanelConnections.INTEGER).orElse(0);
+        String text = shortened ? formatNumber(n) : String.valueOf(n);
+
+        return Component.literal(text);
+    }
+
+    private static String formatNumber(int number){
+        boolean negative = number < 0;
+        number = Math.abs(number);
+        if (number >= 1000000) return (negative ? "-":"") + String.format("%.1fM", number / 1000000f);
+        if (number >=1000) return (negative ? "-":"") + String.format("%.1fK", number / 1000f);
+        return (negative ? "-":"") + number;
     }
 }

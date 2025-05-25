@@ -19,7 +19,7 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
     public boolean power;
 
     public LogicPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super(type, be, slot, LogicalMode.class);
+        super(Component.translatable("create.logistics.logic_gate"), type, be, slot, LogicalMode.class);
 
     }
 
@@ -78,21 +78,18 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
             return;
         power = shouldPower;
         blockEntity.notifyUpdate();
-        /*for(FactoryPanelPosition panelPos : targeting) {
-            if(!getWorld().isLoaded(panelPos.pos()))
-                return;
-            FactoryPanelBehaviour behaviour = FactoryPanelBehaviour.at(getWorld(), panelPos);
-            if(behaviour == null) continue;
-            behaviour.checkForRedstoneInput();
-        } TODO: Update instantly?
-
-        */
         notifyRedstoneOutputs();
     }
 
     @Override
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
+    public MutableComponent getDisplayLinkComponent(boolean shortened) {
         boolean active = getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
-        return IntAttached.with(active ? 1 : 0, Component.literal(active ? "✔ True" : "✖ False"));
+        String t = "✔";
+        String f = "✖";
+        if(!shortened) {
+            t += " True";
+            f += " False";
+        }
+        return Component.literal(active ? t : f);
     }
 }

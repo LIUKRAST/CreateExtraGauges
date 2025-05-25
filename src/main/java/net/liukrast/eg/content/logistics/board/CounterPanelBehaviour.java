@@ -21,7 +21,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     private boolean power;
     public CounterPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
-        super(type, be, slot);
+        super(Component.translatable("create.logistics.counter_threshold"), type, be, slot);
         between(0, 256);
     }
 
@@ -100,19 +100,11 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
             else count++;
         }
         blockEntity.notifyUpdate();
-        /*for(FactoryPanelPosition panelPos : targeting) {
-            if(!getWorld().isLoaded(panelPos.pos()))
-                return;
-            FactoryPanelBehaviour behaviour = FactoryPanelBehaviour.at(getWorld(), panelPos);
-            if(behaviour == null) continue;
-            behaviour.checkForRedstoneInput();
-        } TODO: Update instantly?
-        */
         notifyRedstoneOutputs();
     }
 
     @Override
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
-        return IntAttached.with(count, Component.literal("/" + value));
+    public MutableComponent getDisplayLinkComponent(boolean shortened) {
+        return Component.literal(shortened ? String.valueOf(count) : count + "/" + value);
     }
 }
