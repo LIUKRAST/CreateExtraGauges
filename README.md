@@ -47,6 +47,6 @@ It also adds a custom API which allows mod developers to make their own gauges
 **Thanks to Propants05 for the initial mod idea, and Professaurus for supporting the project through donations.**
 <p align="center">
 <a href="https://discord.gg/pvn8zg9bNY"><img src="http://play.liukrast.net/discord.png" onmouseover="this.src='http://play.liukrast.net/discord_hovered.png'" onmouseout="this.src='http://play.liukrast.net/discord.png'" width="160" style="image-rendering: pixelated"/></a>
-<a href="https://github.com/Creators-of-Create/Create/issues"><img src="http://play.liukrast.net/modrinth.png" onmouseover="this.src='http://play.liukrast.net/modrinth_hovered.png'" onmouseout="this.src='http://play.liukrast.net/modrinth.png'" width="160" style="image-rendering: pixelated"/></a>
-<a href="https://www.youtube.com/channel/UCrKV2QTuyGcv4E3eSJpBiYA/playlists"><img src="http://play.liukrast.net/curseforge.png" onmouseover="this.src='http://play.liukrast.net/curseforge_hovered.png'" onmouseout="this.src='http://play.liukrast.net/curseforge.png'" width="160" style="image-rendering: pixelated"/></a>
+<a href="https://modrinth.com/mod/extra-gauges"><img src="http://play.liukrast.net/modrinth.png" onmouseover="this.src='http://play.liukrast.net/modrinth_hovered.png'" onmouseout="this.src='http://play.liukrast.net/modrinth.png'" width="160" style="image-rendering: pixelated"/></a>
+<a href="https://www.curseforge.com/minecraft/mc-mods/create-extra-gauges"><img src="http://play.liukrast.net/curseforge.png" onmouseover="this.src='http://play.liukrast.net/curseforge_hovered.png'" onmouseout="this.src='http://play.liukrast.net/curseforge.png'" width="160" style="image-rendering: pixelated"/></a>
 </p>
