@@ -72,7 +72,7 @@ public abstract class FactoryPanelBehaviourMixin {
         return (!(instance instanceof AbstractPanelBehaviour ab) || ab.hasConnection(PanelConnections.FILTER)) ? 1 : 0;
     }
 
-    @ModifyVariable(method = "checkForRedstoneInput", at = @At("STORE"))
+    @ModifyVariable(method = "checkForRedstoneInput", at = @At("STORE"), remap = false)
     private boolean checkForRedstoneInput(boolean shouldPower, @Cancellable CallbackInfo ci) {
         var i = FactoryPanelBehaviour.class.cast(this);
         for(FactoryPanelConnection connection : targetedBy.values()) {
