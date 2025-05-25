@@ -177,7 +177,6 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
 
     @Override
     public void read(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        //TODO: Should we avoid calling super?
         super.read(nbt, registries, clientPacket);
         CompoundTag panelTag = nbt.getCompound(CreateLang.asId(slot.name()));
         if (panelTag.isEmpty()) {
