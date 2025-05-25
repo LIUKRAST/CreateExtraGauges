@@ -43,6 +43,18 @@ It also adds a custom API which allows mod developers to make their own gauges
 > Once the threshold is reached, redstone output will be sent.
 > Another redstone pulse will reset the counter to 0.
 
+## Contributing
+
+Forking and contributing to the mod are welcomed, though i would ask for some things:
+- Each commit should explain what was changed 
+- Commits should not include any change in the mod description, authors, or any of the mods toml properties except special cases
+
+## Depending on the mod
+I'm currently working on my first maven, so see you soon :)
+
+
+## Installation
+You can install the mod from the 3rd party sites you find below (curseforge/modrinth) 
 
 **Thanks to Propants05 for the initial mod idea, and Professaurus for supporting the project through donations.**
 <p align="center">
