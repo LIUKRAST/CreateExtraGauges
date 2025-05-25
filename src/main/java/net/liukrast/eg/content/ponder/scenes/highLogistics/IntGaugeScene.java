@@ -80,7 +80,7 @@ public class IntGaugeScene {
 
         scene.world().flashDisplayLink(outLink);
         scene.world().modifyBlockEntityNBT(util.select().position(nixie3), NixieTubeBlockEntity.class, nbt -> {
-            Component text = Component.literal("21");
+            Component text = Component.literal("22");
             nbt.putString("RawCustomText", text.getString());
             nbt.putString("CustomText", Component.Serializer.toJson(text, scene.world().getHolderLookupProvider()));
         });
