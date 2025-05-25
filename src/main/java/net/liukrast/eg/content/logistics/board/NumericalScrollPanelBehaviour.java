@@ -15,7 +15,7 @@ public abstract class NumericalScrollPanelBehaviour extends ScrollPanelBehaviour
 
     @Override
     public ValueSettings getValueSettings() {
-        return new ValueSettings(value < 0 ? 0 : 1, value);
+        return new ValueSettings(value < 0 ? 1 : 0, Math.abs(value));
     }
 
     public MutableComponent formatSettings(ValueSettings settings) {
