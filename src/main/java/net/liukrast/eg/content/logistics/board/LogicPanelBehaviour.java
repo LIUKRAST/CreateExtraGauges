@@ -2,7 +2,6 @@ package net.liukrast.eg.content.logistics.board;
 
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.createmod.catnip.data.IntAttached;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
@@ -92,8 +91,14 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
     }
 
     @Override
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
+    public MutableComponent getDisplayLinkComponent(boolean shortened) {
         boolean active = getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
-        return IntAttached.with(active ? 1 : 0, Component.literal(active ? "✔ True" : "✖ False"));
+        String t = "✔";
+        String f = "✖";
+        if(!shortened) {
+            t += " True";
+            f += " False";
+        }
+        return Component.literal(active ? t : f);
     }
 }

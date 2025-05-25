@@ -134,9 +134,15 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     }
 
     @Override
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
+    public MutableComponent getDisplayLinkComponent(boolean shortened) {
         boolean active = getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
-        return IntAttached.with(active ? 1 : 0, Component.literal(active ? "✔ True" : "✖ False"));
+        String t = "✔";
+        String f = "✖";
+        if(!shortened) {
+            t += " True";
+            f += " False";
+        }
+        return Component.literal(active ? t : f);
     }
 
     @OnlyIn(Dist.CLIENT)

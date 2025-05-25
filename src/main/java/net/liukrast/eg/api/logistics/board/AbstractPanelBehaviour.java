@@ -8,7 +8,6 @@ import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.createmod.catnip.codecs.CatnipCodecUtils;
 import net.createmod.catnip.codecs.CatnipCodecs;
-import net.createmod.catnip.data.IntAttached;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.liukrast.eg.api.GaugeRegistry;
 import net.liukrast.eg.api.registry.PanelType;
@@ -75,10 +74,11 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     }
 
     /**
+     * @param shortenNumbers whether the display is in mode "shortened" or "full_number"
      * @return The component for display links
      * */
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
-        return IntAttached.withZero(Component.empty());
+    public MutableComponent getDisplayLinkComponent(boolean shortenNumbers) {
+        return Component.empty();
     }
 
     public Map<PanelConnection<?>, Supplier<?>> getConnections() {

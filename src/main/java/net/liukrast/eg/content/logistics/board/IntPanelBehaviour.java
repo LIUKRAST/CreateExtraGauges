@@ -3,7 +3,6 @@ package net.liukrast.eg.content.logistics.board;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.createmod.catnip.data.IntAttached;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
@@ -95,8 +94,10 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
     }
 
     @Override
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
-        int count = getConnectionValue(PanelConnections.INTEGER).orElse(0);
-        return IntAttached.with(count, Component.empty());
+    public MutableComponent getDisplayLinkComponent(boolean shortened) {
+        //TODO: Use shortened mode to format numbers
+        // Per francy: qui sotto fai che ritorna text = shortened ? [testo corto] : [testo lungo]
+        String text = String.valueOf(getConnectionValue(PanelConnections.INTEGER).orElse(0));
+        return Component.literal(text);
     }
 }

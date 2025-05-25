@@ -5,7 +5,6 @@ import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.createmod.catnip.data.IntAttached;
 import net.liukrast.eg.api.logistics.board.PanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.RegisterItems;
@@ -113,7 +112,7 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     }
 
     @Override
-    public IntAttached<MutableComponent> getDisplayLinkComponent() {
-        return IntAttached.with(count, Component.literal("/" + value));
+    public MutableComponent getDisplayLinkComponent(boolean shortened) {
+        return Component.literal(shortened ? String.valueOf(count) : count + "/" + value);
     }
 }
