@@ -13,6 +13,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+    id 'maven-publish'
 }
 
 apply plugin: 'org.spongepowered.mixin'
@@ -153,6 +154,22 @@ tasks.named('jar', Jar).configure {
 
     // This is the preferred method to reobfuscate your jar file
     finalizedBy 'reobfJar'
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+
+            artifactId = "${mod_id}-forge-${minecraft_version}"
+            version = "${mod_version}"
+        }
+    }
+    repositories {
+        maven {
+            url = uri("${project.projectDir}/repo")
+        }
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
