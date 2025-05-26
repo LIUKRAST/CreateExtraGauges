@@ -168,7 +168,7 @@ publishing {
         register('mavenJava', MavenPublication) {
             from components.java
 
-            artifactId = "${mod_id}-neoforge-${minecraft_version}"
+            artifactId = "${mod_id}-${minecraft_version}"
             version = "${mod_version}"
         }
     }
