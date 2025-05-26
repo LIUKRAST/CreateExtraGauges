@@ -167,14 +167,18 @@ publishing {
     publications {
         register('mavenJava', MavenPublication) {
             from components.java
+
+            artifactId = "${mod_id}-neoforge-${minecraft_version}"
+            version = "${mod_version}"
         }
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url = uri("${project.projectDir}/repo")
         }
     }
 }
+
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
 idea {

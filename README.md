@@ -50,7 +50,7 @@ Forking and contributing to the mod are welcomed, though i would ask for some th
 - Commits should not include any change in the mod description, authors, or any of the mods toml properties except special cases
 
 ## Depending on the mod
-I'm currently working on my first maven, so see you soon :)
+Check the [Wiki](https://github.com/LIUKRAST/CreateExtraGauges/wiki) to depend on this mod
 
 
 ## Installation
