@@ -2,8 +2,10 @@ package net.liukrast.eg.registry;
 
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.liukrast.eg.ExtraGauges;
+import org.jetbrains.annotations.ApiStatus;
 
-public class RegisterPartialModels {
+public class EGPartialModels {
+    private EGPartialModels() {}
     public static final PartialModel LOGIC_PANEL = block("logic_gauge");
     public static final PartialModel INT_PANEL = block("integer_gauge");
     public static final PartialModel COMPARATOR_PANEL = block("comparator_gauge");
@@ -13,5 +15,6 @@ public class RegisterPartialModels {
         return PartialModel.of(ExtraGauges.id("block/" + path));
     }
 
+    @ApiStatus.Internal
     public static void init() {}
 }

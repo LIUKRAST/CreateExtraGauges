@@ -4,7 +4,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.foundation.utility.CreateLang;
-import net.liukrast.eg.api.GaugeRegistry;
+import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -36,11 +36,12 @@ public abstract class FactoryPanelBlockEntityMixin {
                 var customPanels = tag.getCompound("CustomPanels");
                 if(customPanels.contains(key)) {
                     ResourceLocation id = ResourceLocation.parse(customPanels.getString(key));
-                    var type = Objects.requireNonNull(GaugeRegistry.PANEL_REGISTRY.get(id));
+                    var type = Objects.requireNonNull(EGRegistries.PANEL_REGISTRY.get(id));
                     if(type.asClass().equals(panels.get(slot).getClass())) continue; //No need to re-create the behavior
                     behaviour = type.create(instance, slot);
                 }
             }
+            //TODO: Check if ignoring this is ok!
             if(behaviour == null) behaviour = new FactoryPanelBehaviour(instance, slot);
             this.panels.put(slot, behaviour);
             instance.attachBehaviourLate(behaviour);

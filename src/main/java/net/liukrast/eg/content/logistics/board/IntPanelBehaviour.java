@@ -3,10 +3,10 @@ package net.liukrast.eg.content.logistics.board;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.liukrast.eg.api.logistics.board.PanelConnections;
+import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
-import net.liukrast.eg.registry.RegisterItems;
-import net.liukrast.eg.registry.RegisterPartialModels;
+import net.liukrast.eg.registry.EGItems;
+import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -23,8 +23,8 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(PanelConnections.INTEGER, () -> count);
-        builder.put(PanelConnections.REDSTONE, () -> Math.clamp(count, 0, 15));
+        builder.put(EGPanelConnections.INTEGER, () -> count);
+        builder.put(EGPanelConnections.REDSTONE, () -> Math.clamp(count, 0, 15));
     }
 
     @Override
@@ -41,12 +41,12 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
 
     @Override
     public Item getItem() {
-        return RegisterItems.INT_GAUGE.get();
+        return EGItems.INT_GAUGE.get();
     }
 
     @Override
     public PartialModel getModel(FactoryPanelBlock.PanelState panelState, FactoryPanelBlock.PanelType panelType) {
-        return RegisterPartialModels.INT_PANEL;
+        return EGPartialModels.INT_PANEL;
     }
 
     @Override
@@ -54,24 +54,13 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
         if(!active)
             return;
         List<Integer> countList = new ArrayList<>();
-        for(FactoryPanelConnection connection : targetedByLinks.values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            FactoryPanelSupportBehaviour linkAt = linkAt(getWorld(), connection);
-            if(linkAt == null) return;
-            if(!linkAt.isOutput()) continue;
-            //TODO: Replace instanceof redstone link with a better way of connection
-            if(linkAt.shouldPanelBePowered() && linkAt.blockEntity instanceof RedstoneLinkBlockEntity redstoneLink) {
+        consumeForLinks(link -> {
+            if(link.shouldPanelBePowered() && link.blockEntity instanceof RedstoneLinkBlockEntity redstoneLink) {
                 countList.add(redstoneLink.getReceivedSignal());
-            } else countList.add(linkAt.shouldPanelBePowered() ? 1 : 0);
-        }
-        for(FactoryPanelConnection connection : targetedBy.values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            FactoryPanelBehaviour at = at(getWorld(), connection);
-            if(at == null) return;
-            var opt = PanelConnections.getConnectionValue(at, PanelConnections.INTEGER);
-            if(opt.isEmpty()) continue;
-            countList.add(opt.get());
-        }
+            } else countList.add(link.shouldPanelBePowered() ? 1 : 0);
+        });
+        consumeForExtra(EGPanelConnections.INTEGER.get(), countList::add);
+        consumeForPanels(EGPanelConnections.INTEGER.get(), countList::add);
 
         int result = get().test(countList.stream());
 
@@ -86,7 +75,7 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
 
     @Override
     public MutableComponent getDisplayLinkComponent(boolean shortened) {
-        int n = getConnectionValue(PanelConnections.INTEGER).orElse(0);
+        int n = getConnectionValue(EGPanelConnections.INTEGER).orElse(0);
         String text = shortened ? formatNumber(n) : String.valueOf(n);
         return Component.literal(text);
     }

@@ -2,7 +2,7 @@ package net.liukrast.eg.datagen;
 
 import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
-import net.liukrast.eg.registry.RegisterItems;
+import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
@@ -11,9 +11,9 @@ public class ExtraGaugesPonderTagProvider{
         var HELPER = helper.withKeyFunction(BuiltInRegistries.ITEM::getKey);
 
         HELPER.addToTag(AllCreatePonderTags.HIGH_LOGISTICS)
-                .add(RegisterItems.LOGIC_GAUGE.get())
-                .add(RegisterItems.INT_GAUGE.get())
-                .add(RegisterItems.COMPARATOR_GAUGE.get())
-                .add(RegisterItems.COUNTER_GAUGE.get());
+                .add(EGItems.LOGIC_GAUGE.get())
+                .add(EGItems.INT_GAUGE.get())
+                .add(EGItems.COMPARATOR_GAUGE.get())
+                .add(EGItems.COUNTER_GAUGE.get());
     }
 }

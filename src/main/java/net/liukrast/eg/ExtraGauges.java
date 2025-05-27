@@ -1,25 +1,21 @@
 package net.liukrast.eg;
 
-import com.simibubi.create.AllCreativeModeTabs;
 import net.createmod.ponder.foundation.PonderIndex;
-import net.liukrast.eg.api.GaugeRegistry;
-import net.liukrast.eg.api.event.AbstractPanelRenderEvent;
+import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.datagen.ExtraGaugesItemModelProvider;
-import net.liukrast.eg.registry.RegisterCreativeModeTabs;
-import net.liukrast.eg.registry.RegisterItems;
-import net.liukrast.eg.registry.RegisterPanels;
-import net.liukrast.eg.registry.RegisterPartialModels;
+import net.liukrast.eg.registry.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 
 @Mod(ExtraGauges.MOD_ID)
@@ -31,15 +27,16 @@ public class ExtraGauges {
     }
 
     public ExtraGauges(IEventBus modEventBus) {
-        RegisterItems.register(modEventBus);
-        RegisterPanels.register(modEventBus);
-        RegisterCreativeModeTabs.register(modEventBus);
+        EGItems.register(modEventBus);
+        EGPanels.register(modEventBus);
+        EGCreativeModeTabs.register(modEventBus);
+        EGPanelConnections.register(modEventBus);
         modEventBus.register(this);
     }
 
     @SubscribeEvent
     private void fMLClientSetup(FMLClientSetupEvent event) {
-        RegisterPartialModels.init();
+        EGPartialModels.init();
         PonderIndex.addPlugin(new ExtraGaugesPonderPlugin());
     }
 
@@ -53,6 +50,12 @@ public class ExtraGauges {
 
     @SubscribeEvent
     private void newRegistry(NewRegistryEvent event) {
-        event.register(GaugeRegistry.PANEL_REGISTRY);
+        event.register(EGRegistries.PANEL_REGISTRY);
+        event.register(EGRegistries.PANEL_CONNECTION_REGISTRY);
+    }
+
+    @SubscribeEvent
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        EGCapabilities.registerDefaults(event);
     }
 }

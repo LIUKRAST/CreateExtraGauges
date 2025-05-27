@@ -1,7 +1,7 @@
 package net.liukrast.eg.datagen;
 
 import net.liukrast.eg.ExtraGauges;
-import net.liukrast.eg.registry.RegisterItems;
+import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -45,9 +45,9 @@ public class ExtraGaugesItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        createGauge(RegisterItems.LOGIC_GAUGE.get());
-        createGauge(RegisterItems.INT_GAUGE.get());
-        createGauge(RegisterItems.COMPARATOR_GAUGE.get());
-        createGauge(RegisterItems.COUNTER_GAUGE.get());
+        createGauge(EGItems.LOGIC_GAUGE.get());
+        createGauge(EGItems.INT_GAUGE.get());
+        createGauge(EGItems.COMPARATOR_GAUGE.get());
+        createGauge(EGItems.COUNTER_GAUGE.get());
     }
 }

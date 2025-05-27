@@ -7,10 +7,10 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.gui.ScreenOpener;
-import net.liukrast.eg.api.logistics.board.PanelConnections;
+import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
-import net.liukrast.eg.registry.RegisterItems;
-import net.liukrast.eg.registry.RegisterPartialModels;
+import net.liukrast.eg.registry.EGItems;
+import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.HolderLookup;
@@ -23,6 +23,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     int comparatorMode = 0;
@@ -58,7 +60,7 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(PanelConnections.REDSTONE, () -> power ? 15 : 0);
+        builder.put(EGPanelConnections.REDSTONE, () -> power ? 15 : 0);
     }
 
     @Override
@@ -77,12 +79,12 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
 
     @Override
     public Item getItem() {
-        return RegisterItems.COMPARATOR_GAUGE.get();
+        return EGItems.COMPARATOR_GAUGE.get();
     }
 
     @Override
     public PartialModel getModel(FactoryPanelBlock.PanelState panelState, FactoryPanelBlock.PanelType panelType) {
-        return RegisterPartialModels.COMPARATOR_PANEL;
+        return EGPartialModels.COMPARATOR_PANEL;
     }
 
     @Override
@@ -94,28 +96,17 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     public void checkForRedstoneInput() {
         if(!active)
             return;
-        int result = 0;
-        for(FactoryPanelConnection connection : targetedByLinks.values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            FactoryPanelSupportBehaviour linkAt = linkAt(getWorld(), connection);
-            if(linkAt == null) return;
-            if(!linkAt.isOutput()) continue;
-            //TODO: add better compatibility with other mods
-            if(linkAt.shouldPanelBePowered() && linkAt.blockEntity instanceof RedstoneLinkBlockEntity redstoneLink) {
-                result += redstoneLink.getReceivedSignal();
-            } else result += linkAt.shouldPanelBePowered() ? 1 : 0;
-        }
-        for(FactoryPanelConnection connection : targetedBy.values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            FactoryPanelBehaviour at = at(getWorld(), connection);
-            if(at == null) return;
-            var opt = PanelConnections.getConnectionValue(at, PanelConnections.INTEGER);
-            if(opt.isEmpty()) continue;
-            result += opt.get();
-        }
+        AtomicInteger result = new AtomicInteger();
+        consumeForLinks(link -> {
+            if(link.shouldPanelBePowered() && link.blockEntity instanceof RedstoneLinkBlockEntity redstoneLink) {
+                result.addAndGet(redstoneLink.getReceivedSignal());
+            } else result.addAndGet(link.shouldPanelBePowered() ? 1 : 0);
+        });
+        consumeForPanels(EGPanelConnections.INTEGER.get(), result::addAndGet);
+        consumeForExtra(EGPanelConnections.INTEGER.get(), result::addAndGet);
 
         boolean shouldPower = ComparatorMode.class.getEnumConstants()[comparatorMode]
-                .test(result, value);
+                .test(result.get(), value);
         //End logical mode
         if(shouldPower == power)
             return;
@@ -134,7 +125,7 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
 
     @Override
     public MutableComponent getDisplayLinkComponent(boolean shortened) {
-        boolean active = getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
+        boolean active = getConnectionValue(EGPanelConnections.REDSTONE).orElse(0) > 0;
         String t = "✔";
         String f = "✖";
         if(!shortened) {

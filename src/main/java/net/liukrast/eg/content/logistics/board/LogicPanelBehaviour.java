@@ -2,10 +2,10 @@ package net.liukrast.eg.content.logistics.board;
 
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.liukrast.eg.api.logistics.board.PanelConnections;
+import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
-import net.liukrast.eg.registry.RegisterItems;
-import net.liukrast.eg.registry.RegisterPartialModels;
+import net.liukrast.eg.registry.EGItems;
+import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -25,7 +25,7 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(PanelConnections.REDSTONE, () -> power ? 15 : 0);
+        builder.put(EGPanelConnections.REDSTONE, () -> power ? 15 : 0);
     }
 
     @Override
@@ -42,12 +42,12 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
 
     @Override
     public Item getItem() {
-        return RegisterItems.LOGIC_GAUGE.get();
+        return EGItems.LOGIC_GAUGE.get();
     }
 
     @Override
     public PartialModel getModel(FactoryPanelBlock.PanelState panelState, FactoryPanelBlock.PanelType panelType) {
-        return RegisterPartialModels.LOGIC_PANEL;
+        return EGPartialModels.LOGIC_PANEL;
     }
 
 
@@ -56,21 +56,9 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
         if(!active)
             return;
         List<Boolean> powerList = new ArrayList<>();
-        for(FactoryPanelConnection connection : targetedByLinks.values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            FactoryPanelSupportBehaviour linkAt = linkAt(getWorld(), connection);
-            if(linkAt == null) return;
-            if(!linkAt.isOutput()) continue;
-            powerList.add(linkAt.shouldPanelBePowered());
-        }
-        for(FactoryPanelConnection connection : targetedBy.values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            FactoryPanelBehaviour at = at(getWorld(), connection);
-            if(at == null) return;
-            var opt = PanelConnections.getConnectionValue(at, PanelConnections.REDSTONE);
-            if(opt.isEmpty()) continue;
-            powerList.add(opt.get() > 0);
-        }
+        consumeForLinks(link -> powerList.add(link.shouldPanelBePowered()));
+        consumeForExtra(EGPanelConnections.REDSTONE.get(), out -> powerList.add(out > 0));
+        consumeForPanels(EGPanelConnections.REDSTONE.get(), out -> powerList.add(out > 0));
 
         boolean shouldPower = get().test(powerList.stream());
         //End logical mode
@@ -83,7 +71,7 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
 
     @Override
     public MutableComponent getDisplayLinkComponent(boolean shortened) {
-        boolean active = getConnectionValue(PanelConnections.REDSTONE).orElse(0) > 0;
+        boolean active = getConnectionValue(EGPanelConnections.REDSTONE).orElse(0) > 0;
         String t = "✔";
         String f = "✖";
         if(!shortened) {

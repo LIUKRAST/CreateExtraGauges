@@ -5,10 +5,11 @@ import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.liukrast.eg.api.logistics.board.PanelConnections;
+import net.liukrast.eg.api.logistics.board.PanelConnection;
+import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
-import net.liukrast.eg.registry.RegisterItems;
-import net.liukrast.eg.registry.RegisterPartialModels;
+import net.liukrast.eg.registry.EGItems;
+import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +18,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     private boolean power;
@@ -57,45 +60,33 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(PanelConnections.INTEGER, () -> count);
-        builder.put(PanelConnections.REDSTONE, () -> count >= value ? 15 : 0);
+        builder.put(EGPanelConnections.INTEGER, () -> count);
+        builder.put(EGPanelConnections.REDSTONE, () -> count >= value ? 15 : 0);
     }
 
     @Override
     public Item getItem() {
-        return RegisterItems.COUNTER_GAUGE.asItem();
+        return EGItems.COUNTER_GAUGE.asItem();
     }
 
     @Override
     public PartialModel getModel(FactoryPanelBlock.PanelState panelState, FactoryPanelBlock.PanelType panelType) {
-        return RegisterPartialModels.COUNTER_PANEL;
+        return EGPartialModels.COUNTER_PANEL;
     }
 
     @Override
     public void checkForRedstoneInput() {
         if(!active)
             return;
-        boolean shouldPower = false;
-        for(FactoryPanelConnection connection : targetedByLinks.values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            FactoryPanelSupportBehaviour linkAt = linkAt(getWorld(), connection);
-            if(linkAt == null) return;
-            if(!linkAt.isOutput()) continue;
-            shouldPower |= linkAt.shouldPanelBePowered();
-        }
-        for(FactoryPanelConnection connection : targetedBy.values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            FactoryPanelBehaviour at = at(getWorld(), connection);
-            if(at == null) return;
-            var opt = PanelConnections.getConnectionValue(at, PanelConnections.REDSTONE);
-            if(opt.isEmpty()) continue;
-            shouldPower |= opt.get() > 0;
-        }
+        AtomicBoolean shouldPower = new AtomicBoolean(false);
+        consumeForLinks(link -> shouldPower.set(shouldPower.get() | link.shouldPanelBePowered()));
+        consumeForPanels(EGPanelConnections.REDSTONE.get(), out -> shouldPower.set(shouldPower.get() | out > 0));
+        consumeForExtra(EGPanelConnections.REDSTONE.get(), out -> shouldPower.set(shouldPower.get() | out > 0));
         //End logical mode
-        if(shouldPower == power)
+        if(shouldPower.get() == power)
             return;
-        power = shouldPower;
-        if(shouldPower) {
+        power = shouldPower.get();
+        if(shouldPower.get()) {
             if (count >= value) count = 0;
             else count++;
         }

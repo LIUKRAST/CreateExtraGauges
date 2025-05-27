@@ -8,7 +8,7 @@ import net.liukrast.eg.content.ponder.scenes.highLogistics.CounterGaugeScene;
 import net.liukrast.eg.content.ponder.scenes.highLogistics.IntGaugeScene;
 import net.liukrast.eg.content.ponder.scenes.highLogistics.LogicGaugeScene;
 import net.liukrast.eg.datagen.ExtraGaugesPonderTagProvider;
-import net.liukrast.eg.registry.RegisterItems;
+import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -25,14 +25,14 @@ public class ExtraGaugesPonderPlugin implements PonderPlugin {
     public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         PonderSceneRegistrationHelper<Item> HELPER = helper.withKeyFunction(BuiltInRegistries.ITEM::getKey);
 
-        HELPER.forComponents(RegisterItems.LOGIC_GAUGE.get())
+        HELPER.forComponents(EGItems.LOGIC_GAUGE.get())
                 .addStoryBoard("high_logistics/logic_gauge", LogicGaugeScene::logicGauge);
-        HELPER.forComponents(RegisterItems.INT_GAUGE.get())
+        HELPER.forComponents(EGItems.INT_GAUGE.get())
                 .addStoryBoard("high_logistics/integer_gauge_redstone", IntGaugeScene::intGaugeRedstone)
                 .addStoryBoard("high_logistics/integer_gauge_factory", IntGaugeScene::intGaugeFactory);
-        HELPER.forComponents(RegisterItems.COUNTER_GAUGE.get())
+        HELPER.forComponents(EGItems.COUNTER_GAUGE.get())
                 .addStoryBoard("high_logistics/counter_gauge", CounterGaugeScene::countGauge);
-        HELPER.forComponents(RegisterItems.COMPARATOR_GAUGE.get())
+        HELPER.forComponents(EGItems.COMPARATOR_GAUGE.get())
                 .addStoryBoard("high_logistics/comparator_gauge_redstone", ComparatorGaugeScene::compGaugeRedstone)
                 .addStoryBoard("high_logistics/comparator_gauge_factory", ComparatorGaugeScene::compGaugeFactory);
     }
