@@ -49,5 +49,7 @@ public class ExtraGaugesItemModelProvider extends ItemModelProvider {
         createGauge(EGItems.INT_GAUGE.get());
         createGauge(EGItems.COMPARATOR_GAUGE.get());
         createGauge(EGItems.COUNTER_GAUGE.get());
+        createGauge(EGItems.PASSIVE_GAUGE.get());
+        withExistingParent("integer_selector", ExtraGauges.id("block/integer_selector"));
     }
 }

@@ -10,6 +10,7 @@ public class EGPartialModels {
     public static final PartialModel INT_PANEL = block("integer_gauge");
     public static final PartialModel COMPARATOR_PANEL = block("comparator_gauge");
     public static final PartialModel COUNTER_PANEL = block("counter_gauge");
+    public static final PartialModel PASSIVE_PANEL = block("passive_gauge");
 
     private static PartialModel block(String path) {
         return PartialModel.of(ExtraGauges.id("block/" + path));

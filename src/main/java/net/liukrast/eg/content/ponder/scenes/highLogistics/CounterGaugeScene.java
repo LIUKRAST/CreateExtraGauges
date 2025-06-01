@@ -36,6 +36,18 @@ public class CounterGaugeScene {
         var outLink = util.grid().at(1,4,1);
         var nixie = util.grid().at(1,5,2);
 
+        scene.rotateCameraY(180);
+        scene.idle(40);
+        scene.overlay()
+                .showText(60)
+                .text("Setup")
+                .attachKeyFrame()
+                .placeNearTarget()
+                .pointAt(link1_2.getCenter().add(-0.25, 0.3, 0));
+        scene.idle(70);
+        scene.rotateCameraY(180);
+        scene.idle(40);
+
         scene.overlay()
                 .showText(40)
                 .text("Counter Gauges can count the number of redstone inputs...")

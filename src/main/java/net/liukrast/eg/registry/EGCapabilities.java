@@ -1,6 +1,8 @@
 package net.liukrast.eg.registry;
 
 import com.simibubi.create.AllBlocks;
+import net.liukrast.eg.api.EGRegistries;
+import net.liukrast.eg.content.logistics.IntSelectorBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -30,6 +32,12 @@ public class EGCapabilities {
                     return null;
                 },
                 validBlocks
+        );
+
+        event.registerBlock(
+                EGPanelConnections.INTEGER.get().asCapability(),
+                (level, blockPos, blockState, blockEntity, ctx) -> ctx != null && ctx.matches(blockState) && blockEntity instanceof IntSelectorBlockEntity be ? be.behaviour.getValue() : null,
+                EGBlocks.INT_SELECTOR.get()
         );
     }
 }

@@ -12,7 +12,9 @@ import com.mojang.serialization.Codec;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.logistics.packagerLink.LogisticallyLinkedBlockItem;
 import net.createmod.catnip.codecs.CatnipCodecUtils;
+import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
+import net.liukrast.eg.api.logistics.board.PanelConnection;
 import net.liukrast.eg.api.util.IFPExtra;
 import net.liukrast.eg.registry.EGPanelConnections;
 import net.minecraft.core.BlockPos;
@@ -57,7 +59,7 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour;tick()V", shift = At.Shift.AFTER), cancellable = true)
     private void tick(CallbackInfo ci) {
-        if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour) ci.cancel();
+        if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour ab && ab.skipOriginalTick()) ci.cancel();
     }
 
     @Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class))
@@ -117,10 +119,15 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
     @Inject(method = "addConnection", at = @At("HEAD"), cancellable = true)
     private void addConnection(FactoryPanelPosition fromPos, CallbackInfo ci) {
         var i = FactoryPanelBehaviour.class.cast(this);
-        var at = EGPanelConnections.getCap(i.getWorld(), fromPos.pos(), EGPanelConnections.REDSTONE);
-        if(at == null) return;
-        extra_gauges$targetedByExtra.put(fromPos.pos(), new FactoryPanelConnection(fromPos, 1));
-        ci.cancel();
+        var state = i.getWorld().getBlockState(fromPos.pos());
+        if(EGRegistries.PANEL_CONNECTION_REGISTRY
+                .stream()
+                .map(c -> i.getWorld().getCapability(c.asCapability(), fromPos.pos(), PanelConnection.PanelContext.from(state)))
+                .anyMatch(Objects::nonNull)
+        ) {
+            extra_gauges$targetedByExtra.put(fromPos.pos(), new FactoryPanelConnection(fromPos, 1));
+            ci.cancel();
+        }
     }
 
     @Definition(id = "failed", local = @Local(type = boolean.class))
@@ -173,7 +180,7 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
     @ModifyExpressionValue(method = "onShortInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0))
     private boolean onShortInteract(boolean original) {
         var instance = FactoryPanelBehaviour.class.cast(this);
-        return instance instanceof AbstractPanelBehaviour panel ? panel.shouldAllowFilteringBehaviour() && original : original;
+        return instance instanceof AbstractPanelBehaviour panel ? panel.withFilteringBehaviour() && original : original;
     }
 
     @Definition(id = "heldItem", local = @Local(type = ItemStack.class))

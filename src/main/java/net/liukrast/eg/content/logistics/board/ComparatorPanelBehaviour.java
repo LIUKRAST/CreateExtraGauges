@@ -88,11 +88,6 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     }
 
     @Override
-    public ValueSettings getValueSettings() {
-        return super.getValueSettings();
-    }
-
-    @Override
     public void checkForRedstoneInput() {
         if(!active)
             return;

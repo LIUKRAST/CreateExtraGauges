@@ -22,6 +22,8 @@ public class EGCreativeModeTabs {
                     out.accept(EGItems.INT_GAUGE);
                     out.accept(EGItems.COMPARATOR_GAUGE);
                     out.accept(EGItems.COUNTER_GAUGE);
+                    out.accept(EGItems.PASSIVE_GAUGE);
+                    out.accept(EGBlocks.INT_SELECTOR);
                 })
                 .build());
     }

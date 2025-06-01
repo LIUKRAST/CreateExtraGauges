@@ -3,10 +3,7 @@ package net.liukrast.eg.registry;
 import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.api.registry.PanelType;
-import net.liukrast.eg.content.logistics.board.ComparatorPanelBehaviour;
-import net.liukrast.eg.content.logistics.board.CounterPanelBehaviour;
-import net.liukrast.eg.content.logistics.board.IntPanelBehaviour;
-import net.liukrast.eg.content.logistics.board.LogicPanelBehaviour;
+import net.liukrast.eg.content.logistics.board.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -20,6 +17,7 @@ public class EGPanels {
     public static final DeferredHolder<PanelType<?>, PanelType<IntPanelBehaviour>> INT = PANELS.register("integer", () -> new PanelType<>(IntPanelBehaviour::new, IntPanelBehaviour.class));
     public static final DeferredHolder<PanelType<?>, PanelType<ComparatorPanelBehaviour>> COMPARATOR = PANELS.register("comparator", () -> new PanelType<>(ComparatorPanelBehaviour::new, ComparatorPanelBehaviour.class));
     public static final DeferredHolder<PanelType<?>, PanelType<CounterPanelBehaviour>> COUNTER = PANELS.register("counter", () -> new PanelType<>(CounterPanelBehaviour::new, CounterPanelBehaviour.class));
+    public static final DeferredHolder<PanelType<?>, PanelType<PassivePanelBehaviour>> PASSIVE = PANELS.register("passive", () -> new PanelType<>(PassivePanelBehaviour::new, PassivePanelBehaviour.class));
 
     @ApiStatus.Internal
     public static void register(IEventBus eventBus) {

@@ -62,9 +62,7 @@ public class LogicGaugeScene {
                 .pointAt(link4_1.getCenter().add(-0.25f, 0.25f,0));
         scene.idle(70);
 
-        builder.world().modifyBlockEntity(logic, FactoryPanelBlockEntity.class, be -> {
-            ((LogicPanelBehaviour) be.panels.get(PanelSlot.TOP_RIGHT)).power = true;
-        });
+        builder.world().modifyBlockEntity(logic, FactoryPanelBlockEntity.class, be -> ((LogicPanelBehaviour) be.panels.get(PanelSlot.TOP_RIGHT)).power = true);
 
         scene.world().toggleRedstonePower(util.select().position(link4_1));
         scene.world().toggleRedstonePower(util.select().position(link4_2));
@@ -100,9 +98,7 @@ public class LogicGaugeScene {
 
         scene.idle(20);
 
-        builder.world().modifyBlockEntity(logic, FactoryPanelBlockEntity.class, be -> {
-            ((LogicPanelBehaviour) be.panels.get(PanelSlot.TOP_RIGHT)).power = false;
-        });
+        builder.world().modifyBlockEntity(logic, FactoryPanelBlockEntity.class, be -> ((LogicPanelBehaviour) be.panels.get(PanelSlot.TOP_RIGHT)).power = false);
         scene.world().toggleRedstonePower(util.select().position(link4_1));
         scene.world().toggleRedstonePower(util.select().position(link4_2));
         builder.world().modifyBlockEntity(link4_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
@@ -135,9 +131,7 @@ public class LogicGaugeScene {
         builder.world().modifyBlockEntity(link3_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
         scene.idle(10);
 
-        builder.world().modifyBlockEntity(logic, FactoryPanelBlockEntity.class, be -> {
-            ((LogicPanelBehaviour) be.panels.get(PanelSlot.TOP_RIGHT)).power = true;
-        });
+        builder.world().modifyBlockEntity(logic, FactoryPanelBlockEntity.class, be -> ((LogicPanelBehaviour) be.panels.get(PanelSlot.TOP_RIGHT)).power = true);
         scene.world().toggleRedstonePower(util.select().position(link4_1));
         scene.world().toggleRedstonePower(util.select().position(link4_2));
         builder.world().modifyBlockEntity(link4_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));

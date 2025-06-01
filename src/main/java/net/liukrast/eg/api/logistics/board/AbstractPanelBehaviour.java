@@ -2,7 +2,7 @@ package net.liukrast.eg.api.logistics.board;
 
 import com.mojang.serialization.Codec;
 import com.simibubi.create.content.logistics.factoryBoard.*;
-import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
+import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.utility.CreateLang;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
@@ -100,6 +100,10 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         return connections;
     }
 
+    public boolean skipOriginalTick() {
+        return true;
+    }
+
     public static class PanelConnectionBuilder {
         private final Map<PanelConnection<?>, Supplier<?>> map = new HashMap<>();
 
@@ -115,8 +119,6 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
             map.put(panelConnection, getter);
             return this;
         }
-
-
     }
 
     /**
@@ -130,7 +132,7 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
      * Since original class extends {@link com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour},
      * return true if you want this gauge to have the render from filtering behavior.
      * */
-    public boolean shouldAllowFilteringBehaviour() {
+    public boolean withFilteringBehaviour() {
         return false;
     }
 
@@ -186,7 +188,7 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     public void destroy() {
         super.destroy();
         if(blockEntity instanceof FactoryPanelBlockEntity be) {
-            var newBehaviour = new FactoryPanelBehaviour(be, this.slot);
+            var newBehaviour = new FactoryPanelBehaviour(be, this.slot); //TODO: Might break with other mods
             newBehaviour.active = false;
             blockEntity.attachBehaviourLate(newBehaviour);
             be.panels.put(slot, newBehaviour);
@@ -266,6 +268,12 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         panelTag.put("TargetedByLinks", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(targetedByLinks.values())).orElseThrow());
         panelTag.put("TargetedByExtra", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(((IFPExtra)this).extra_gauges$getExtra().values())).orElseThrow());
 
+        if(withFilteringBehaviour()) {
+            panelTag.put("Filter", getFilter().saveOptional(registries));
+            panelTag.putInt("FilterAmount", count);
+            panelTag.putBoolean("UpTo", upTo);
+        }
+
         easyWrite(panelTag, registries, clientPacket);
 
         nbt.put(CreateLang.asId(slot.name()), panelTag);
@@ -280,12 +288,12 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
 
     @Override
     public boolean canShortInteract(ItemStack toApply) {
-        return shouldAllowFilteringBehaviour() && super.canShortInteract(toApply);
+        return withFilteringBehaviour() && super.canShortInteract(toApply);
     }
 
     @Override
     public ItemStack getFilter() {
-        return getConnectionValue(EGPanelConnections.FILTER).orElse(ItemStack.EMPTY);
+        return getConnectionValue(EGPanelConnections.FILTER).orElse(FilterItemStack.empty()).item();
     }
 
     // We invoke the private function through mixin. Create, why are you making this method private...

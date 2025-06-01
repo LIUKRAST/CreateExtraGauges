@@ -11,6 +11,7 @@
     "AllIconsMixin",
     "ClientEventsMixin",
     "FactoryGaugeDisplaySourceMixin",
+    "FactoryPanelBehaviourAccessor",
     "FactoryPanelBehaviourIMixin",
     "FactoryPanelBehaviourMixin",
     "FactoryPanelBlockEntityMixin",

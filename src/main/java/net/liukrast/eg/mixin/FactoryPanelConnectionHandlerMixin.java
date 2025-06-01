@@ -6,9 +6,9 @@ import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.platform.CatnipServices;
+import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelConnection;
-import net.liukrast.eg.registry.EGPanelConnections;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -28,6 +28,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.Objects;
 
 @Mixin(FactoryPanelConnectionHandler.class)
 public class FactoryPanelConnectionHandlerMixin {
@@ -67,50 +69,57 @@ public class FactoryPanelConnectionHandlerMixin {
             cancellable = true
     )
     private static void onRightClick(CallbackInfoReturnable<Boolean> cir, @Local Minecraft mc, @Local BlockHitResult bhr) {
-        var cap = EGPanelConnections.getCap(mc.level, bhr.getBlockPos(), EGPanelConnections.REDSTONE);
-        if(cap == null) return;
-        FactoryPanelBehaviour at = FactoryPanelBehaviour.at(mc.level, connectingFrom);
-        String checkForIssues = extra_gauges$checkForSpecialIssues(at, bhr.getBlockPos(), mc.level.getBlockState(bhr.getBlockPos()));
-        if(checkForIssues != null) {
-            mc.player.displayClientMessage(CreateLang.translate(checkForIssues)
-                    .style(ChatFormatting.RED)
+        assert mc.level != null;
+        var state = mc.level.getBlockState(bhr.getBlockPos());
+        if(EGRegistries.PANEL_CONNECTION_REGISTRY
+                .stream()
+                .map(c -> mc.level.getCapability(c.asCapability(), bhr.getBlockPos(), PanelConnection.PanelContext.from(state)))
+                .anyMatch(Objects::nonNull)
+        ) {
+            FactoryPanelBehaviour at = FactoryPanelBehaviour.at(mc.level, connectingFrom);
+            String checkForIssues = extra_gauges$checkForSpecialIssues(at, bhr.getBlockPos(), mc.level.getBlockState(bhr.getBlockPos()));
+            if (checkForIssues != null) {
+                assert mc.player != null;
+                mc.player.displayClientMessage(CreateLang.translate(checkForIssues)
+                        .style(ChatFormatting.RED)
+                        .component(), true);
+                connectingFrom = null;
+                connectingFromBox = null;
+                AllSoundEvents.DENY.playAt(mc.level, mc.player.blockPosition(), 1, 1, false);
+                cir.setReturnValue(true);
+                return;
+            }
+            FactoryPanelPosition bestPosition = null;
+            double bestDistance = Double.POSITIVE_INFINITY;
+
+            for (FactoryPanelBlock.PanelSlot slot : FactoryPanelBlock.PanelSlot.values()) {
+                FactoryPanelPosition panelPosition = new FactoryPanelPosition(bhr.getBlockPos(), slot);
+                FactoryPanelConnection connection = new FactoryPanelConnection(panelPosition, 1);
+                Vec3 diff =
+                        connection.calculatePathDiff(mc.level.getBlockState(connectingFrom.pos()), connectingFrom);
+                if (bestDistance < diff.lengthSqr())
+                    continue;
+                bestDistance = diff.lengthSqr();
+                bestPosition = panelPosition;
+            }
+
+            CatnipServices.NETWORK.sendToServer(new FactoryPanelConnectionPacket(bestPosition, connectingFrom, false));
+
+            assert mc.player != null;
+            mc.player.displayClientMessage(CreateLang
+                    .translate("factory_panel.link_connected", mc.level.getBlockState(bhr.getBlockPos())
+                            .getBlock()
+                            .getName())
+                    .style(ChatFormatting.GREEN)
                     .component(), true);
+
             connectingFrom = null;
             connectingFromBox = null;
-            AllSoundEvents.DENY.playAt(mc.level, mc.player.blockPosition(), 1, 1, false);
+            mc.player.level()
+                    .playLocalSound(mc.player.blockPosition(), SoundEvents.AMETHYST_BLOCK_PLACE, SoundSource.BLOCKS,
+                            0.5f, 0.5f, false);
             cir.setReturnValue(true);
-            return;
         }
-        FactoryPanelPosition bestPosition = null;
-        double bestDistance = Double.POSITIVE_INFINITY;
-
-        for (FactoryPanelBlock.PanelSlot slot : FactoryPanelBlock.PanelSlot.values()) {
-            FactoryPanelPosition panelPosition = new FactoryPanelPosition(bhr.getBlockPos(), slot);
-            FactoryPanelConnection connection = new FactoryPanelConnection(panelPosition, 1);
-            Vec3 diff =
-                    connection.calculatePathDiff(mc.level.getBlockState(connectingFrom.pos()), connectingFrom);
-            if (bestDistance < diff.lengthSqr())
-                continue;
-            bestDistance = diff.lengthSqr();
-            bestPosition = panelPosition;
-        }
-
-        CatnipServices.NETWORK.sendToServer(new FactoryPanelConnectionPacket(bestPosition, connectingFrom, false));
-
-        mc.player.displayClientMessage(CreateLang
-                .translate("factory_panel.link_connected", mc.level.getBlockState(bhr.getBlockPos())
-                        .getBlock()
-                        .getName())
-                .style(ChatFormatting.GREEN)
-                .component(), true);
-
-        connectingFrom = null;
-        connectingFromBox = null;
-        mc.player.level()
-                .playLocalSound(mc.player.blockPosition(), SoundEvents.AMETHYST_BLOCK_PLACE, SoundSource.BLOCKS,
-                        0.5f, 0.5f, false);
-        cir.setReturnValue(true);
-
     }
 
     @Unique

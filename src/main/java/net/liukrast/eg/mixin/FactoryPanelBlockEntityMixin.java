@@ -37,14 +37,15 @@ public abstract class FactoryPanelBlockEntityMixin {
                 if(customPanels.contains(key)) {
                     ResourceLocation id = ResourceLocation.parse(customPanels.getString(key));
                     var type = Objects.requireNonNull(EGRegistries.PANEL_REGISTRY.get(id));
-                    if(type.asClass().equals(panels.get(slot).getClass())) continue; //No need to re-create the behavior
+                    var current = panels.get(slot);
+                    if(current != null && type.asClass().equals(current.getClass())) continue; //No need to re-create the behavior
                     behaviour = type.create(instance, slot);
                 }
             }
-            //TODO: Check if ignoring this is ok!
-            if(behaviour == null) behaviour = new FactoryPanelBehaviour(instance, slot);
-            this.panels.put(slot, behaviour);
-            instance.attachBehaviourLate(behaviour);
+            if(behaviour != null) {
+                panels.put(slot, behaviour);
+                instance.attachBehaviourLate(behaviour);
+            }
         }
     }
 

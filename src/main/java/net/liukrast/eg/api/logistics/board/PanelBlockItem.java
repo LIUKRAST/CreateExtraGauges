@@ -3,15 +3,19 @@ package net.liukrast.eg.api.logistics.board;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
+import com.simibubi.create.content.logistics.packagerLink.LogisticallyLinkedBlockItem;
 import net.liukrast.eg.api.registry.PanelType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -24,13 +28,29 @@ import java.util.function.Supplier;
 /**
  * The class for a custom panel block item.
  * */
-public class PanelBlockItem extends BlockItem {
+public class PanelBlockItem extends LogisticallyLinkedBlockItem {
 
     private final Supplier<PanelType<?>> type;
 
     public PanelBlockItem(Supplier<PanelType<?>> type, Properties properties) {
         super(AllBlocks.FACTORY_GAUGE.get(), properties);
         this.type = type;
+    }
+
+    @Override
+    public boolean isFoil(@NotNull ItemStack stack) {
+        return stack.isEnchanted();
+    }
+
+    @Override
+    public @NotNull InteractionResult useOn(UseOnContext context) {
+        InteractionResult interactionresult = this.place(new BlockPlaceContext(context));
+        if (!interactionresult.consumesAction() && context.getItemInHand().has(DataComponents.FOOD)) {
+            InteractionResult interactionresult1 = super.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
+            return interactionresult1 == InteractionResult.CONSUME ? InteractionResult.CONSUME_PARTIAL : interactionresult1;
+        } else {
+            return interactionresult;
+        }
     }
 
     protected AbstractPanelBehaviour getNewBehaviourInstance(FactoryPanelBlockEntity blockEntity, FactoryPanelBlock.PanelSlot slot) {
@@ -90,7 +110,7 @@ public class PanelBlockItem extends BlockItem {
         return null;
     }
 
-    // We want to ignore the registration to the map, so that creative tab won't crash
+    // We want to ignore the registration to the map so that the creative tab won't crash
     @Override
     public void registerBlocks(@NotNull Map<Block, Item> blockToItemMap, @NotNull Item item) {}
 

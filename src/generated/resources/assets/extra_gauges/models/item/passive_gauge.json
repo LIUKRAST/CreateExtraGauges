@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/factory_gauge/item",
+  "textures": {
+    "0": "extra_gauges:block/passive_panel",
+    "particle": "extra_gauges:block/passive_panel"
+  }
+}
