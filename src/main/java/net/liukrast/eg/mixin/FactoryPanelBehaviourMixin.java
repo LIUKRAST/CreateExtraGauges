@@ -23,6 +23,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -40,7 +41,7 @@ import java.util.stream.Stream;
 public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
 
     @Unique
-    private Map<BlockPos, FactoryPanelConnection> extra_gauges$targetedByExtra = new HashMap<>();
+    private final Map<BlockPos, FactoryPanelConnection> extra_gauges$targetedByExtra = new HashMap<>();
 
     @Override
     public Map<BlockPos, FactoryPanelConnection> extra_gauges$getExtra() {
@@ -73,7 +74,6 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
         return original.call(instance);
     }
 
-    @SuppressWarnings("ModifyVariableMayBeArgsOnly")
     @ModifyVariable(method = "moveTo", at = @At(value = "STORE", ordinal = 0))
     private FactoryPanelBehaviour moveTo(FactoryPanelBehaviour original) {
         var be = ((FactoryPanelBlockEntity)original.blockEntity);
@@ -138,19 +138,18 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
         return (!(instance instanceof AbstractPanelBehaviour ab) || ab.hasConnection(EGPanelConnections.FILTER)) ? 1 : 0;
     }
 
-    @ModifyVariable(method = "checkForRedstoneInput", at = @At("STORE"))
+    @ModifyVariable(method = "checkForRedstoneInput", at = @At(value = "STORE",ordinal = 0))
     private boolean checkForRedstoneInput(boolean shouldPower, @Cancellable CallbackInfo ci) {
         var i = FactoryPanelBehaviour.class.cast(this);
+
         for(FactoryPanelConnection connection : targetedBy.values()) {
             if(!i.getWorld().isLoaded(connection.from.pos())) {
                 ci.cancel();
                 return false;
             }
-            FactoryPanelBehaviour behaviour = at(i.getWorld(), connection);
-            if(behaviour == null || !behaviour.isActive() || !(behaviour instanceof AbstractPanelBehaviour panel)) {
-                ci.cancel();
-                return false;
-            }
+            Level world = i.getWorld();
+            FactoryPanelBehaviour behaviour = at(world, connection);
+            if(behaviour == null || !behaviour.isActive() || !(behaviour instanceof AbstractPanelBehaviour panel)) return false;
             if(panel.hasConnection(EGPanelConnections.REDSTONE)) {
                 if(panel.hasConnection(EGPanelConnections.FILTER)) {
                     if(panel.shouldUseRedstoneInsteadOfFilter()) shouldPower |= panel.getConnectionValue(EGPanelConnections.REDSTONE).orElse(0) > 0;
@@ -173,7 +172,7 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
 
     @Inject(method = "notifyRedstoneOutputs", at = @At("TAIL"))
     private void notifyRedstoneOutputs(CallbackInfo ci) {
-        //TODO: Implement for future outputs
+        // Implement for future outputs
     }
 
 
