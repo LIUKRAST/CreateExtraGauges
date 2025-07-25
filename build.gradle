@@ -13,7 +13,8 @@ repositories {
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
     maven { url = "https://mvn.devos.one/snapshots" } // Registrate
     maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
-    maven {url = "https://maven.blamejared.com/"}
+    maven { url = "https://maven.blamejared.com/"}
+    maven { url = "https://cursemaven.com"}
 }
 
 base {
@@ -132,6 +133,8 @@ dependencies {
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     // at runtime, use the full JEI jar for NeoForge
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+
+    implementation "curse.maven:create-vibrant-vaults-1251719:6463890"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
