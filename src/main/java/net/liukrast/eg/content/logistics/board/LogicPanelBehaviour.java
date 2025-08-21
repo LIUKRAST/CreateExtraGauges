@@ -45,6 +45,24 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
         return EGPartialModels.LOGIC_PANEL;
     }
 
+    /* CACHE */
+    @Override
+    public Map<BlockPos, Boolean> cacheMap() {
+        return cache;
+    }
+
+    @Override
+    public Codec<Boolean> cacheCodec() {
+        return Codec.BOOL;
+    }
+
+    /* DATA */
+    /* UPDATE */
+    @Override
+    public void tick() {
+        super.tick();
+        updated = 0;
+    }
 
     @Override
     public void checkForRedstoneInput() {

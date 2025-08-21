@@ -33,9 +33,18 @@ public class ExtraGaugesPonderPlugin implements PonderPlugin {
         HELPER.forComponents(EGItems.COUNTER_GAUGE.get())
                 .addStoryBoard("high_logistics/counter_gauge", CounterGaugeScene::countGauge);
         HELPER.forComponents(EGItems.COMPARATOR_GAUGE.get())
-                .addStoryBoard("high_logistics/comparator_gauge_redstone", ComparatorGaugeScene::compGaugeRedstone)
-                .addStoryBoard("high_logistics/comparator_gauge_factory", ComparatorGaugeScene::compGaugeFactory);
                 .addStoryBoard("high_logistics/comparator_gauge", ComparatorGaugeScene::comparatorGauge);
+        HELPER.forComponents(EGItems.PASSIVE_GAUGE.get())
+                .addStoryBoard("high_logistics/passive_gauge", PassiveGaugeScene::passiveGauge)
+                .addStoryBoard("high_logistics/expanded_factory_recipes", ExtendedCraftScene::autoCrafter);
+        HELPER.forComponents(EGItems.STRING_GAUGE.get())
+                .addStoryBoard("high_logistics/string_gauge", StringGaugeScenes::stringGauge)
+                .addStoryBoard("high_logistics/string_gauge_storage", StringGaugeScenes::stringGaugeStorage)
+                .addStoryBoard("high_logistics/display_collector", StringGaugeScenes::displayCollector);
+        HELPER.forComponents(EGBlocks.DISPLAY_COLLECTOR.asItem())
+                .addStoryBoard("high_logistics/display_collector", StringGaugeScenes::displayCollector);
+        HELPER.forComponents(AllBlocks.FACTORY_GAUGE.asItem())
+                .addStoryBoard("high_logistics/expanded_factory_recipes", ExtendedCraftScene::autoCrafter);
     }
 
     @Override

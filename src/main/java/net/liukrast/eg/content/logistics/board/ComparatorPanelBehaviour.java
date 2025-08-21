@@ -1,18 +1,22 @@
 package net.liukrast.eg.content.logistics.board;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Codec;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.gui.ScreenOpener;
+import net.liukrast.eg.ExtraGaugesConfig;
+import net.liukrast.eg.api.util.CacheContainer;
 import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.EGItems;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -24,9 +28,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
+public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour implements CacheContainer<Integer> {
     int comparatorMode = 0;
     private int updated = 0;
     private final Map<BlockPos, Integer> cache = new HashMap<>();
@@ -34,6 +40,16 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     public ComparatorPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(Component.translatable("create.logistics.comparator_value"), type, be, slot);
         between(-256, 256);
+    }
+
+    @Override
+    public Map<BlockPos, Integer> cacheMap() {
+        return cache;
+    }
+
+    @Override
+    public Codec<Integer> cacheCodec() {
+        return Codec.INT;
     }
 
     @Override

@@ -63,6 +63,7 @@ public class EGPanelConnections {
         });
     }
 
+    @SuppressWarnings("unused")
     public static Collection<PanelConnection<?>> getConnections(FactoryPanelBehaviour at) {
         if(at instanceof AbstractPanelBehaviour ab) return ab.getConnections();
         return FACTORY_CONNECTIONS.keySet();

@@ -39,6 +39,29 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
     }
 
     @Override
+    public Item getItem() {
+        return EGItems.INT_GAUGE.get();
+    }
+
+    @Override
+    public PartialModel getModel(FactoryPanelBlock.PanelState panelState, FactoryPanelBlock.PanelType panelType) {
+        return EGPartialModels.INT_PANEL;
+    }
+
+    /* CACHE */
+
+    @Override
+    public Map<BlockPos, Integer> cacheMap() {
+        return cache;
+    }
+
+    @Override
+    public Codec<Integer> cacheCodec() {
+        return Codec.INT;
+    }
+
+    /* DATA */
+    @Override
     public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         super.easyWrite(nbt, registries, clientPacket);
         nbt.putInt("Count", count);
