@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode> implements CacheContainer<Boolean> {
+    private int updated = 0;
+    private final Map<BlockPos, Boolean> cache = new HashMap<>();
 
     public LogicPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(Component.translatable("create.logistics.logic_gate"), type, be, slot, LogicalMode.class);

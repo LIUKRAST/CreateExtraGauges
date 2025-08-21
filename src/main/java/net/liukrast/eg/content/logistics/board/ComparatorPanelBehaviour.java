@@ -28,6 +28,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour {
     int comparatorMode = 0;
+    private int updated = 0;
+    private final Map<BlockPos, Integer> cache = new HashMap<>();
 
     public ComparatorPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(Component.translatable("create.logistics.comparator_value"), type, be, slot);

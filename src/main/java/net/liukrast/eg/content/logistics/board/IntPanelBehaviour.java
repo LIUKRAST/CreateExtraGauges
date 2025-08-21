@@ -23,6 +23,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMode> implements CacheContainer<Integer> {
+    private int updated = 0;
+    private final Map<BlockPos, Integer> cache = new HashMap<>();
+
     public IntPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(Component.translatable("create.logistics.int_operation"), type, be, slot, IntOperationMode.class);
     }
