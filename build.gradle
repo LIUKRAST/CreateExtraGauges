@@ -15,6 +15,9 @@ repositories {
     maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
     maven { url = "https://maven.blamejared.com/"}
     maven { url = "https://cursemaven.com"}
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 base {
@@ -134,7 +137,7 @@ dependencies {
     // at runtime, use the full JEI jar for NeoForge
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
-    implementation "curse.maven:create-vibrant-vaults-1251719:6463890"
+    implementation fileTree(dir: "${rootDir}/libs", include: ['*.jar'])
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
