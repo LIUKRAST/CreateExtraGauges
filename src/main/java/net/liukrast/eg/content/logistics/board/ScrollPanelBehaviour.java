@@ -21,6 +21,7 @@ public abstract class ScrollPanelBehaviour extends AbstractPanelBehaviour {
     Consumer<Integer> callback;
     Consumer<Integer> clientCallback;
     Function<Integer, String> formatter;
+    @SuppressWarnings({"FieldCanBeLocal", "unused", "FieldMayBeFinal"})
     private Supplier<Boolean> isActive;
 
     public ScrollPanelBehaviour(Component label, PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {

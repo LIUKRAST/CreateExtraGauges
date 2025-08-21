@@ -1,19 +1,19 @@
 package net.liukrast.eg.mixin;
 
-import com.llamalad7.mixinextras.expression.Definition;
-import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.logistics.factoryBoard.*;
-import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import net.liukrast.eg.api.event.AbstractPanelRenderEvent;
+import net.liukrast.eg.api.logistics.ColoredFactoryPanelSupportBehaviour;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelConnection;
 import net.liukrast.eg.api.util.IFPExtra;
 import net.liukrast.eg.registry.EGPanelConnections;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.neoforged.neoforge.common.NeoForge;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,19 +23,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(FactoryPanelRenderer.class)
 public class FactoryPanelRendererMixin {
 
+    /* Allows abstract panels to have their own render system + decides whether a bulb should be rendered or not */
     @ModifyExpressionValue(
             method = "renderSafe(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
-            at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;getAmount()I"))
+            at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;getAmount()I")
+    )
     private int renderSafe(int original, @Local FactoryPanelBehaviour behaviour, @Local(argsOnly = true) float partialTicks, @Local(argsOnly = true)PoseStack ms, @Local(argsOnly = true)MultiBufferSource buffer, @Local(argsOnly = true, ordinal = 0) int light, @Local(argsOnly = true, ordinal = 1) int overlay) {
         if (behaviour instanceof AbstractPanelBehaviour abstractPanel) {
             ms.pushPose();
-
             NeoForge.EVENT_BUS.post(new AbstractPanelRenderEvent(abstractPanel, partialTicks, ms, buffer, light, overlay));
             ms.popPose();
-            return abstractPanel.shouldRenderBulb() ? 1 : 0;
+            return abstractPanel.shouldRenderBulb(original > 0) ? 1 : 0;
         } else return original;
     }
 
+    /* Render extra connections */
     @Inject(
             method = "renderSafe(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
             at = @At(value = "INVOKE", target = "Ljava/util/Map;values()Ljava/util/Collection;", ordinal = 0)
@@ -45,57 +47,33 @@ public class FactoryPanelRendererMixin {
             FactoryPanelRenderer.renderPath(behaviour, connection, partialTicks, ms, buffer, light, overlay);
     }
 
+    /* Render paths */
     @ModifyArg(method = "renderPath", at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/render/SuperByteBuffer;color(I)Lnet/createmod/catnip/render/SuperByteBuffer;"))
-    private static int renderPath(int color, @Local(argsOnly = true) FactoryPanelBehaviour behaviour, @Local(argsOnly = true) FactoryPanelConnection connection, @Local(ordinal = 0) boolean displayLinkMode, @Local(ordinal = 1) boolean redstoneLinkMode) {
-        if(displayLinkMode || redstoneLinkMode) return color;
-        var other = FactoryPanelBehaviour.at(behaviour.getWorld(), connection);
-        if(other == null) return color;
-        if(!(other instanceof AbstractPanelBehaviour) && !(behaviour instanceof AbstractPanelBehaviour)) return color;
-        var connectionsA = EGPanelConnections.getConnections(behaviour);
-        var connectionsB = EGPanelConnections.getConnections(other);
-        for(PanelConnection<?> panelConnection : connectionsA.keySet()) {
-            if(connectionsB.containsKey(panelConnection)) {
-                if(panelConnection == EGPanelConnections.FILTER.get()) return color;
-                return panelConnection.getColorGeneric(connectionsA.get(panelConnection), connectionsB.get(panelConnection));
+    private static int renderPath(int color, @Local(argsOnly = true) FactoryPanelBehaviour behaviour, @Local(argsOnly = true) FactoryPanelConnection connection, @Local FactoryPanelSupportBehaviour support, @Local(ordinal = 1) boolean redstoneLinkMode, @Local(ordinal = 4) LocalBooleanRef dots) {
+        if(redstoneLinkMode && behaviour instanceof AbstractPanelBehaviour ab) {
+            var opt = ab.getConnectionValue(EGPanelConnections.REDSTONE.get());
+            if(opt.isPresent()) {
+                return opt.orElse(0)==0?0x580101:0xEF0000;
             }
         }
+        if(support instanceof ColoredFactoryPanelSupportBehaviour colored) {
+            var line = colored.getColor(behaviour);
+            dots.set(line.dots());
+            return line.color();
+        }
+        if(support != null) return color;
+        var other = FactoryPanelBehaviour.at(behaviour.getWorld(), connection);
+        if(behaviour instanceof AbstractPanelBehaviour ab) {
+            return other != null ? ab.calculatePath(other, color) : ab.calculateExtraPath(connection.from.pos());
+        } else if(other instanceof AbstractPanelBehaviour ab) {
+            for(PanelConnection<?> c : ab.getConnections()) {
+                if(c == EGPanelConnections.FILTER.get()) return color;
+                if(c == EGPanelConnections.INTEGER.get()) return 0x006496;
+                if(c == EGPanelConnections.REDSTONE.get()) return EGPanelConnections.getConnectionValue(ab, EGPanelConnections.REDSTONE).orElse(0)==0?0x580101:0xEF0000;
+                if(c == EGPanelConnections.STRING.get()) return 0xFFFFFFFF;
+            }
+            return 0x888898;
+        }
         return color;
-    }
-
-    @Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class, argsOnly = true))
-    @Definition(id = "count", field = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;count:I")
-    @Expression("behaviour.count == 0")
-    @ModifyExpressionValue(method = "renderPath", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 0))
-    private static boolean renderPath(boolean original, @Local(argsOnly = true) FactoryPanelBehaviour behaviour) {
-        if(behaviour instanceof AbstractPanelBehaviour ab) {
-            if(ab.hasConnection(EGPanelConnections.FILTER)) {
-                if(ab.hasConnection(EGPanelConnections.REDSTONE)) {
-                    return !ab.shouldUseRedstoneInsteadOfFilter() && original;
-                } else return original;
-            } return !ab.hasConnection(EGPanelConnections.REDSTONE);
-        }
-        return original;
-    }
-
-    @Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class, argsOnly = true))
-    @Definition(id = "satisfied", field = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;satisfied:Z")
-    @Expression("behaviour.satisfied")
-    @ModifyExpressionValue(method = "renderPath", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 0))
-    private static boolean renderPath$1(boolean original, @Local(argsOnly = true) FactoryPanelBehaviour behaviour) {
-        if(behaviour instanceof AbstractPanelBehaviour ab) {
-            return ab.getConnectionValue(EGPanelConnections.REDSTONE).orElse(0) > 0;
-        }
-        return original;
-    }
-
-    @Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class, argsOnly = true))
-    @Definition(id = "redstonePowered", field = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;redstonePowered:Z")
-    @Expression("behaviour.redstonePowered")
-    @ModifyExpressionValue(method = "renderPath", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 0))
-    private static boolean renderPath$2(boolean original, @Local(argsOnly = true) FactoryPanelBehaviour behaviour, @SuppressWarnings("LocalMayBeArgsOnly") @Local FactoryPanelSupportBehaviour sbe) {
-        if(behaviour instanceof AbstractPanelBehaviour ab && ab.hasConnection(EGPanelConnections.REDSTONE)) {
-            return ((RedstoneLinkBlockEntity)sbe.blockEntity).getReceivedSignal() > 0;
-        }
-        return original;
     }
 }

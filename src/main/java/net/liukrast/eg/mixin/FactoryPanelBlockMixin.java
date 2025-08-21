@@ -9,7 +9,8 @@ import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
-import com.simibubi.create.foundation.utility.CreateLang;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockItem;
+import com.simibubi.create.content.logistics.packagerLink.LogisticallyLinkedBlockItem;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelBlockItem;
 import net.minecraft.core.BlockPos;
@@ -30,6 +31,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -40,6 +42,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 @Mixin(FactoryPanelBlock.class)
@@ -88,25 +91,26 @@ public abstract class FactoryPanelBlockMixin extends Block {
     @WrapWithCondition(method = "setPlacedBy", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlock;withBlockEntityDo(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Ljava/util/function/Consumer;)V"))
     private boolean withBlockEntityDo(FactoryPanelBlock instance, BlockGetter blockGetter, BlockPos pos, Consumer<FactoryPanelBlockEntity> consumer, @Local(argsOnly = true) ItemStack stack, @Local FactoryPanelBlock.PanelSlot initialSlot) {
         if(!(stack.getItem() instanceof PanelBlockItem panelBlockItem)) return true;
-        FactoryPanelBlock.class.cast(this).withBlockEntityDo(blockGetter, pos, blockEntity -> panelBlockItem.applyToSlot(blockEntity, initialSlot));
+        FactoryPanelBlock.class.cast(this).withBlockEntityDo(blockGetter, pos, blockEntity -> panelBlockItem.applyToSlot(blockEntity, initialSlot, LogisticallyLinkedBlockItem.networkFromStack(FactoryPanelBlockItem.fixCtrlCopiedStack(stack))));
         return false;
     }
 
-    @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/BlockHitResult;getLocation()Lnet/minecraft/world/phys/Vec3;"), cancellable = true)
+    @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"), cancellable = true)
     private void useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<ItemInteractionResult> cir) {
         if(!(stack.getItem() instanceof PanelBlockItem panelBlockItem)) return;
         if(level.getBlockEntity(pos) instanceof FactoryPanelBlockEntity panel && panel.restocker) {
             AllSoundEvents.DENY.playOnServer(level, pos);
-            player.displayClientMessage(CreateLang.translate("factory_panel.custom_panel_on_restocker")
-                    .component(), true);
-            cir.setReturnValue(ItemInteractionResult.FAIL);
+            player.displayClientMessage(Component.translatable("extra_gauges.panel.custom_panel_on_restocker"), true);
+            cir.setReturnValue(ItemInteractionResult.CONSUME);
+            cir.cancel();
             return;
         }
         var error = panelBlockItem.isReadyForPlacement(stack, level, pos, player);
         if(error != null) {
             AllSoundEvents.DENY.playOnServer(level, pos);
             player.displayClientMessage(error, true);
-            cir.setReturnValue(ItemInteractionResult.FAIL);
+            cir.setReturnValue(ItemInteractionResult.CONSUME);
+            cir.cancel();
         }
     }
 
@@ -120,15 +124,10 @@ public abstract class FactoryPanelBlockMixin extends Block {
         return original || stack.getItem() instanceof PanelBlockItem;
     }
 
-    @ModifyExpressionValue(method = "lambda$useItemOn$2", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlockEntity;addPanel(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlock$PanelSlot;Ljava/util/UUID;)Z"))
-    private boolean lambda$useItemOn$2(boolean original, @Local(argsOnly = true) ItemStack stack, @Local(argsOnly = true) FactoryPanelBlockEntity blockEntity, @Local(argsOnly = true) FactoryPanelBlock.PanelSlot newSlot) {
-        return original || (stack.getItem() instanceof PanelBlockItem blockItem && blockItem.applyToSlot(blockEntity, newSlot));
-    }
-
-    @WrapWithCondition(method = "lambda$useItemOn$2", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V"))
-    private boolean lambda$useItemOn$2(Player instance, Component chatComponent, boolean actionBar, @Local(argsOnly = true) ItemStack stack) {
-        if(!(stack.getItem() instanceof PanelBlockItem blockItem)) return true;
-        return blockItem.getPlacedMessage() == null;
+    @WrapOperation(method = "lambda$useItemOn$2", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlockEntity;addPanel(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBlock$PanelSlot;Ljava/util/UUID;)Z"))
+    private boolean lambda$useItemOn$2(FactoryPanelBlockEntity instance, FactoryPanelBlock.PanelSlot panelSlot, UUID slot, Operation<Boolean> original, @Local(argsOnly = true) ItemStack stack, @Local(argsOnly = true) FactoryPanelBlockEntity blockEntity, @Local(argsOnly = true) FactoryPanelBlock.PanelSlot newSlot) {
+        if(stack.getItem() instanceof PanelBlockItem blockItem) return blockItem.applyToSlot(blockEntity, newSlot, LogisticallyLinkedBlockItem.networkFromStack(FactoryPanelBlockItem.fixCtrlCopiedStack(stack)));
+        return original.call(instance, panelSlot, slot);
     }
 
     @ModifyArg(method = "lambda$useItemOn$2", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V"))

@@ -1,5 +1,6 @@
 package net.liukrast.eg.api.logistics.board;
 
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
@@ -32,8 +33,10 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -43,8 +46,14 @@ import java.util.function.Supplier;
  * */
 public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     private final PanelType<?> type;
-    private final Map<PanelConnection<?>, Supplier<?>> connections = new Reference2ObjectArrayMap<>();
+    private final Reference2ObjectArrayMap<PanelConnection<?>, Supplier<?>> connections = new Reference2ObjectArrayMap<>();
 
+    protected static final int WAITING = 0xffd541;
+    protected static final int DISABLED = 0x888898;
+
+    /**
+     * This constructor allows to modify the valueBoxTransform to make a custom input system
+     * */
     public AbstractPanelBehaviour(ValueBoxTransform valueBoxTransform, PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         this(type, be, slot);
         ((FilteringBehaviourMixin)this).setValueBoxTransform(valueBoxTransform);
@@ -59,24 +68,22 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     }
 
     /**
-     * Adds new connections to the panel. See more in {@link PanelConnection}
+     * Adds a new connection provider to this gauge.
+     * This means other gauges can read information from this gauge.
+     * Also keep in mind that the order these connections is added is important for some panels which read multiple connections
      * */
     public abstract void addConnections(PanelConnectionBuilder builder);
 
-
-    @ApiStatus.Internal
-    public <T> Optional<T> getConnectionValue(DeferredHolder<PanelConnection<?>, PanelConnection<T>> connection) {
-        return getConnectionValue(connection.get());
+    /**
+     * @return the connections set, sorted
+     * */
+    public Set<PanelConnection<?>> getConnections() {
+        return connections.keySet();
     }
 
-    @ApiStatus.Internal
-    public <T> Optional<T> getConnectionValue(PanelConnection<T> connection) {
-        if(!connections.containsKey(connection)) return Optional.empty();
-        // We can safely cast here.
-        //noinspection unchecked
-        return Optional.ofNullable((T) connections.get(connection).get());
-    }
-
+    /**
+     * @return Whether the panel has a precise connection, using forge's deferred holder
+     * */
     public <T> boolean hasConnection(DeferredHolder<PanelConnection<?>, PanelConnection<T>> connection) {
         return hasConnection(connection.get());
     }
@@ -96,35 +103,17 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         return Component.empty();
     }
 
-    public Map<PanelConnection<?>, Supplier<?>> getConnections() {
-        return connections;
-    }
-
+    /**
+     * Whether the panel should skip calling {@link FactoryPanelBehaviour#tick()}
+     * */
     public boolean skipOriginalTick() {
         return true;
-    }
-
-    public static class PanelConnectionBuilder {
-        private final Map<PanelConnection<?>, Supplier<?>> map = new HashMap<>();
-
-        private PanelConnectionBuilder() {}
-
-        @SuppressWarnings("UnusedReturnValue")
-        public <T> PanelConnectionBuilder put(@NotNull DeferredHolder<PanelConnection<?>, PanelConnection<T>> panelConnection, @NotNull Supplier<T> getter) {
-            return put(panelConnection.get(), getter);
-        }
-
-        @SuppressWarnings("UnusedReturnValue")
-        public <T> PanelConnectionBuilder put(@NotNull PanelConnection<T> panelConnection, @NotNull Supplier<T> getter) {
-            map.put(panelConnection, getter);
-            return this;
-        }
     }
 
     /**
      * @return Whether the panel should render its bulb
      * */
-    public boolean shouldRenderBulb() {
+    public boolean shouldRenderBulb(boolean original) {
         return false;
     }
 
@@ -159,15 +148,63 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {}
 
     /**
-     * Used for abstract panels which have both {@link EGPanelConnections#FILTER} & {@link EGPanelConnections#REDSTONE}.
-     * In those cases, the factory gauge will try to interact with them based on this value:
-     * If the return value is true,
-     * it will get the filter information from your custom gauge and update their recipe and so on.
-     * Else, if the return value is false,
-     * it will use the redstone information from your custom gauge and update their blocked/unblocked state.
+     * Opens the editor screen for this panel
      * */
-    public boolean shouldUseRedstoneInsteadOfFilter() {
-        return false;
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void displayScreen(Player player) {
+        if (player instanceof LocalPlayer)
+            ScreenOpener.open(new BasicPanelScreen<>(this));
+    }
+
+    /**
+     * This function is called when trying to connect two gauges together.
+     * The default declaration you see below ignores the {@code no_item} issue,
+     * since most of the custom gauges do not actually need a custom item inside to connect.
+     * @return whether it should ignore or not the issue inserted.
+     * */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    public boolean ignoreIssue(@Nullable String issue) {
+        return "factory_panel.no_item".equals(issue);
+    }
+
+    /**
+     * @return The path color
+     * */
+    public int calculatePath(FactoryPanelBehaviour other, int original) {
+        return DISABLED;
+    }
+
+    public int calculateExtraPath(BlockPos pos) {
+        return DISABLED;
+    }
+
+    @ApiStatus.Internal
+    public <T> Optional<T> getConnectionValue(DeferredHolder<PanelConnection<?>, PanelConnection<T>> connection) {
+        return getConnectionValue(connection.get());
+    }
+
+    @ApiStatus.Internal
+    public <T> Optional<T> getConnectionValue(PanelConnection<T> connection) {
+        if(!connections.containsKey(connection)) return Optional.empty();
+        // We can safely cast here.
+        //noinspection unchecked
+        return Optional.ofNullable((T) connections.get(connection).get());
+    }
+
+    public static class PanelConnectionBuilder {
+        private final Map<PanelConnection<?>, Supplier<?>> map = new Reference2ObjectArrayMap<>();
+
+        private PanelConnectionBuilder() {}
+
+        public <T> PanelConnectionBuilder put(@NotNull DeferredHolder<PanelConnection<?>, PanelConnection<T>> panelConnection, @NotNull Supplier<T> getter) {
+            return put(panelConnection.get(), getter);
+        }
+
+        public <T> PanelConnectionBuilder put(@NotNull PanelConnection<T> panelConnection, @NotNull Supplier<T> getter) {
+            map.put(panelConnection, getter);
+            return this;
+        }
     }
 
     public PanelType<?> getPanelType() {
@@ -219,6 +256,28 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         }
     }
 
+
+    /*public <A,B,C,D,E> void consumeForPanels(
+            PanelConnection<A> panelConnectionA, Consumer<A> consumerA,
+            PanelConnection<B> panelConnectionB, Consumer<B> consumerB,
+            PanelConnection<C> panelConnectionC, Consumer<C> consumerC,
+            PanelConnection<D> panelConnectionD, Consumer<D> consumerD,
+            PanelConnection<E> panelConnectionE, Consumer<E> consumerE
+    ) {
+        for(FactoryPanelConnection connection : targetedBy.values()) {
+            if(!getWorld().isLoaded(connection.from.pos())) return;
+            FactoryPanelBehaviour at = at(getWorld(), connection);
+            if(at == null) return;
+            for(PanelConnection<?> c : EGPanelConnections.getConnections(at)) {
+                if(c == panelConnectionA) EGPanelConnections.getConnectionValue(at, panelConnectionA).ifPresent(consumerA);
+                if(c == panelConnectionB) EGPanelConnections.getConnectionValue(at, panelConnectionB).ifPresent(consumerB);
+                if(c == panelConnectionC) EGPanelConnections.getConnectionValue(at, panelConnectionC).ifPresent(consumerC);
+                if(c == panelConnectionD) EGPanelConnections.getConnectionValue(at, panelConnectionD).ifPresent(consumerD);
+                if(c == panelConnectionE) EGPanelConnections.getConnectionValue(at, panelConnectionE).ifPresent(consumerE);
+            }
+        }
+    }*/
+
     public <T> void consumeForPanels(PanelConnection<T> panelConnection, Consumer<T> consumer) {
         for(FactoryPanelConnection connection : targetedBy.values()) {
             if(!getWorld().isLoaded(connection.from.pos())) return;
@@ -230,16 +289,21 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         }
     }
 
-    public <T> void consumeForExtra(PanelConnection<T> panelConnection, Consumer<T> consumer) {
+    public <T> void consumeForExtra(PanelConnection<T> panelConnection, BiConsumer<BlockPos, T> consumer) {
         Set<BlockPos> toRemove = new HashSet<>();
-        for(FactoryPanelConnection connection : ((IFPExtra)this).extra_gauges$getExtra().values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            var cap = EGPanelConnections.getCap(getWorld(), connection.from.pos(), panelConnection);
-            if(cap == null) {
+        for(var connection : ((IFPExtra)this).extra_gauges$getExtra().values()) {
+            var pos = connection.from.pos();
+            if(!getWorld().isLoaded(pos)) return;
+            var level = getWorld();
+            var state = level.getBlockState(pos);
+            var be = level.getBlockEntity(pos);
+            var listener = panelConnection.getListener(state.getBlock());
+            if(listener == null) {
                 toRemove.add(connection.from.pos());
                 continue;
             }
-            consumer.accept(cap);
+            var opt = listener.invalidate(level, state, pos, be);
+            opt.ifPresent(t -> consumer.accept(pos, t));
 
         }
         toRemove.forEach(pos -> ((IFPExtra)this).extra_gauges$getExtra().remove(pos));
@@ -266,7 +330,9 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         panelTag.put("Targeting", CatnipCodecUtils.encode(CatnipCodecs.set(FactoryPanelPosition.CODEC), targeting).orElseThrow());
         panelTag.put("TargetedBy", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(targetedBy.values())).orElseThrow());
         panelTag.put("TargetedByLinks", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(targetedByLinks.values())).orElseThrow());
-        panelTag.put("TargetedByExtra", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(((IFPExtra)this).extra_gauges$getExtra().values())).orElseThrow());
+        IFPExtra extra = ((IFPExtra)this);
+        panelTag.put("TargetedByExtra", CatnipCodecUtils.encode(Codec.list(FactoryPanelConnection.CODEC), new ArrayList<>(extra.extra_gauges$getExtra().values())).orElseThrow());
+        if(extra.extra_gauges$getWidth() != 3) panelTag.putInt("extra_gauges$CraftWidth", extra.extra_gauges$getWidth());
 
         if(withFilteringBehaviour()) {
             panelTag.put("Filter", getFilter().saveOptional(registries));
@@ -277,13 +343,6 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         easyWrite(panelTag, registries, clientPacket);
 
         nbt.put(CreateLang.asId(slot.name()), panelTag);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void displayScreen(Player player) {
-        if (player instanceof LocalPlayer)
-            ScreenOpener.open(new BasicPanelScreen(this));
     }
 
     @Override
@@ -298,11 +357,23 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
 
     // We invoke the private function through mixin. Create, why are you making this method private...
     public void notifyRedstoneOutputs() {
+        for(FactoryPanelPosition panelPos : targeting) {
+            if(!getWorld().isLoaded(panelPos.pos()))
+                return;
+            FactoryPanelBehaviour behaviour = FactoryPanelBehaviour.at(getWorld(), panelPos);
+            if(behaviour == null) continue;
+            behaviour.checkForRedstoneInput();
+        }
         ((FactoryPanelBehaviourIMixin)this).extra_gauges$notifyRedstoneOutputs();
     }
 
     @Override
     public boolean acceptsValueSettings() {
         return true;
+    }
+
+    @Override
+    public @NotNull Component getDisplayName() {
+        return getItem().getDefaultInstance().getHoverName();
     }
 }
