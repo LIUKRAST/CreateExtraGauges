@@ -34,7 +34,6 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
                     boolean bool = !(be instanceof AbstractPanelBehaviour ab) || ab.hasConnection(EGPanelConnections.STRING.get());
                     return new ColoredFactoryPanelSupportBehaviour.Line(bool ? 0xFFFFFFFF : 0x888898, true);
                 },
-                () -> true,
                 this,
                 () -> true,
                 () -> false,

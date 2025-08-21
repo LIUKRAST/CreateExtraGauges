@@ -71,7 +71,6 @@ public class IntSelectorBlockEntity extends SmartBlockEntity {
         this.behaviour = behaviour;
         behaviours.add(panelSupport = new ColoredFactoryPanelSupportBehaviour(
                 (be) -> new ColoredFactoryPanelSupportBehaviour.Line(0x006496, false),
-                () -> false,
                 this, () -> true, () -> behaviour.value > 0, () -> {}
         ));
     }
