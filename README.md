@@ -2,10 +2,13 @@
   <img src="https://raw.githubusercontent.com/LIUKRAST/CreateExtraGauges/refs/heads/master/page/title.png"  alt="Title"/>
 </p>
 
-**This mod adds new custom gauges to create mod, like the factory gauge, but with different functions**
-
-It also adds a custom API which allows mod developers to make their own gauges
-(See more in the [Wiki](https://github.com/LIUKRAST/CreateExtraGauges/wiki)).
+<div style="position: relative; width: 100%; max-width: 100%; aspect-ratio: 1280 / 832; background-image: url('https://raw.githubusercontent.com/LIUKRAST/CreateExtraGauges/refs/heads/master/page/expanded_crafting.png'); background-size: cover; background-position: center;">
+  <iframe src="https://youtu.be/bXDiJp56Sbg?si=L0WsYffnDONz5hE1"
+          frameborder="0"
+          allowfullscreen
+          style="position: absolute; top: 10%; left: 10%; width: 80%; height: 80%;">
+  </iframe>
+</div>
 
 ## ![Logic Gauge](page/logic_gauge.png) Logic Gauge
 > The logic gauge allows transferring redstone data through their connections.
