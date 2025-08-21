@@ -200,6 +200,7 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
             for(PanelConnection<?> c : connections) {
                 if(c == EGPanelConnections.FILTER.get()) continue block;
                 if(c == EGPanelConnections.INTEGER.get()) {
+                    if(total == null) total = 0;
                     total += panel.getConnectionValue(EGPanelConnections.INTEGER.get()).orElse(0);
                     continue block;
                 }
