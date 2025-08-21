@@ -1,12 +1,14 @@
 package net.liukrast.eg.content.logistics;
 
 import com.google.common.collect.ImmutableList;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelSupportBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.CreateLang;
+import net.liukrast.eg.api.logistics.ColoredFactoryPanelSupportBehaviour;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -21,6 +23,8 @@ import java.util.List;
 public class IntSelectorBlockEntity extends SmartBlockEntity {
 
     public ScrollValueBehaviour behaviour;
+    public ColoredFactoryPanelSupportBehaviour panelSupport;
+
     public IntSelectorBlockEntity(BlockPos pos, BlockState state) {
         super(EGBlockEntityTypes.INT_SELECTOR.get(), pos, state);
     }
@@ -44,6 +48,7 @@ public class IntSelectorBlockEntity extends SmartBlockEntity {
                 if (!valueSetting.equals(getValueSettings()))
                     playFeedbackSound(this);
                 setValue(valueSetting.row() == 0 ? value : -value);
+                panelSupport.notifyPanels();
             }
 
             @Override
@@ -64,5 +69,10 @@ public class IntSelectorBlockEntity extends SmartBlockEntity {
         behaviour.between(-256, 256);
         behaviours.add(behaviour);
         this.behaviour = behaviour;
+        behaviours.add(panelSupport = new ColoredFactoryPanelSupportBehaviour(
+                (be) -> new ColoredFactoryPanelSupportBehaviour.Line(0x006496, false),
+                () -> false,
+                this, () -> true, () -> behaviour.value > 0, () -> {}
+        ));
     }
 }

@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "facing=down,powered=false": {
+      "model": "extra_gauges:block/display_collector/block",
+      "x": 180
+    },
+    "facing=down,powered=true": {
+      "model": "extra_gauges:block/display_collector/block_powered",
+      "x": 180
+    },
+    "facing=east,powered=false": {
+      "model": "extra_gauges:block/display_collector/block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true": {
+      "model": "extra_gauges:block/display_collector/block_powered",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,powered=false": {
+      "model": "extra_gauges:block/display_collector/block",
+      "x": 90
+    },
+    "facing=north,powered=true": {
+      "model": "extra_gauges:block/display_collector/block_powered",
+      "x": 90
+    },
+    "facing=south,powered=false": {
+      "model": "extra_gauges:block/display_collector/block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true": {
+      "model": "extra_gauges:block/display_collector/block_powered",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,powered=false": {
+      "model": "extra_gauges:block/display_collector/block"
+    },
+    "facing=up,powered=true": {
+      "model": "extra_gauges:block/display_collector/block_powered"
+    },
+    "facing=west,powered=false": {
+      "model": "extra_gauges:block/display_collector/block",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true": {
+      "model": "extra_gauges:block/display_collector/block_powered",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

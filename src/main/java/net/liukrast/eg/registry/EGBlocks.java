@@ -2,7 +2,9 @@ package net.liukrast.eg.registry;
 
 import com.simibubi.create.AllBlocks;
 import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.content.item.DisplayCollectorBlockItem;
 import net.liukrast.eg.content.logistics.IntSelectorBlock;
+import net.liukrast.eg.content.logistics.DisplayCollectorBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -17,9 +19,11 @@ public class EGBlocks {
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ExtraGauges.MOD_ID);
 
     public static final DeferredBlock<IntSelectorBlock> INT_SELECTOR = BLOCKS.register("integer_selector", () -> new IntSelectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get())));
+    public static final DeferredBlock<DisplayCollectorBlock> DISPLAY_COLLECTOR = BLOCKS.register("display_collector", () -> new DisplayCollectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.DISPLAY_LINK.get())));
 
     static {
         ITEMS.register("integer_selector", () -> new BlockItem(INT_SELECTOR.get(), new Item.Properties()));
+        ITEMS.register("display_collector", () -> new DisplayCollectorBlockItem(DISPLAY_COLLECTOR.get(), new Item.Properties()));
     }
 
     @ApiStatus.Internal

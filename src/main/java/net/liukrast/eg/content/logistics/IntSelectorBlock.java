@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -29,9 +28,7 @@ public class IntSelectorBlock extends FaceAttachedHorizontalDirectionalBlock imp
 
     @Override
     protected void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if(isMoving || state.getBlock() == newState.getBlock())
-            return;
-        withBlockEntityDo(worldIn, pos, be -> worldIn.removeBlockEntity(pos));
+        IBE.onRemove(state, worldIn, pos, newState);
     }
 
     @Override
