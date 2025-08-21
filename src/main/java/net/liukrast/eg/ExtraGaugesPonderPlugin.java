@@ -1,13 +1,12 @@
 package net.liukrast.eg;
 
+import com.simibubi.create.AllBlocks;
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
-import net.liukrast.eg.content.ponder.scenes.highLogistics.ComparatorGaugeScene;
-import net.liukrast.eg.content.ponder.scenes.highLogistics.CounterGaugeScene;
-import net.liukrast.eg.content.ponder.scenes.highLogistics.IntGaugeScene;
-import net.liukrast.eg.content.ponder.scenes.highLogistics.LogicGaugeScene;
+import net.liukrast.eg.content.ponder.scenes.highLogistics.*;
 import net.liukrast.eg.datagen.ExtraGaugesPonderTagProvider;
+import net.liukrast.eg.registry.EGBlocks;
 import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -26,15 +25,17 @@ public class ExtraGaugesPonderPlugin implements PonderPlugin {
         PonderSceneRegistrationHelper<Item> HELPER = helper.withKeyFunction(BuiltInRegistries.ITEM::getKey);
 
         HELPER.forComponents(EGItems.LOGIC_GAUGE.get())
-                .addStoryBoard("high_logistics/logic_gauge", LogicGaugeScene::logicGauge);
-        HELPER.forComponents(EGItems.INT_GAUGE.get())
-                .addStoryBoard("high_logistics/integer_gauge_redstone", IntGaugeScene::intGaugeRedstone)
-                .addStoryBoard("high_logistics/integer_gauge_factory", IntGaugeScene::intGaugeFactory);
+                .addStoryBoard("high_logistics/logic_gauge", LogicGaugeScene::logicGauge)
+                .addStoryBoard("high_logistics/logic_gauge_storage", LogicGaugeScene::logicGaugeStorage);
+        HELPER.forComponents(EGItems.INT_GAUGE.get(), EGBlocks.INT_SELECTOR.asItem())
+                .addStoryBoard("high_logistics/integer_gauge", IntGaugeScene::intGauge)
+                .addStoryBoard("high_logistics/integer_gauge_storage", IntGaugeScene::intGaugeStorage);
         HELPER.forComponents(EGItems.COUNTER_GAUGE.get())
                 .addStoryBoard("high_logistics/counter_gauge", CounterGaugeScene::countGauge);
         HELPER.forComponents(EGItems.COMPARATOR_GAUGE.get())
                 .addStoryBoard("high_logistics/comparator_gauge_redstone", ComparatorGaugeScene::compGaugeRedstone)
                 .addStoryBoard("high_logistics/comparator_gauge_factory", ComparatorGaugeScene::compGaugeFactory);
+                .addStoryBoard("high_logistics/comparator_gauge", ComparatorGaugeScene::comparatorGauge);
     }
 
     @Override

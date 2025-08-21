@@ -13,7 +13,6 @@ import net.liukrast.eg.api.util.IFPExtra;
 import net.liukrast.eg.registry.EGPanelConnections;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.neoforged.neoforge.common.NeoForge;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

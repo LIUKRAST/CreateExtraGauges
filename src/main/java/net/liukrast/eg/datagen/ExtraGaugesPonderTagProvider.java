@@ -14,6 +14,7 @@ public class ExtraGaugesPonderTagProvider{
                 .add(EGItems.LOGIC_GAUGE.get())
                 .add(EGItems.INT_GAUGE.get())
                 .add(EGItems.COMPARATOR_GAUGE.get())
-                .add(EGItems.COUNTER_GAUGE.get());
+                .add(EGItems.COUNTER_GAUGE.get())
+                .add(EGItems.PASSIVE_GAUGE.get());
     }
 }

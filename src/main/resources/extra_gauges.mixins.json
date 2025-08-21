@@ -1,7 +1,7 @@
 {
   "required": true,
   "mixinextras": {
-    "minVersion": "0.5.0-rc.2"
+    "minVersion": "0.5.0"
   },
   "minVersion": "0.8",
   "package": "net.liukrast.eg.mixin",
@@ -9,6 +9,7 @@
   "refmap": "extra_gauges.refmap.json",
   "mixins": [
     "AllIconsMixin",
+    "ClickToLinkBlockItemMixin",
     "ClientEventsMixin",
     "FactoryGaugeDisplaySourceMixin",
     "FactoryPanelBehaviourAccessor",
@@ -21,9 +22,11 @@
     "FactoryPanelRendererMixin",
     "FactoryPanelSupportBehaviourMixin",
     "FilteringBehaviourMixin",
-    "FilteringRendererMixin"
+    "FilteringRendererMixin",
+    "ValueSettingsClientMixin"
   ],
   "client": [
+    "FactoryPanelScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
