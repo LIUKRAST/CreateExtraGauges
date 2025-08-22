@@ -24,6 +24,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 public class PassivePanelBehaviour extends AbstractPanelBehaviour {
@@ -70,6 +72,7 @@ public class PassivePanelBehaviour extends AbstractPanelBehaviour {
         return false;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void displayScreen(Player player) {
         if (player instanceof LocalPlayer)

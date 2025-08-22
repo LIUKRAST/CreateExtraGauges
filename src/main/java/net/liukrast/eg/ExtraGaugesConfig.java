@@ -27,11 +27,9 @@ public class ExtraGaugesConfig {
             .defineInRange("stringGaugeMaxLength", 256, 0, Integer.MAX_VALUE);
 
     static final ModConfigSpec SPEC = BUILDER.build();
-
-    @OnlyIn(Dist.CLIENT)
+    
     private static final ModConfigSpec.Builder CLIENT = new ModConfigSpec.Builder();
 
-    @OnlyIn(Dist.CLIENT)
     public static final ModConfigSpec.BooleanValue PANEL_CACHING = CLIENT
             .comment("Caching all input values to display when non instant updates are still processing")
             .define("panelCaching", true);

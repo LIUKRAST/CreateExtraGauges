@@ -5,11 +5,10 @@
   },
   "minVersion": "0.8",
   "package": "net.liukrast.eg.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_21",
   "refmap": "extra_gauges.refmap.json",
   "mixins": [
     "AllIconsMixin",
-    "ClickToLinkBlockItemMixin",
     "ClientEventsMixin",
     "FactoryGaugeDisplaySourceMixin",
     "FactoryPanelBehaviourAccessor",
@@ -23,11 +22,12 @@
     "FactoryPanelSupportBehaviourMixin",
     "FilteringBehaviourMixin",
     "FilteringRendererMixin",
-    "PackageRepackageHelperMixin",
-    "ValueSettingsClientMixin"
+    "PackageRepackageHelperMixin"
   ],
   "client": [
-    "FactoryPanelScreenMixin"
+    "FactoryPanelScreenMixin",
+    "ClickToLinkBlockItemMixin",
+    "ValueSettingsClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1
