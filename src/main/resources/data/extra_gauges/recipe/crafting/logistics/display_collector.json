@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "create:display_link"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "extra_gauges:display_collector"
+  }
+}
