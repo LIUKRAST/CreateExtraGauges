@@ -1,7 +1,5 @@
 package net.liukrast.eg;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ExtraGaugesConfig {
@@ -27,7 +25,7 @@ public class ExtraGaugesConfig {
             .defineInRange("stringGaugeMaxLength", 256, 0, Integer.MAX_VALUE);
 
     static final ModConfigSpec SPEC = BUILDER.build();
-    
+
     private static final ModConfigSpec.Builder CLIENT = new ModConfigSpec.Builder();
 
     public static final ModConfigSpec.BooleanValue PANEL_CACHING = CLIENT
