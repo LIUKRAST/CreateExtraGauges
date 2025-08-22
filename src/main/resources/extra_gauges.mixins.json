@@ -23,6 +23,7 @@
     "FactoryPanelSupportBehaviourMixin",
     "FilteringBehaviourMixin",
     "FilteringRendererMixin",
+    "PackageRepackageHelperMixin",
     "ValueSettingsClientMixin"
   ],
   "client": [
