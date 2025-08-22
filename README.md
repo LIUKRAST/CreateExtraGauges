@@ -34,3 +34,9 @@
 
 Bring logic, math, text, and advanced recipes into your Create contraptions —  
 **Extra Gauges = extra power for your factory!**
+
+<p align="center">
+<a href="https://discord.gg/pvn8zg9bNY"><img src="http://play.liukrast.net/discord.png" onmouseover="this.src='http://play.liukrast.net/discord_hovered.png'" onmouseout="this.src='http://play.liukrast.net/discord.png'" width="160" style="image-rendering: pixelated"/></a>
+<a href="https://modrinth.com/mod/extra-gauges"><img src="http://play.liukrast.net/modrinth.png" onmouseover="this.src='http://play.liukrast.net/modrinth_hovered.png'" onmouseout="this.src='http://play.liukrast.net/modrinth.png'" width="160" style="image-rendering: pixelated"/></a>
+<a href="https://www.curseforge.com/minecraft/mc-mods/create-extra-gauges"><img src="http://play.liukrast.net/curseforge.png" onmouseover="this.src='http://play.liukrast.net/curseforge_hovered.png'" onmouseout="this.src='http://play.liukrast.net/curseforge.png'" width="160" style="image-rendering: pixelated"/></a>
+</p>
