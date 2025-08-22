@@ -28,7 +28,7 @@
 
 ## 🙌 Credits
 - **Original idea:** Propants05  
-- **Supporter:** Professaurus  
+- **Supporter:** swzo 
 
 ---
 
