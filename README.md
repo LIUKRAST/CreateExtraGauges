@@ -1,67 +1,36 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/LIUKRAST/CreateExtraGauges/refs/heads/master/page/title.png"  alt="Title"/>
-</p>
+![Title](https://raw.githubusercontent.com/LIUKRAST/CreateExtraGauges/refs/heads/master/page/title.png)
+# Create: Extra Gauges
 
-<div style="position: relative; width: 100%; max-width: 100%; aspect-ratio: 1280 / 832; background-image: url('https://raw.githubusercontent.com/LIUKRAST/CreateExtraGauges/refs/heads/master/page/expanded_crafting.png'); background-size: cover; background-position: center;">
-  <iframe src="https://youtu.be/bXDiJp56Sbg?si=L0WsYffnDONz5hE1"
-          frameborder="0"
-          allowfullscreen
-          style="position: absolute; top: 10%; left: 10%; width: 80%; height: 80%;">
-  </iframe>
-</div>
+**Create: Extra Gauges** is an addon for the [Create mod](https://github.com/Creators-of-Create/Create) that expands automation with new types of gauges and smart logic tools.
 
-## ![Logic Gauge](page/logic_gauge.png) Logic Gauge
-> The logic gauge allows transferring redstone data through their connections.
-> Instead of having an item filter like the factory gauge,
-> it lets you select between many Logic Gates (OR, AND, NAND, NOR, XOR, XNOR)
-> and will use these gates to manage the inputs/outputs.<br>
-> `Example: You have two redstone signals coming into the gauge, and your logic gate is set to "AND",
-> it will only output redstone if ALL the inputs are on.`
+---
 
-## ![Integer Gauge](page/integer_gauge.png) Integer Gauge
-> The integer gauge transfers integer (numerical) data through their connections.
-> Instead of a logic gate, it will have some mathematical operation gates (+, -, *),
-> and will apply those operations with the inputs.
-> If connected to **Factory Gauges**,
-> they will send the item amount of that type in the linked storage all the way to the integer gauge.<br>
-> `Example: You have to factory gauge inputs (one for diamonds and one for emeralds), and you have 3 diamonds and 2 emeralds in your storage.
-> You can use the integer gauge to sum, subtract or multiply these two numbers to get an integer output (for example 3 + 2 = 5). This can be directly sent to redstone links or logic gauges converting the number into a redstone signal.<br>
-> NOTE: The subtract operation isn't really a subtract operation. Instead, it's a sum that gets then inverted (positive -> negative and viceversa)`
+## ✨ Key Feature
+- **Factory Gauges can now craft larger autocrafter recipes** *(2.0)*  
+  *Example: Crushing Wheels can be crafted with andesite alloy, andesite, and spruce planks.*
 
-## ![Comparator Gauge](page/comparator_gauge.png) Comparator Gauge
-> The comparator gauge converts integer data into redstone data, using a specific comparison operation.
-> By holding right-click, you can select a **Value** which will be stored into your gauge data.
-> By just right-clicking (without holding),
-> you can instead open the menu to set up the comparison mode (=, !=, >, <, >=, <=).
-> The comparison mode will then be used to evaluate the result based on the input and the value.
-> Let's say you input a value of 15, and the mode is =, it will be compared `input = value`, and if it's true,
-> it will output a redstone signal
+---
 
-## ![Counter Gauge](page/counter_gauge.png) Counter Gauge
-> The counter-gauge can convert redstone inputs in both integer and another redstone data,
-> let's see.
-> Each time a redstone pulse is sent to the gauge, the counter will increase by one.
-> By holding right-click, you can change the threshold,
-> which will define the maximum number your count can reach.
-> Once the threshold is reached, redstone output will be sent.
-> Another redstone pulse will reset the counter to 0.
+## 🛠 Features
+- **Logic Gauge** – apply logical operators (AND, OR, NAND, NOR, XOR, XNOR) to redstone signals.  
+- **Integer Gauge** – perform arithmetic with numeric values (addition, subtraction, multiplication).  
+- **Comparator Gauge** – compare numeric input with a stored value using conditions (=, ≠, >, <, ≥, ≤).  
+- **Counter Gauge** – count redstone pulses and output once a threshold is reached.  
+- **String Gauge** *(2.0)* – transfer and modify text; integrates with Display Links.  
+- **Passive Gauge** *(2.0, idea by @Spark)* – reacts to inputs without constant power needs.  
+- **Integer Selector** *(2.0)* – provides configurable integer input for Integer Gauges.  
+- **Panel improvements** *(2.0)* – instant updates with configurable limits per tick.  
+- **Levers & analog levers** *(2.0)* – directly connect to gauges without redstone links.  
+- **Cache system** *(2.0)* – visual feedback (yellow lines) when updates are pending.  
+- Refined gauge **textures** *(2.0)* to better match the Create aesthetic.  
 
-## Contributing
+---
 
-Forking and contributing to the mod are welcomed, though i would ask for some things:
-- Each commit should explain what was changed 
-- Commits should not include any change in the mod description, authors, or any of the mods toml properties except special cases
+## 🙌 Credits
+- **Original idea:** Propants05  
+- **Supporter:** Professaurus  
 
-## Depending on the mod
-Check the [Wiki](https://github.com/LIUKRAST/CreateExtraGauges/wiki) to depend on this mod
+---
 
-
-## Installation
-You can install the mod from the 3rd party sites you find below (curseforge/modrinth) 
-
-**Thanks to Propants05 for the initial mod idea, and Professaurus for supporting the project through donations.**
-<p align="center">
-<a href="https://discord.gg/pvn8zg9bNY"><img src="http://play.liukrast.net/discord.png" onmouseover="this.src='http://play.liukrast.net/discord_hovered.png'" onmouseout="this.src='http://play.liukrast.net/discord.png'" width="160" style="image-rendering: pixelated"/></a>
-<a href="https://modrinth.com/mod/extra-gauges"><img src="http://play.liukrast.net/modrinth.png" onmouseover="this.src='http://play.liukrast.net/modrinth_hovered.png'" onmouseout="this.src='http://play.liukrast.net/modrinth.png'" width="160" style="image-rendering: pixelated"/></a>
-<a href="https://www.curseforge.com/minecraft/mc-mods/create-extra-gauges"><img src="http://play.liukrast.net/curseforge.png" onmouseover="this.src='http://play.liukrast.net/curseforge_hovered.png'" onmouseout="this.src='http://play.liukrast.net/curseforge.png'" width="160" style="image-rendering: pixelated"/></a>
-</p>
+Bring logic, math, text, and advanced recipes into your Create contraptions —  
+**Extra Gauges = extra power for your factory!**
