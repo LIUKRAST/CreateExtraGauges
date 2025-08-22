@@ -63,7 +63,7 @@
   "extra_gauges.ponder.integer_gauge.text_4": "... and §9Integer §9selectors §rallow to input way more numbers.",
   "extra_gauges.ponder.integer_gauge.text_5": "§eNote: §rLevers and Analog levers §cdo §cnot §csend §can §cupdate §cinstantly§r, while redstone links and §9Integer §9selectors §rdo.",
   "extra_gauges.ponder.integer_gauge.text_6": "Let's see what happens if we connect two integer gauges...",
-  "extra_gauges.ponder.integer_gauge.text_7": "The gauge, now having §92 §9inputs§r, will output the §6sum§r of these.",
+  "extra_gauges.ponder.integer_gauge.text_7": "The gauge, now having §92 §9inputs§r, will output the §6sum§r of these. (No 15+7 anymore)",
   "extra_gauges.ponder.integer_gauge.text_8": "By holding right click, we can change the operation this gauge applies, using §6SUBTRACT §ror §6MULTIPLY§r.",
   "extra_gauges.ponder.integer_gauge_storage.header": "Making Integer Gauges interact with Factory Gauges",
   "extra_gauges.ponder.integer_gauge_storage.text_1": "Integer gauges are obviously meant to interact with other gauges",
