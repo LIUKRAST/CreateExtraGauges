@@ -131,6 +131,7 @@
   "extra_gauges.gui.factory_panel.extend_width": "幅を広げる (%s)",
   "extra_gauges.gui.factory_panel.reduce_width": "幅を縮める (%s)",
   "extra_gauges.gui.passive_panel.no_recipe": "レシピがありません",
+
   "extra_gauges.gui.string_panel.join": "結合:",
   "extra_gauges.gui.string_panel.regex": "正規表現:",
   "extra_gauges.gui.string_panel.replacement": "置換:"
