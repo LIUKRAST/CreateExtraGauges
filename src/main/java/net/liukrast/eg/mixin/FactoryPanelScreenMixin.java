@@ -191,20 +191,25 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
     @Expression("slot = 0")
     @Inject(method = "renderWindow", at = @At("MIXINEXTRAS:EXPRESSION"))
     private void renderWindow(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci, @Local(ordinal = 2) int x, @Local(ordinal = 3) int y) {
-        if(extra_gauges$availableMechanicalRecipe == null) return;
-        graphics.blit(extra_gauges$TEXTURE, x+56, y+23, 0, 0, 79, 72);
-        if(mouseX < x+56+11 || mouseX > x+56+68 || mouseY < y+23+4 || mouseY > y+23+61) return;
-        graphics.renderComponentTooltip(font, List.of(
-                Component.translatable("extra_gauges.gui.factory_panel.auto_crafting_input")
+        if(!craftingActive) return;
+        if(extra_gauges$availableMechanicalRecipe != null) {
+            graphics.blit(extra_gauges$TEXTURE, x + 56, y + 23, 0, 0, 79, 72);
+            if (!(mouseX < x + 56 + 11 || mouseX > x + 56 + 68 || mouseY < y + 23 + 4 || mouseY > y + 23 + 61)) {
+                graphics.renderComponentTooltip(font, List.of(
+                        Component.translatable("extra_gauges.gui.factory_panel.auto_crafting_input")
                                 .withStyle(style -> style.withColor(0xFFeeda78)),
-                CreateLang.translate("gui.factory_panel.crafting_input_tip")
+                        CreateLang.translate("gui.factory_panel.crafting_input_tip")
                                 .style(ChatFormatting.GRAY)
                                 .component(),
-                Component.translatable("extra_gauges.gui.factory_panel.crafting_input_tip_1", extra_gauges$width)
-                        .withStyle(ChatFormatting.GRAY),
-                Component.translatable("extra_gauges.gui.factory_panel.crafting_input_tip_2", extra_gauges$height)
-                        .withStyle(ChatFormatting.GRAY)
-        ), mouseX, mouseY);
+                        Component.translatable("extra_gauges.gui.factory_panel.crafting_input_tip_1", extra_gauges$width)
+                                .withStyle(ChatFormatting.GRAY),
+                        Component.translatable("extra_gauges.gui.factory_panel.crafting_input_tip_2", extra_gauges$height)
+                                .withStyle(ChatFormatting.GRAY)
+                ), mouseX, mouseY);
+            }
+        }
+        extra_gauges$generateButton(graphics,x+56+75, y+23+14, 80, mouseX, mouseY, Component.translatable("extra_gauges.gui.factory_panel.extend_width", extra_gauges$width));
+        if(extra_gauges$width > (extra_gauges$availableMechanicalRecipe == null ? 3 : extra_gauges$availableMechanicalRecipe.getWidth())) extra_gauges$generateButton(graphics, x+56+75, y+23+14+22, 88, mouseX, mouseY, Component.translatable("extra_gauges.gui.factory_panel.reduce_width", extra_gauges$width));
     }
 
     @ModifyExpressionValue(method = "renderWindow", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelScreen;craftingIngredients:Ljava/util/List;"))
@@ -222,13 +227,6 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
     @WrapWithCondition(method = "renderWindow", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelScreen;renderInputItem(Lnet/minecraft/client/gui/GuiGraphics;ILcom/simibubi/create/content/logistics/BigItemStack;II)V", ordinal = 0))
     private boolean renderWindow(FactoryPanelScreen instance, GuiGraphics graphics, int slot, BigItemStack itemStack, int mouseX, int mouseY, @Local(ordinal = 4) LocalIntRef slotRef) {
         return extra_gauges$availableMechanicalRecipe == null;
-    }
-
-    @Inject(method = "renderWindow", at = @At("TAIL"))
-    private void renderWindow$1(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci, @Local(ordinal = 2) int x, @Local(ordinal = 3) int y) {
-        if(!craftingActive) return;
-        extra_gauges$generateButton(graphics,x+56+75, y+23+14, 80, mouseX, mouseY, Component.translatable("extra_gauges.gui.factory_panel.extend_width", extra_gauges$width));
-        if(extra_gauges$width > (extra_gauges$availableMechanicalRecipe == null ? 3 : extra_gauges$availableMechanicalRecipe.getWidth())) extra_gauges$generateButton(graphics, x+56+75, y+23+14+22, 88, mouseX, mouseY, Component.translatable("extra_gauges.gui.factory_panel.reduce_width", extra_gauges$width));
     }
 
     @Unique
