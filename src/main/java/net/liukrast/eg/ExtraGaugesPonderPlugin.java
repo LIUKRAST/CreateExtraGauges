@@ -17,7 +17,7 @@ import org.lwjgl.system.NonnullDefault;
 public class ExtraGaugesPonderPlugin implements PonderPlugin {
     @Override
     public String getModId() {
-        return ExtraGauges.MOD_ID;
+        return EGConstants.MOD_ID;
     }
 
     @Override

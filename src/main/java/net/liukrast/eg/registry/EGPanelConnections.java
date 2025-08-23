@@ -5,7 +5,7 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelConnection;
@@ -22,7 +22,7 @@ import java.util.function.Function;
 public class EGPanelConnections {
     private EGPanelConnections() {}
     static final Map<PanelConnection<?>, Function<FactoryPanelBehaviour, ?>> FACTORY_CONNECTIONS = new Reference2ObjectArrayMap<>();
-    private static final DeferredRegister<PanelConnection<?>> CONNECTIONS = DeferredRegister.create(EGRegistries.PANEL_CONNECTION_REGISTRY, ExtraGauges.MOD_ID);
+    private static final DeferredRegister<PanelConnection<?>> CONNECTIONS = DeferredRegister.create(EGRegistries.PANEL_CONNECTION_REGISTRY, EGConstants.MOD_ID);
 
     public static final DeferredHolder<PanelConnection<?>, PanelConnection<FilterItemStack>> FILTER = CONNECTIONS.register("filter", PanelConnection::new);
     public static final DeferredHolder<PanelConnection<?>, PanelConnection<Integer>> REDSTONE = CONNECTIONS.register("redstone", PanelConnection::new);

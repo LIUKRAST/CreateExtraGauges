@@ -24,7 +24,7 @@ import java.util.EnumMap;
 @Mixin(FactoryPanelModel.class)
 public class FactoryPanelModelMixin {
     @Unique
-    private static final ModelProperty<EnumMap<FactoryPanelBlock.PanelSlot, AbstractPanelBehaviour>> PANEL_MODEL = new ModelProperty<>();
+    private static final ModelProperty<EnumMap<FactoryPanelBlock.PanelSlot, AbstractPanelBehaviour>> extra_gauges$PANEL_MODEL = new ModelProperty<>();
 
     @Inject(method = "gatherModelData", at = @At("RETURN"))
     private void gatherModelData(ModelData.Builder builder, BlockAndTintGetter world, BlockPos pos, BlockState state, ModelData blockEntityData, CallbackInfoReturnable<ModelData.Builder> cir) {
@@ -34,14 +34,15 @@ public class FactoryPanelModelMixin {
             if(!(behaviour instanceof AbstractPanelBehaviour abstractBehaviour)) continue;
             states.put(slot, abstractBehaviour);
         }
-        cir.getReturnValue().with(PANEL_MODEL, states);
+        cir.getReturnValue().with(extra_gauges$PANEL_MODEL, states);
     }
 
     @ModifyVariable(method = "addPanel", at = @At(value = "STORE", ordinal = 0))
-    private PartialModel addPanel(PartialModel model, @Local(argsOnly = true) ModelData modelData, @Local(argsOnly = true) FactoryPanelBlock.PanelSlot slot, @Local(argsOnly = true)FactoryPanelBlock.PanelState panelState, @Local(argsOnly = true)FactoryPanelBlock.PanelType panelType) {
-        var panelModel = modelData.get(PANEL_MODEL);
-        if(panelModel == null) return model;
-        if(!panelModel.containsKey(slot)) return model;
-        return panelModel.get(slot).getModel(panelState, panelType);
+    private PartialModel addPanel(PartialModel original, @Local(argsOnly = true) ModelData modelData, @Local(argsOnly = true) FactoryPanelBlock.PanelSlot slot, @Local(argsOnly = true)FactoryPanelBlock.PanelState panelState, @Local(argsOnly = true)FactoryPanelBlock.PanelType panelType) {
+        var panelModel = modelData.get(extra_gauges$PANEL_MODEL);
+        if(panelModel == null) return original;
+        if(panelModel.get(slot) == null) return original;
+        var model1 = panelModel.get(slot).getModel(panelState, panelType);
+        return model1 == null ? original : model1;
     }
 }

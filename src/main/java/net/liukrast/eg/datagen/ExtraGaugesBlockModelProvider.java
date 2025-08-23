@@ -1,6 +1,6 @@
 package net.liukrast.eg.datagen;
 
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -14,7 +14,7 @@ import java.util.function.Function;
 
 public class ExtraGaugesBlockModelProvider extends BlockModelProvider {
     public ExtraGaugesBlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, ExtraGauges.MOD_ID, existingFileHelper);
+        super(output, EGConstants.MOD_ID, existingFileHelper);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ExtraGaugesBlockModelProvider extends BlockModelProvider {
 
     public static BlockModelBuilder createGauge(BlockModelProvider instance, Item item, Function<String, String> texture) {
         var id = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
-        return instance.getBuilder(id.toString()).parent(new ModelFile.UncheckedModelFile(ExtraGauges.id("block/template_gauge")))
+        return instance.getBuilder(id.toString()).parent(new ModelFile.UncheckedModelFile(EGConstants.id("block/template_gauge")))
                 .texture("texture", ResourceLocation.fromNamespaceAndPath(id.getNamespace(), texture.apply(id.getPath())))
                 .texture("particle", ResourceLocation.fromNamespaceAndPath(id.getNamespace(), texture.apply(id.getPath())));
     }

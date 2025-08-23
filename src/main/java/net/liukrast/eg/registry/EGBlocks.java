@@ -1,7 +1,7 @@
 package net.liukrast.eg.registry;
 
 import com.simibubi.create.AllBlocks;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.content.item.DisplayCollectorBlockItem;
 import net.liukrast.eg.content.logistics.IntSelectorBlock;
 import net.liukrast.eg.content.logistics.DisplayCollectorBlock;
@@ -15,8 +15,8 @@ import org.jetbrains.annotations.ApiStatus;
 
 public class EGBlocks {
     private EGBlocks() {}
-    private static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ExtraGauges.MOD_ID);
-    private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ExtraGauges.MOD_ID);
+    private static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(EGConstants.MOD_ID);
+    private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(EGConstants.MOD_ID);
 
     public static final DeferredBlock<IntSelectorBlock> INT_SELECTOR = BLOCKS.register("integer_selector", () -> new IntSelectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get())));
     public static final DeferredBlock<DisplayCollectorBlock> DISPLAY_COLLECTOR = BLOCKS.register("display_collector", () -> new DisplayCollectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.DISPLAY_LINK.get())));

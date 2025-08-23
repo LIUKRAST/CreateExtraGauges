@@ -6,7 +6,7 @@
   "minVersion": "0.8",
   "package": "net.liukrast.eg.mixin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "extra_gauges.refmap.json",
+  "plugin": "net.liukrast.eg.mixin.plugin.ExtraGaugesMixinConfigPlugin",
   "mixins": [
     "AllIconsMixin",
     "ClientEventsMixin",
@@ -25,8 +25,8 @@
     "PackageRepackageHelperMixin"
   ],
   "client": [
-    "FactoryPanelScreenMixin",
     "ClickToLinkBlockItemMixin",
+    "FactoryPanelScreenMixin",
     "ValueSettingsClientMixin"
   ],
   "injectors": {

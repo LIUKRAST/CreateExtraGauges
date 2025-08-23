@@ -10,7 +10,7 @@ import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.gui.element.GuiGameElement;
 import net.createmod.catnip.platform.CatnipServices;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 
 public class BasicPanelScreen<T extends AbstractPanelBehaviour> extends AbstractSimiScreen {
-    public static final ResourceLocation TEXTURE = ExtraGauges.id("textures/gui/generic_gauge.png");
+    public static final ResourceLocation TEXTURE = EGConstants.id("textures/gui/generic_gauge.png");
 
     public final T behaviour;
     private boolean sendReset;

@@ -3,7 +3,7 @@ package net.liukrast.eg.registry;
 import com.simibubi.create.Create;
 import net.createmod.catnip.net.base.BasePacketPayload;
 import net.createmod.catnip.net.base.CatnipPacketRegistry;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.networking.FactoryPanelChangeSizePacket;
 import net.liukrast.eg.networking.PanelCacheUpdatePacket;
 import net.liukrast.eg.networking.StringPanelUpdatePacket;
@@ -35,7 +35,7 @@ public enum RegisterPackets implements BasePacketPayload.PacketTypeProvider {
     }
 
     public static void register() {
-        CatnipPacketRegistry packetRegistry = new CatnipPacketRegistry(ExtraGauges.MOD_ID, "1.0.0");
+        CatnipPacketRegistry packetRegistry = new CatnipPacketRegistry(EGConstants.MOD_ID, "1.0.0");
         for (RegisterPackets packet : RegisterPackets.values()) {
             packetRegistry.registerPacket(packet.type);
         }

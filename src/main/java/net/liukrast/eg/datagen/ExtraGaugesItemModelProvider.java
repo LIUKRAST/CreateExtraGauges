@@ -1,6 +1,6 @@
 package net.liukrast.eg.datagen;
 
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -19,7 +19,7 @@ import java.util.function.Function;
  * */
 public class ExtraGaugesItemModelProvider extends ItemModelProvider {
     public ExtraGaugesItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, ExtraGauges.MOD_ID, existingFileHelper);
+        super(output, EGConstants.MOD_ID, existingFileHelper);
     }
 
     public static ItemModelBuilder createGauge(ItemModelProvider instance, Item item, Function<String, String> texture) {
@@ -51,6 +51,6 @@ public class ExtraGaugesItemModelProvider extends ItemModelProvider {
         createGauge(EGItems.COUNTER_GAUGE.get());
         createGauge(EGItems.PASSIVE_GAUGE.get());
         createGauge(EGItems.STRING_GAUGE.get());
-        withExistingParent("integer_selector", ExtraGauges.id("block/integer_selector"));
+        withExistingParent("integer_selector", EGConstants.id("block/integer_selector"));
     }
 }

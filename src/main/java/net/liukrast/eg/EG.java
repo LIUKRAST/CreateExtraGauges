@@ -1,6 +1,5 @@
 package net.liukrast.eg;
 
-import net.createmod.ponder.foundation.PonderIndex;
 import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.datagen.ExtraGaugesBlockModelProvider;
 import net.liukrast.eg.datagen.ExtraGaugesBlockStateProvider;
@@ -8,31 +7,21 @@ import net.liukrast.eg.datagen.ExtraGaugesItemModelProvider;
 import net.liukrast.eg.registry.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-@Mod(ExtraGauges.MOD_ID)
-public class ExtraGauges {
-    public static final String MOD_ID = "extra_gauges";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+@Mod(EGConstants.MOD_ID)
+public class EG {
 
-    public static ResourceLocation id(String path, Object... args) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, String.format(path, args));
-    }
-
-    public ExtraGauges(IEventBus modEventBus, ModContainer modContainer) {
+    public EG(IEventBus modEventBus, ModContainer modContainer) {
         EGItems.register(modEventBus);
         EGPanels.register(modEventBus);
         EGCreativeModeTabs.register(modEventBus);
@@ -41,9 +30,7 @@ public class ExtraGauges {
         EGBlockEntityTypes.register(modEventBus);
         EGDisplayTargets.register(modEventBus);
         modEventBus.register(this);
-        modEventBus.addListener(EGBlockEntityTypes::registerRenderers);
         modContainer.registerConfig(ModConfig.Type.COMMON, ExtraGaugesConfig.SPEC);
-        modContainer.registerConfig(ModConfig.Type.CLIENT, ExtraGaugesConfig.CLIENT_SPEC);
         RegisterPackets.register();
         NeoForge.EVENT_BUS.addListener(this::loadLevel);
     }
@@ -51,12 +38,6 @@ public class ExtraGauges {
     private void loadLevel(LevelEvent.Load event) {
         EGExtraPanelConnections.register();
         EGPanelConnections.initDefaults();
-    }
-
-    @SubscribeEvent
-    private void fMLClientSetup(FMLClientSetupEvent event) {
-        EGPartialModels.init();
-        PonderIndex.addPlugin(new ExtraGaugesPonderPlugin());
     }
 
     @SubscribeEvent

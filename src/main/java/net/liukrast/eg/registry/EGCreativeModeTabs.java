@@ -1,6 +1,6 @@
 package net.liukrast.eg.registry;
 
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.ApiStatus;
 public class EGCreativeModeTabs {
     private EGCreativeModeTabs() {}
 
-    private static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, ExtraGauges.MOD_ID);
+    private static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, EGConstants.MOD_ID);
 
     static {
         CREATIVE_MODE_TAB.register("main_tab", () -> CreativeModeTab.builder()

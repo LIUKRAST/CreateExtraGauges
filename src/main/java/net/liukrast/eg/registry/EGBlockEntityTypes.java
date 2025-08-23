@@ -1,7 +1,7 @@
 package net.liukrast.eg.registry;
 
 import com.simibubi.create.content.redstone.displayLink.LinkBulbRenderer;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.content.logistics.DisplayCollectorBlockEntity;
 import net.liukrast.eg.content.logistics.IntSelectorBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.ApiStatus;
 @SuppressWarnings("DataFlowIssue")
 public class EGBlockEntityTypes {
     private EGBlockEntityTypes() {}
-    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, ExtraGauges.MOD_ID);
+    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, EGConstants.MOD_ID);
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IntSelectorBlockEntity>> INT_SELECTOR = BLOCK_ENTITY_TYPES.register("integer_selector", () -> BlockEntityType.Builder.of(IntSelectorBlockEntity::new, EGBlocks.INT_SELECTOR.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DisplayCollectorBlockEntity>> DISPLAY_COLLECTOR = BLOCK_ENTITY_TYPES.register("display_collector", () -> BlockEntityType.Builder.of(DisplayCollectorBlockEntity::new, EGBlocks.DISPLAY_COLLECTOR.get()).build(null));

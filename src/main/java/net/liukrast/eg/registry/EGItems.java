@@ -1,6 +1,6 @@
 package net.liukrast.eg.registry;
 
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.api.logistics.board.PanelBlockItem;
 import net.liukrast.eg.content.item.LogisticallyLinkedPanelBlockItem;
 import net.minecraft.world.item.Item;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.ApiStatus;
 
 public class EGItems {
     private EGItems() {}
-    private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ExtraGauges.MOD_ID);
+    private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(EGConstants.MOD_ID);
 
     public static final DeferredItem<PanelBlockItem> LOGIC_GAUGE = ITEMS.register("logic_gauge", () -> new PanelBlockItem(EGPanels.LOGIC::get, new Item.Properties()));
     public static final DeferredItem<PanelBlockItem> INT_GAUGE = ITEMS.register("integer_gauge", () -> new PanelBlockItem(EGPanels.INT::get, new Item.Properties()));

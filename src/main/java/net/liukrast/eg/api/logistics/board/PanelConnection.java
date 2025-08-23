@@ -1,6 +1,6 @@
 package net.liukrast.eg.api.logistics.board;
 
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.api.util.ConnectionExtra;
 import net.minecraft.core.Direction;
@@ -20,7 +20,7 @@ public class PanelConnection<T> {
     public PanelConnection() {}
 
     public void addListener(ConnectionExtra<T> supplier, Block... validBlocks) {
-        if(validBlocks.length == 0) ExtraGauges.LOGGER.error("Registered panel connection listener without any blocks. {}", this);
+        if(validBlocks.length == 0) EGConstants.LOGGER.error("Registered panel connection listener without any blocks. {}", this);
         for(var block : validBlocks) {
             extraConnections.put(block, supplier);
         }

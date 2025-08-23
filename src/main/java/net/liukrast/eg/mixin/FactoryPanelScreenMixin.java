@@ -18,7 +18,7 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelScreen;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.platform.CatnipServices;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.api.util.IFPExtra;
 import net.liukrast.eg.networking.FactoryPanelChangeSizePacket;
 import net.minecraft.ChatFormatting;
@@ -50,7 +50,7 @@ import java.util.Set;
 
 @Mixin(FactoryPanelScreen.class)
 public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
-    @Unique private static final ResourceLocation extra_gauges$TEXTURE = ExtraGauges.id("textures/gui/auto_crafting_gauge.png");
+    @Unique private static final ResourceLocation extra_gauges$TEXTURE = EGConstants.id("textures/gui/auto_crafting_gauge.png");
 
     @Unique private MechanicalCraftingRecipe extra_gauges$availableMechanicalRecipe = null;
 

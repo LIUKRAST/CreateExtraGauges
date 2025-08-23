@@ -1,6 +1,5 @@
 {
-	"format_version": "1.21.6",
-	"credit": "Made with Blockbench",
+	"format_version": "1.9.0",
 	"elements": [
 		{
 			"from": [1, 0, 1],
@@ -36,14 +35,6 @@
 				"up": {"uv": [0, 10, 8, 14], "rotation": 180, "texture": "#texture"},
 				"down": {"uv": [0, 10, 8, 14], "texture": "#texture"}
 			}
-		}
-	],
-	"groups": [
-		{
-			"name": "group",
-			"origin": [9, 0.5, 7],
-			"color": 0,
-			"children": [0, 1, 2]
 		}
 	]
 }

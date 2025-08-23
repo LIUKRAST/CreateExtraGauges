@@ -4,7 +4,7 @@ import com.mojang.serialization.DynamicOps;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.content.redstone.displayLink.DisplayLinkBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.api.logistics.ColoredFactoryPanelSupportBehaviour;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
@@ -48,7 +48,7 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
         DynamicOps<Tag> dynamicops = registries.createSerializationContext(NbtOps.INSTANCE);
         ComponentSerialization.FLAT_CODEC
                 .parse(dynamicops, tag.get("text"))
-                .resultOrPartial(ExtraGauges.LOGGER::error)
+                .resultOrPartial(EGConstants.LOGGER::error)
                 .ifPresent(text -> component = text);
     }
 
@@ -59,7 +59,7 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
         DynamicOps<Tag> dynamicops = registries.createSerializationContext(NbtOps.INSTANCE);
         ComponentSerialization.FLAT_CODEC
                 .encodeStart(dynamicops, component)
-                .resultOrPartial(ExtraGauges.LOGGER::error)
+                .resultOrPartial(EGConstants.LOGGER::error)
                 .ifPresent(tag1 -> tag.put("text", tag1));
     }
 

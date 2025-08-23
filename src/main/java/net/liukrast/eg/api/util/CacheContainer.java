@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DynamicOps;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import net.createmod.catnip.platform.CatnipServices;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.networking.PanelCacheUpdatePacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -29,10 +29,10 @@ public interface CacheContainer<T> {
             try {
                 BlockPos pos = new BlockPos(Integer.parseInt(t[0]), Integer.parseInt(t[1]), Integer.parseInt(t[2]));
                 codec.parse(dynamicOps, tag.get(key))
-                        .resultOrPartial(ExtraGauges.LOGGER::error)
+                        .resultOrPartial(EGConstants.LOGGER::error)
                         .ifPresent(r -> cache.put(pos, r));
             } catch (NumberFormatException e) {
-                ExtraGauges.LOGGER.error("Unable to parse compound tag {}", tag.get(key), e);
+                EGConstants.LOGGER.error("Unable to parse compound tag {}", tag.get(key), e);
             }
         }
 
@@ -44,7 +44,7 @@ public interface CacheContainer<T> {
         for(BlockPos pos : cache.keySet()) {
             String key = pos.getX()+","+pos.getY()+","+pos.getZ();
             codec.encodeStart(dynamicOps, cache.get(pos))
-                    .resultOrPartial(ExtraGauges.LOGGER::error)
+                    .resultOrPartial(EGConstants.LOGGER::error)
                     .ifPresent(tag1 -> tag.put(key, tag1));
         }
 

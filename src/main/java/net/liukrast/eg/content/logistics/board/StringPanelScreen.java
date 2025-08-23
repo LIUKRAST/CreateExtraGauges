@@ -1,7 +1,7 @@
 package net.liukrast.eg.content.logistics.board;
 
 import net.createmod.catnip.platform.CatnipServices;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.api.logistics.board.BasicPanelScreen;
 import net.liukrast.eg.networking.StringPanelUpdatePacket;
 import net.minecraft.client.gui.GuiGraphics;
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class StringPanelScreen extends BasicPanelScreen<StringPanelBehaviour> {
-    public static final ResourceLocation TEXTURE = ExtraGauges.id("textures/gui/string_gauge.png");
+    public static final ResourceLocation TEXTURE = EGConstants.id("textures/gui/string_gauge.png");
 
     public static final Component JOIN = Component.translatable("extra_gauges.gui.string_panel.join");
     public static final Component REGEX = Component.translatable("extra_gauges.gui.string_panel.regex");

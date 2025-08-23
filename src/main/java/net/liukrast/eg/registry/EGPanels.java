@@ -1,6 +1,6 @@
 package net.liukrast.eg.registry;
 
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.content.logistics.board.*;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.ApiStatus;
 
 public class EGPanels {
     private EGPanels() {}
-    private static final DeferredRegister<PanelType<?>> PANELS = DeferredRegister.create(EGRegistries.PANEL_REGISTRY, ExtraGauges.MOD_ID);
+    private static final DeferredRegister<PanelType<?>> PANELS = DeferredRegister.create(EGRegistries.PANEL_REGISTRY, EGConstants.MOD_ID);
 
     public static final DeferredHolder<PanelType<?>, PanelType<LogicPanelBehaviour>> LOGIC = PANELS.register("logic", () -> new PanelType<>(LogicPanelBehaviour::new, LogicPanelBehaviour.class));
     public static final DeferredHolder<PanelType<?>, PanelType<IntPanelBehaviour>> INT = PANELS.register("integer", () -> new PanelType<>(IntPanelBehaviour::new, IntPanelBehaviour.class));
