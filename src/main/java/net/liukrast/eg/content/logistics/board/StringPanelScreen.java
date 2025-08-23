@@ -12,6 +12,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class StringPanelScreen extends BasicPanelScreen<StringPanelBehaviour> {
     public static final ResourceLocation TEXTURE = ExtraGauges.id("textures/gui/string_gauge.png");
+
+    public static final Component JOIN = Component.translatable("extra_gauges.gui.string_panel.join");
+    public static final Component REGEX = Component.translatable("extra_gauges.gui.string_panel.regex");
+    public static final Component REPLACEMENT = Component.translatable("extra_gauges.gui.string_panel.replacement");
+
     private EditBox joinBox,regexBox,replaceBox;
     public StringPanelScreen(StringPanelBehaviour behaviour) {
         super(behaviour);
@@ -68,11 +73,11 @@ public class StringPanelScreen extends BasicPanelScreen<StringPanelBehaviour> {
     @Override
     protected void renderWindow(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         super.renderWindow(graphics, mouseX, mouseY, partialTicks);
-        graphics.drawString(font, Component.literal("Join:"), guiLeft+20, guiTop+24, 0xFF442b28, false);
+        graphics.drawString(font, JOIN, guiLeft+20, guiTop+24, 0xFF442b28, false);
         graphics.blit(TEXTURE, guiLeft+8, guiTop+30, 0,0, 160, 32);
-        graphics.drawString(font, Component.literal("Regex:"), guiLeft+20, guiTop+24+34, 0xFF442b28, false);
+        graphics.drawString(font, REGEX, guiLeft+20, guiTop+24+34, 0xFF442b28, false);
         graphics.blit(TEXTURE, guiLeft+8, guiTop+30+34, 0,0, 160, 32);
-        graphics.drawString(font, Component.literal("Replacement:"), guiLeft+20, guiTop+24+34+34, 0xFF442b28, false);
+        graphics.drawString(font, REPLACEMENT, guiLeft+20, guiTop+24+34+34, 0xFF442b28, false);
         graphics.blit(TEXTURE, guiLeft+8, guiTop+30+34+34, 0,0, 160, 32);
     }
 }

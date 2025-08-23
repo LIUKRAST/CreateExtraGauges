@@ -130,5 +130,9 @@
   "extra_gauges.gui.factory_panel.auto_crafting_input": "Recipe too big to render",
   "extra_gauges.gui.factory_panel.extend_width": "Extend width (%s)",
   "extra_gauges.gui.factory_panel.reduce_width": "Reduce width (%s)",
-  "extra_gauges.gui.passive_panel.no_recipe": "Missing recipe"
+  "extra_gauges.gui.passive_panel.no_recipe": "Missing recipe",
+
+  "extra_gauges.gui.string_panel.join": "Join:",
+  "extra_gauges.gui.string_panel.regex": "Regex:",
+  "extra_gauges.gui.string_panel.replacement": "Replacement:"
 }
