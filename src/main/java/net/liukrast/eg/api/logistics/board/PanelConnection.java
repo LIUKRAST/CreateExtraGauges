@@ -30,8 +30,8 @@ public class PanelConnection<T> {
         if(state.hasProperty(BlockStateProperties.ATTACH_FACE)) {
             var attachFace = state.getValue(BlockStateProperties.ATTACH_FACE);
             return switch (attachFace) {
-                case CEILING -> Direction.UP;
-                case FLOOR -> Direction.DOWN;
+                case CEILING -> Direction.DOWN;
+                case FLOOR -> Direction.UP;
                 case WALL -> state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             };
         } else if(state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) return state.getValue(BlockStateProperties.HORIZONTAL_FACING);
