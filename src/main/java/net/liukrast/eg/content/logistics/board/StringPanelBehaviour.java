@@ -138,7 +138,7 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
             return;
         value = result;
         try {
-            intValue = Integer.parseInt(result);
+            intValue = (int) Float.parseFloat(value);
         } catch (NumberFormatException ignored) {
             intValue = 0;
         }

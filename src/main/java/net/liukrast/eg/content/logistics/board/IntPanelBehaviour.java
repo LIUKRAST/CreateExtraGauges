@@ -36,6 +36,8 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
     public void addConnections(PanelConnectionBuilder builder) {
         builder.put(EGPanelConnections.INTEGER, () -> count);
         builder.put(EGPanelConnections.REDSTONE, () -> Math.clamp(count, 0, 15));
+        builder.put(EGPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
+
     }
 
     @Override
