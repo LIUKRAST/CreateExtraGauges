@@ -58,8 +58,8 @@
 
   "extra_gauges.ponder.integer_gauge.header": "Using Integer Gauges to transmit numbers",
   "extra_gauges.ponder.integer_gauge.text_1": "Integer gauges can transmit numbers over several wall-attached objects",
-  "extra_gauges.ponder.integer_gauge.text_2": "§9Levers §rand §9Redstone Links §rwill emit a number of 15 if they are on...",
-  "extra_gauges.ponder.integer_gauge.text_3": "... §9Analog §9levers §rwill emit a signal between 0 and 15 based on the state...",
+  "extra_gauges.ponder.integer_gauge.text_2": "§9Levers §rwill emit a number of 15 if they are on...",
+  "extra_gauges.ponder.integer_gauge.text_3": "... §9Analog §9levers §rand §9Redstone §9Links §rwill emit a signal between 0 and 15 based on the state...",
   "extra_gauges.ponder.integer_gauge.text_4": "... and §9Integer §9selectors §rallow to input way more numbers.",
   "extra_gauges.ponder.integer_gauge.text_5": "§eNote: §rLevers and Analog levers §cdo §cnot §csend §can §cupdate §cinstantly§r, while redstone links and §9Integer §9selectors §rdo.",
   "extra_gauges.ponder.integer_gauge.text_6": "Let's see what happens if we connect two integer gauges...",
