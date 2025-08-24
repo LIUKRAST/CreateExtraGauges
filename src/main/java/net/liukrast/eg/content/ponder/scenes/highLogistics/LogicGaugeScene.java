@@ -2,148 +2,128 @@ package net.liukrast.eg.content.ponder.scenes.highLogistics;
 
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock.PanelSlot;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
-import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
-import net.liukrast.eg.content.logistics.board.LogicPanelBehaviour;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import static net.liukrast.eg.content.ponder.scenes.highLogistics.GaugeHelper.*;
 
 public class LogicGaugeScene {
 
     public static void logicGauge(SceneBuilder builder, SceneBuildingUtil util) {
+        var scene = simpleInit(builder, util, "logic_gauge");
+
+        scene.world().showIndependentSection(util.select().fromTo(5,1,3,1,4,3), Direction.NORTH);
+        scene.world().showIndependentSection(util.select().fromTo(5,3,2,1,3,2), Direction.NORTH);
+        scene.idle(40);
+
+        var gaugePos = new FactoryPanelPosition(new BlockPos(3,3,2), PanelSlot.TOP_RIGHT);
+        var leverPos = new BlockPos(5,3,2);
+        var leverPos2 = new FactoryPanelPosition(new BlockPos(5,4,2), PanelSlot.BOTTOM_RIGHT);
+        var linkPos = new BlockPos(1,3,2);
+        var dLink = new FactoryPanelPosition(new BlockPos(1,4,2), PanelSlot.TOP_LEFT);
+
+        displayText(scene, gaugePos.pos(), 100, false);
+        displayText(scene, leverPos, 100, true);
+        displayText(scene, linkPos, 80, false);
+        displayText(scene, leverPos, 100, true);
+        activateRedstone(scene, leverPos);
+        activateRedstone(scene, linkPos);
+        setPanelPowered(scene, gaugePos, false);
+        scene.idle(20);
+        displayText(scene, gaugePos.pos(), 60, false);
+        //END PHASE 1
+        scene.world().toggleRedstonePower(util.select().position(leverPos));
+        scene.world().toggleRedstonePower(util.select().position(linkPos));
+        setPanelPowered(scene, gaugePos, true);
+        //START PHASE 2
+        scene.world().showIndependentSection(util.select().position(leverPos2.pos()),Direction.SOUTH);
+        addPanelConnection(scene, gaugePos, leverPos2);
+        setArrowMode(scene, gaugePos, leverPos2, 2);
+        scene.idle(40);
+        displayText(scene, gaugePos.pos(), 120, true);
+        activateRedstone(scene, leverPos2.pos());
+        activateRedstone(scene, linkPos);
+        setPanelPowered(scene, gaugePos, false);
+        scene.idle(40);
+        scene.overlay().showControls(gaugePos.pos().getCenter().add(-0.5f, 0, 0), Pointing.DOWN, 100).rightClick();
+        displayText(scene, gaugePos.pos(), 100, true);
+        scene.world().toggleRedstonePower(util.select().position(linkPos));
+        setPanelPowered(scene, gaugePos, true);
+        scene.idle(40);
+        displayText(scene, gaugePos.pos(), 100, true);
+        activateRedstone(scene, leverPos);
+        activateRedstone(scene, linkPos);
+        setPanelPowered(scene, gaugePos, false);
+        scene.idle(40);
+        scene.world().showIndependentSection(util.select().fromTo(4,5,3,1,5,3), Direction.DOWN);
+        scene.world().showIndependentSection(util.select().position(1,4,2), Direction.SOUTH);
+        scene.idle(40);
+        displayText(scene, gaugePos.pos(), 100, true);
+        addPanelConnection(scene, gaugePos, dLink);
+        scene.idle(40);
+        scene.world().flashDisplayLink(dLink.pos());
+        setNixieTubeText(scene, new BlockPos(3,5,3), Component.literal("✔ True"), 3, Direction.WEST);
+        scene.idle(40);
+    }
+
+    public static void logicGaugeStorage(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = new CreateSceneBuilder(builder);
-        scene.title("logic_gauge", "Compact Logical Instructions with Logic Gauges");
+        scene.title("logic_gauge_storage", "Making Logic Gauges interact with Factory gauges");
         scene.configureBasePlate(0, 0, 7);
         scene.scaleSceneView(0.825f);
         scene.setSceneOffsetY(-0.5f);
+
         scene.world().showIndependentSection(util.select().fromTo(7, 0, 0, 0, 0, 7), Direction.UP);
         scene.idle(10);
 
-        scene.world().showSection(util.select().fromTo(5, 1, 3, 1, 1, 3), Direction.DOWN);
-        scene.idle(5);
-        scene.world().showSection(util.select().fromTo(5, 4, 2, 1, 2, 4), Direction.DOWN);
-        scene.idle(25);
-        var logic = util.grid().at(3, 3, 2);
-        var lever1 = util.grid().at(5, 4, 2);
-        var link1_1 = util.grid().at(4, 4, 2);
-        var link1_2 = util.grid().at(5, 4, 4);
-        var lever2 = util.grid().at(5, 3, 2);
-        var link2_1 = util.grid().at(4, 3, 2);
-        var link2_2 = util.grid().at(5, 3, 4);
-        var lever3 = util.grid().at(5, 2, 2);
-        var link3_1 = util.grid().at(4, 2, 2);
-        var link3_2 = util.grid().at(5, 2, 4);
-        var link4_1 = util.grid().at(1, 3, 2);
-        var link4_2 = util.grid().at(1, 4, 4);
-        var redLamp = util.grid().at(1, 4, 3);
-        scene.overlay()
-                .showText(60)
-                .text("Logic Gauges can read redstone information from panel elements...")
-                .attachKeyFrame()
-                .placeNearTarget()
-                .pointAt(link1_1.getCenter().add(-0.25f, 0.25f,0));
-        scene.idle(70);
-
-        scene.world().toggleRedstonePower(util.select().position(lever1));
-        scene.effects().indicateRedstone(lever1);
-        scene.world().toggleRedstonePower(util.select().position(link1_1));
-        scene.world().toggleRedstonePower(util.select().position(link1_2));
-        builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
+        scene.world().showIndependentSection(util.select().fromTo(5,1,2,1,4,3), Direction.NORTH);
         scene.idle(40);
 
-        scene.overlay()
-                .showText(60)
-                .text("And transmit it over to other panel elements")
-                .attachKeyFrame()
-                .placeNearTarget()
-                .pointAt(link4_1.getCenter().add(-0.25f, 0.25f,0));
-        scene.idle(70);
-
-        builder.world().modifyBlockEntity(logic, FactoryPanelBlockEntity.class, be -> {
-            ((LogicPanelBehaviour) be.panels.get(PanelSlot.TOP_RIGHT)).power = true;
-        });
-
-        scene.world().toggleRedstonePower(util.select().position(link4_1));
-        scene.world().toggleRedstonePower(util.select().position(link4_2));
-        builder.world().modifyBlockEntity(link4_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        builder.world().modifyBlockEntity(link4_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        scene.world().toggleRedstonePower(util.select().position(redLamp));
-        scene.effects().indicateRedstone(redLamp);
-        scene.idle(40);
-
-        scene.overlay()
-                .showControls(logic.getCenter().add(-0.5f, 0.5f, 0), Pointing.DOWN, 60)
-                .rightClick();
-        scene.overlay()
-                .showText(60)
-                .text("Connections between elements can be created via the + button in the GUI by right-clicking the gauge")
-                .attachKeyFrame()
-                .placeNearTarget()
-                .pointAt(logic.getCenter().add(-0.5f, 0.55f, 0));
-        scene.idle(70);
-
-        scene.idle(10);
-
-        scene.overlay()
-                .showControls(logic.getCenter().add(-0.5f, 0.5f, 0), Pointing.DOWN, 100)
-                .rightClick();
+        var gaugePos = new BlockPos(2,3,2);
+        var originPos = new BlockPos(4,3,2);
+        var targetPos = new BlockPos(1,3,2);
         scene.overlay()
                 .showText(100)
-                .text("Logic operations (OR, AND, NOR, NAND, XOR, XNOR) can be changed by holding right-click")
-                .attachKeyFrame()
+                .text("")
                 .placeNearTarget()
-                .pointAt(logic.getCenter().add(-0.5f, 0.55f, 0));
-        scene.idle(110);
-
-        scene.idle(20);
-
-        builder.world().modifyBlockEntity(logic, FactoryPanelBlockEntity.class, be -> {
-            ((LogicPanelBehaviour) be.panels.get(PanelSlot.TOP_RIGHT)).power = false;
-        });
-        scene.world().toggleRedstonePower(util.select().position(link4_1));
-        scene.world().toggleRedstonePower(util.select().position(link4_2));
-        builder.world().modifyBlockEntity(link4_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
-        builder.world().modifyBlockEntity(link4_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
-        scene.world().toggleRedstonePower(util.select().position(redLamp));
-        scene.idle(40);
-
+                .attachKeyFrame()
+                .pointAt(gaugePos.getCenter().add(-0.25f, 0.25f,0));
+        scene.idle(120);
         scene.overlay()
-                .showText(70)
-                .text("The logic gate, now in AND mode, will output redstone only if all links are active")
-                .attachKeyFrame()
+                .showText(80)
+                .text("")
                 .placeNearTarget()
-                .pointAt(logic.getCenter().add(-0.5f, 0.55f, 0));
-        scene.idle(80);
-
-        scene.idle(20);
-
-        scene.world().toggleRedstonePower(util.select().position(lever2));
-        scene.effects().indicateRedstone(lever2);
-        scene.world().toggleRedstonePower(util.select().position(link2_1));
-        scene.world().toggleRedstonePower(util.select().position(link2_2));
-        builder.world().modifyBlockEntity(link2_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        builder.world().modifyBlockEntity(link2_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        scene.idle(10);
-        scene.world().toggleRedstonePower(util.select().position(lever3));
-        scene.effects().indicateRedstone(lever3);
-        scene.world().toggleRedstonePower(util.select().position(link3_1));
-        scene.world().toggleRedstonePower(util.select().position(link3_2));
-        builder.world().modifyBlockEntity(link3_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        builder.world().modifyBlockEntity(link3_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        scene.idle(10);
-
-        builder.world().modifyBlockEntity(logic, FactoryPanelBlockEntity.class, be -> {
-            ((LogicPanelBehaviour) be.panels.get(PanelSlot.TOP_RIGHT)).power = true;
+                .attachKeyFrame()
+                .pointAt(originPos.getCenter().add(-0.25f, 0.25f,0));
+        scene.idle(100);
+        builder.world().modifyBlockEntityNBT(util.select().position(originPos), FactoryPanelBlockEntity.class, tag -> {
+            CompoundTag panelTag = tag.getCompound(CreateLang.asId(PanelSlot.TOP_RIGHT.name()));
+            panelTag.putBoolean("Satisfied", true);
+            panelTag.putInt("FilterAmount", 64);
         });
-        scene.world().toggleRedstonePower(util.select().position(link4_1));
-        scene.world().toggleRedstonePower(util.select().position(link4_2));
-        builder.world().modifyBlockEntity(link4_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        builder.world().modifyBlockEntity(link4_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        scene.world().toggleRedstonePower(util.select().position(redLamp));
-        scene.effects().indicateRedstone(redLamp);
-        scene.idle(60);
+        builder.world().modifyBlockEntity(originPos, FactoryPanelBlockEntity.class, be -> be.panels.get(PanelSlot.TOP_RIGHT).count=1);
+        builder.world().modifyBlockEntity(gaugePos, FactoryPanelBlockEntity.class, be -> be.panels.get(PanelSlot.TOP_LEFT).redstonePowered = false);
+        scene.overlay()
+                .showText(100)
+                .text("")
+                .placeNearTarget()
+                .attachKeyFrame()
+                .pointAt(gaugePos.getCenter().add(-0.25f, 0.25f,0));
+        scene.idle(120);
+        builder.world().modifyBlockEntity(targetPos, FactoryPanelBlockEntity.class, be -> (be.panels.get(PanelSlot.TOP_LEFT)).redstonePowered = true);
+        scene.overlay()
+                .showText(100)
+                .text("")
+                .placeNearTarget()
+                .attachKeyFrame()
+                .pointAt(targetPos.getCenter().add(-0.25f, 0.25f,0));
+        scene.idle(120);
     }
 }

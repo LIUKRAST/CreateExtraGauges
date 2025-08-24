@@ -26,8 +26,8 @@ import java.util.stream.Stream;
 @Mixin(value = FactoryGaugeDisplaySource.class, remap = false)
 public abstract class FactoryGaugeDisplaySourceMixin extends ValueListDisplaySource {
     /*
-     * abstract panel behaviors will ignore the default display link
-     * */
+    * abstarct panel behaviours will ignore the default display link
+    * */
     @Inject(
             method = "createEntry",
             at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;getFilter()Lnet/minecraft/world/item/ItemStack;"),

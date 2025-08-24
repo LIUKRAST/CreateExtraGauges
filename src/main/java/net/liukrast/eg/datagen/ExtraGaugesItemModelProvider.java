@@ -1,7 +1,7 @@
 package net.liukrast.eg.datagen;
 
-import net.liukrast.eg.ExtraGauges;
-import net.liukrast.eg.registry.RegisterItems;
+import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +19,7 @@ import java.util.function.Function;
  * */
 public class ExtraGaugesItemModelProvider extends ItemModelProvider {
     public ExtraGaugesItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, ExtraGauges.MOD_ID, existingFileHelper);
+        super(output, EGConstants.MOD_ID, existingFileHelper);
     }
 
     public static ItemModelBuilder createGauge(ItemModelProvider instance, Item item, Function<String, String> texture) {
@@ -45,9 +45,12 @@ public class ExtraGaugesItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        createGauge(RegisterItems.LOGIC_GAUGE.get());
-        createGauge(RegisterItems.INT_GAUGE.get());
-        createGauge(RegisterItems.COMPARATOR_GAUGE.get());
-        createGauge(RegisterItems.COUNTER_GAUGE.get());
+        createGauge(EGItems.LOGIC_GAUGE.get());
+        createGauge(EGItems.INT_GAUGE.get());
+        createGauge(EGItems.COMPARATOR_GAUGE.get());
+        createGauge(EGItems.COUNTER_GAUGE.get());
+        createGauge(EGItems.PASSIVE_GAUGE.get());
+        createGauge(EGItems.STRING_GAUGE.get());
+        withExistingParent("integer_selector", EGConstants.id("block/integer_selector"));
     }
 }

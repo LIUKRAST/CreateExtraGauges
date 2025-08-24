@@ -1,0 +1,57 @@
+{
+  "variants": {
+    "face=ceiling,facing=east": {
+      "model": "extra_gauges:block/integer_selector",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=north": {
+      "model": "extra_gauges:block/integer_selector",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=south": {
+      "model": "extra_gauges:block/integer_selector",
+      "x": 180
+    },
+    "face=ceiling,facing=west": {
+      "model": "extra_gauges:block/integer_selector",
+      "x": 180,
+      "y": 90
+    },
+    "face=floor,facing=east": {
+      "model": "extra_gauges:block/integer_selector",
+      "y": 90
+    },
+    "face=floor,facing=north": {
+      "model": "extra_gauges:block/integer_selector"
+    },
+    "face=floor,facing=south": {
+      "model": "extra_gauges:block/integer_selector",
+      "y": 180
+    },
+    "face=floor,facing=west": {
+      "model": "extra_gauges:block/integer_selector",
+      "y": 270
+    },
+    "face=wall,facing=east": {
+      "model": "extra_gauges:block/integer_selector",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=north": {
+      "model": "extra_gauges:block/integer_selector",
+      "x": 90
+    },
+    "face=wall,facing=south": {
+      "model": "extra_gauges:block/integer_selector",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=west": {
+      "model": "extra_gauges:block/integer_selector",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

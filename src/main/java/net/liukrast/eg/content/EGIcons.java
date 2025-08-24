@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.gui.AllIcons;
 import net.createmod.catnip.theme.Color;
-import net.liukrast.eg.ExtraGauges;
+import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.mixin.AllIconsMixin;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
 
 public class EGIcons extends AllIcons {
-    public static final ResourceLocation ICON_ATLAS = ExtraGauges.id("textures/gui/icons.png");
+    public static final ResourceLocation ICON_ATLAS = EGConstants.id("textures/gui/icons.png");
     public static final int ICON_ATLAS_SIZE = 64;
 
     private static int x = 0, y = -1;

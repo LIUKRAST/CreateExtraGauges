@@ -19,6 +19,6 @@ public class FilteringRendererMixin {
     @Expression("b instanceof FilteringBehaviour")
     @ModifyExpressionValue(method = "tick", at = @At("MIXINEXTRAS:EXPRESSION"))
     private static boolean tick(boolean original, @Local BlockEntityBehaviour b) {
-        return b instanceof AbstractPanelBehaviour panel ? panel.shouldAllowFilteringBehaviour() : original;
+        return b instanceof AbstractPanelBehaviour panel ? panel.withFilteringBehaviour() : original;
     }
 }

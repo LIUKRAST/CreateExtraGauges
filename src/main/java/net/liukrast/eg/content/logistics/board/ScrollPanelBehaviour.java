@@ -4,6 +4,7 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.registry.PanelType;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -20,6 +21,7 @@ public abstract class ScrollPanelBehaviour extends AbstractPanelBehaviour {
     Consumer<Integer> callback;
     Consumer<Integer> clientCallback;
     Function<Integer, String> formatter;
+    @SuppressWarnings({"FieldCanBeLocal", "unused", "FieldMayBeFinal"})
     private Supplier<Boolean> isActive;
 
     public ScrollPanelBehaviour(Component label, PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {

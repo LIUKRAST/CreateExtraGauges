@@ -2,7 +2,6 @@ package net.liukrast.eg.content.ponder.scenes.highLogistics;
 
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
-import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlockEntity;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import net.createmod.catnip.math.Pointing;
@@ -36,35 +35,42 @@ public class CounterGaugeScene {
         var outLink = util.grid().at(1,4,1);
         var nixie = util.grid().at(1,5,2);
 
+        scene.rotateCameraY(180);
+        scene.idle(40);
         scene.overlay()
-                .showText(40)
+                .showText(80)
+                .text("Setup")
+                .attachKeyFrame()
+                .placeNearTarget()
+                .pointAt(link1_2.getCenter().add(-0.25, 0.3, 0));
+        scene.idle(100);
+        scene.rotateCameraY(180);
+        scene.idle(40);
+
+        scene.overlay()
+                .showText(60)
                 .text("Counter Gauges can count the number of redstone inputs...")
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(button.getCenter().add(-0.25,0.3,0));
-        scene.idle(60);
+        scene.idle(80);
 
         scene.world().toggleRedstonePower(util.select().position(button));
         scene.effects().indicateRedstone(button);
         scene.world().toggleRedstonePower(util.select().position(link1_1));
         scene.world().toggleRedstonePower(util.select().position(link1_2));
-        builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
         scene.idle(15);
         scene.world().toggleRedstonePower(util.select().position(button));
         scene.world().toggleRedstonePower(util.select().position(link1_1));
         scene.world().toggleRedstonePower(util.select().position(link1_2));
-        builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
-        builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
         scene.idle(15);
 
         scene.overlay()
-                .showText(40)
+                .showText(60)
                 .text("And transmit it over to other panel elements")
-                .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(outLink.getCenter());
-        scene.idle(60);
+        scene.idle(80);
 
         scene.world().flashDisplayLink(outLink);
         scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
@@ -85,29 +91,14 @@ public class CounterGaugeScene {
                 .pointAt(counter.getCenter().add(-0.5f, 0.1, 0));
         scene.idle(60);
 
-        scene.overlay()
-                .showControls(counter.getCenter().add(-0.5f, 0, 0), Pointing.DOWN, 40)
-                .rightClick();
-        scene.overlay()
-                .showText(40)
-                .text("The counter threshold can be changed by holding right-click")
-                .attachKeyFrame()
-                .placeNearTarget()
-                .pointAt(counter.getCenter().add(-0.5f, 0.1, 0));
-        scene.idle(60);
-
         scene.world().toggleRedstonePower(util.select().position(button));
         scene.effects().indicateRedstone(button);
         scene.world().toggleRedstonePower(util.select().position(link1_1));
         scene.world().toggleRedstonePower(util.select().position(link1_2));
-        builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
         scene.idle(15);
         scene.world().toggleRedstonePower(util.select().position(button));
         scene.world().toggleRedstonePower(util.select().position(link1_1));
         scene.world().toggleRedstonePower(util.select().position(link1_2));
-        builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
-        builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
         scene.idle(15);
 
         scene.world().flashDisplayLink(outLink);
@@ -122,16 +113,19 @@ public class CounterGaugeScene {
         scene.effects().indicateRedstone(button);
         scene.world().toggleRedstonePower(util.select().position(link1_1));
         scene.world().toggleRedstonePower(util.select().position(link1_2));
-        builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
         scene.idle(15);
         scene.world().toggleRedstonePower(util.select().position(button));
         scene.world().toggleRedstonePower(util.select().position(link1_1));
         scene.world().toggleRedstonePower(util.select().position(link1_2));
-        builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
-        builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
+        scene.world().modifyBlockEntity(counter, FactoryPanelBlockEntity.class, be -> {
+            CounterPanelBehaviour panel = (CounterPanelBehaviour) be.panels.get(FactoryPanelBlock.PanelSlot.BOTTOM_RIGHT);
+            panel.count = 3;
+            panel.value = 3;
+            panel.redstonePowered = false;
+        });
+        scene.world().toggleRedstonePower(util.select().fromTo(1,2, 1, 1, 2, 3));
+        scene.effects().indicateRedstone(new BlockPos(1, 2, 1));
         scene.idle(15);
-
         scene.world().flashDisplayLink(outLink);
         scene.world().modifyBlockEntityNBT(util.select().position(nixie), NixieTubeBlockEntity.class, nbt -> {
             Component text = Component.literal("3");
@@ -139,26 +133,17 @@ public class CounterGaugeScene {
             nbt.putString("CustomText", Component.Serializer.toJson(text));
         });
         scene.idle(20);
-
         scene.overlay()
                 .showText(70)
-                .text("Once the threshold is reached (in this example it's 3), the counter will output redstone power")
-                .attachKeyFrame()
+                .text("")
                 .placeNearTarget()
                 .pointAt(new BlockPos(1, 2, 1).getCenter());
         scene.idle(100);
-
-        scene.world().modifyBlockEntity(counter, FactoryPanelBlockEntity.class, be -> {
-            CounterPanelBehaviour panel = (CounterPanelBehaviour) be.panels.get(FactoryPanelBlock.PanelSlot.BOTTOM_RIGHT);
-            panel.value = 3;
-        });
-        scene.world().toggleRedstonePower(util.select().fromTo(1,2, 1, 1, 2, 3));
-        scene.effects().indicateRedstone(new BlockPos(1, 2, 1));
         scene.idle(15);
 
         scene.overlay()
                 .showText(40)
-                .text("Triggering the counter another time will reset the counter to 0")
+                .text("")
                 .attachKeyFrame()
                 .placeNearTarget()
                 .pointAt(outLink.getCenter());
@@ -168,14 +153,17 @@ public class CounterGaugeScene {
         scene.effects().indicateRedstone(button);
         scene.world().toggleRedstonePower(util.select().position(link1_1));
         scene.world().toggleRedstonePower(util.select().position(link1_2));
-        builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
-        builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(15));
+        scene.world().modifyBlockEntity(counter, FactoryPanelBlockEntity.class,be -> {
+            CounterPanelBehaviour panel = (CounterPanelBehaviour) be.panels.get(FactoryPanelBlock.PanelSlot.BOTTOM_RIGHT);
+            panel.count = 0;
+            panel.value = 3;
+            panel.redstonePowered = true;
+        });
+        scene.world().toggleRedstonePower(util.select().fromTo(1,2, 1, 1, 2, 3));
         scene.idle(15);
         scene.world().toggleRedstonePower(util.select().position(button));
         scene.world().toggleRedstonePower(util.select().position(link1_1));
         scene.world().toggleRedstonePower(util.select().position(link1_2));
-        builder.world().modifyBlockEntity(link1_1, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
-        builder.world().modifyBlockEntity(link1_2, RedstoneLinkBlockEntity.class, be -> be.setSignal(0));
         scene.idle(15);
 
         scene.world().flashDisplayLink(outLink);
@@ -184,7 +172,6 @@ public class CounterGaugeScene {
             nbt.putString("RawCustomText", text.getString());
             nbt.putString("CustomText", Component.Serializer.toJson(text));
         });
-        scene.world().toggleRedstonePower(util.select().fromTo(1,2, 1, 1, 2, 3));
         scene.idle(20);
     }
 }

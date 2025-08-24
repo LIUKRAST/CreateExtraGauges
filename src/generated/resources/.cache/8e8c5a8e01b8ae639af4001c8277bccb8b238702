@@ -1,5 +1,8 @@
-// 1.20.1	2025-05-23T01:48:46.0608168	Item Models: extra_gauges
+// 1.20.1	2025-08-24T14:05:04.6392454	Item Models: extra_gauges
 8aebbe985da0f35134df9d07f46c33f797197405 assets/extra_gauges/models/item/comparator_gauge.json
 d9105706bbd163cc0e32678af7edab0985804571 assets/extra_gauges/models/item/counter_gauge.json
 28d4c8ae26ac77bfcc57370da0dba93dc6a8b899 assets/extra_gauges/models/item/integer_gauge.json
+9656fcec8d783746b5719f81cf40d9f929341187 assets/extra_gauges/models/item/integer_selector.json
 ab2a18c4b4bb8389de612f548ecdb7d3518383f9 assets/extra_gauges/models/item/logic_gauge.json
+05cd8d2a05c19028050a7d211bb6c03e730c9aa1 assets/extra_gauges/models/item/passive_gauge.json
+7326c29e4af4cbe705496f402898a6bbd7694f69 assets/extra_gauges/models/item/string_gauge.json

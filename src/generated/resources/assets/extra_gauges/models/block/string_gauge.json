@@ -1,0 +1,7 @@
+{
+  "parent": "extra_gauges:block/template_gauge",
+  "textures": {
+    "particle": "extra_gauges:block/string_panel",
+    "texture": "extra_gauges:block/string_panel"
+  }
+}
