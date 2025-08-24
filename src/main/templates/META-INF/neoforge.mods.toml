@@ -9,7 +9,7 @@ displayName = "${mod_name}"
 displayURL="https://discord.gg/pvn8zg9bNY"
 logoFile="extra_gauges.png"
 credits='''Thanmks to Propants for the initial idea
-Thanks to our supporter Professaurus'''
+Thanks to our supporter swzo'''
 authors = "${mod_authors}"
 description = '''${mod_description}'''
 
