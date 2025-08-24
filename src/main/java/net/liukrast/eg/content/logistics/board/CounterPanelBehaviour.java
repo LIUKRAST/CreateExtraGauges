@@ -124,6 +124,9 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
 
     @Override
     public MutableComponent getDisplayLinkComponent(boolean shortened) {
-        return Component.literal(shortened ? String.valueOf(count) : count + "/" + value);
+        if(shortened) return Component.literal(String.valueOf(count));
+        return Component.literal(count + "/").append(value == 0
+                ? Component.translatable("extra_gauges.counter_panel.no_limit")
+                : Component.literal(String.valueOf(value)));
     }
 }

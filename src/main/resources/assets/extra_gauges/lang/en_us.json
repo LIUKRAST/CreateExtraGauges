@@ -134,5 +134,7 @@
 
   "extra_gauges.gui.string_panel.join": "Join:",
   "extra_gauges.gui.string_panel.regex": "Regex:",
-  "extra_gauges.gui.string_panel.replacement": "Replacement:"
+  "extra_gauges.gui.string_panel.replacement": "Replacement:",
+
+  "extra_gauges.counter_panel.no_limit": "No limit"
 }
