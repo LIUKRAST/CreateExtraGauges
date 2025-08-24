@@ -12,7 +12,6 @@ import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.EGItems;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -37,6 +36,7 @@ public class IntPanelBehaviour extends ScrollOptionPanelBehaviour<IntOperationMo
     public void addConnections(PanelConnectionBuilder builder) {
         builder.put(EGPanelConnections.INTEGER, () -> count);
         builder.put(EGPanelConnections.REDSTONE, () -> Mth.clamp(count, 0, 15));
+        builder.put(EGPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override

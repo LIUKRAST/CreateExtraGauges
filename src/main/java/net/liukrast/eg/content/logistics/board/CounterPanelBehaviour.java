@@ -75,6 +75,7 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     public void addConnections(PanelConnectionBuilder builder) {
         builder.put(EGPanelConnections.INTEGER, () -> count);
         builder.put(EGPanelConnections.REDSTONE, () -> count >= value ? 15 : 0);
+        builder.put(EGPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override

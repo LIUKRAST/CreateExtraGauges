@@ -20,12 +20,12 @@ import java.util.Objects;
 
 import static com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock.PanelSlot;
 
-@Mixin(value = FactoryPanelBlockEntity.class, remap = false)
+@Mixin(value = FactoryPanelBlockEntity.class)
 public abstract class FactoryPanelBlockEntityMixin {
 
-    @Shadow public EnumMap<PanelSlot, FactoryPanelBehaviour> panels;
+    @Shadow(remap = false) public EnumMap<PanelSlot, FactoryPanelBehaviour> panels;
 
-    @Inject(method = "read", at = @At("HEAD"))
+    @Inject(method = "read", at = @At("HEAD"), remap = false)
     private void read(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
         var instance = FactoryPanelBlockEntity.class.cast(this);
         for(PanelSlot slot : PanelSlot.values()) {
@@ -48,7 +48,7 @@ public abstract class FactoryPanelBlockEntityMixin {
         }
     }
 
-    @Inject(method = "destroy", at = @At("HEAD"))
+    @Inject(method = "destroy", at = @At("HEAD"), remap = false)
     private void destroy(CallbackInfo ci) {
         var instance = FactoryPanelBlockEntity.class.cast(this);
         for(var panel : panels.values()) {

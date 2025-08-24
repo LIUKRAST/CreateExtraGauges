@@ -6,7 +6,6 @@ import com.simibubi.create.AllPackets;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.foundation.utility.CreateLang;
-import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.eg.api.logistics.board.PanelConnection;
@@ -41,7 +40,7 @@ public class FactoryPanelConnectionHandlerMixin {
 
     @ModifyExpressionValue(
             method = "checkForIssues(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;)Ljava/lang/String;",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0, remap = true)
     )
     private static boolean checkForIssues(boolean original, @Local(argsOnly = true, ordinal = 1) FactoryPanelBehaviour to) {
         if(to instanceof AbstractPanelBehaviour ab) return original && !ab.ignoreIssue("factory_panel.no_item");
@@ -50,7 +49,7 @@ public class FactoryPanelConnectionHandlerMixin {
 
     @ModifyExpressionValue(
             method = "checkForIssues(Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;)Ljava/lang/String;",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 1)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 1, remap = true)
     )
     private static boolean checkForIssues$1(boolean original, @Local(argsOnly = true, ordinal = 0) FactoryPanelBehaviour from) {
         if(from instanceof AbstractPanelBehaviour ab) return original && !ab.ignoreIssue("factory_panel.no_item");
@@ -75,7 +74,7 @@ public class FactoryPanelConnectionHandlerMixin {
 
     @ModifyArg(
             method = "panelClicked",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V", ordinal = 2)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V", ordinal = 2, remap = true)
     )
     private static Component panelClicked(Component original, @Local(ordinal = 0, argsOnly = true) FactoryPanelBehaviour from, @Local(ordinal = 1) FactoryPanelBehaviour to) {
         if(from instanceof AbstractPanelBehaviour || to instanceof AbstractPanelBehaviour) return Component.translatable("extra_gauges.panel.panels_connected", from.getDisplayName(), to.getDisplayName()).withStyle(ChatFormatting.GREEN);

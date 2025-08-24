@@ -77,6 +77,7 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour impl
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
         builder.put(EGPanelConnections.REDSTONE, () -> !redstonePowered ? 15 : 0);
+        builder.put(EGPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override

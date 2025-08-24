@@ -35,6 +35,7 @@ public class PassivePanelBehaviour extends AbstractPanelBehaviour {
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
         builder.put(EGPanelConnections.FILTER, () -> filter);
+        builder.put(EGPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override

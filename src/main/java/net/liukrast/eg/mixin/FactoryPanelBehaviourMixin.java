@@ -110,7 +110,7 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
     }
 
     /* DATA */
-    @Inject(method = "write", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;putUUID(Ljava/lang/String;Ljava/util/UUID;)V"))
+    @Inject(method = "write", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;putUUID(Ljava/lang/String;Ljava/util/UUID;)V", remap = true))
     private void write(CompoundTag nbt, boolean clientPacket, CallbackInfo ci, @Local(ordinal = 1) CompoundTag panelTag) {
         panelTag.put("TargetedByExtra", NBTHelper.writeCompoundList(this.extra_gauges$targetedByExtra.values(), FactoryPanelConnection::write));
         if(extra_gauges$width != 3) panelTag.putInt("extra_gauges$CraftWidth", extra_gauges$width);
@@ -247,17 +247,18 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
     }
 
     /* INTERACTION */
-    @ModifyExpressionValue(method = "onShortInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0))
+    @ModifyExpressionValue(method = "onShortInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0, remap = true))
     private boolean onShortInteract(boolean original) {
         var instance = FactoryPanelBehaviour.class.cast(this);
         return instance instanceof AbstractPanelBehaviour panel ? panel.withFilteringBehaviour() && original : original;
     }
 
+    @SuppressWarnings("DefaultAnnotationParam")
     @Definition(id = "heldItem", local = @Local(type = ItemStack.class))
-    @Definition(id = "getItem", method = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;")
+    @Definition(id = "getItem", method = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;", remap = true)
     @Definition(id = "LogisticallyLinkedBlockItem", type = LogisticallyLinkedBlockItem.class)
     @Expression("heldItem.getItem() instanceof LogisticallyLinkedBlockItem")
-    @ModifyExpressionValue(method = "onShortInteract", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = "onShortInteract", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
     private boolean onShortInteract$1(boolean original) {
         var instance = FactoryPanelBehaviour.class.cast(this);
         return original && !(instance instanceof AbstractPanelBehaviour);
