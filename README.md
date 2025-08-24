@@ -1,4 +1,4 @@
-![Title](https://raw.githubusercontent.com/LIUKRAST/CreateExtraGauges/refs/heads/master/page/title.png)
+![Title](https://liukrast.net/assets/liukrast/textures/mod_title/extra_gauges.png)
 # Create: Extra Gauges
 
 **Create: Extra Gauges** is an addon for the [Create mod](https://github.com/Creators-of-Create/Create) that expands automation with new types of gauges and smart logic tools.
