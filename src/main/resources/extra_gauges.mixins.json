@@ -9,7 +9,9 @@
   "plugin": "net.liukrast.eg.mixin.plugin.ExtraGaugesMixinConfigPlugin",
   "mixins": [
     "AllIconsMixin",
+    "BeltTunnelBlockEntityMixin",
     "ClientEventsMixin",
+    "DisplayLinkBlockMixin",
     "FactoryGaugeDisplaySourceMixin",
     "FactoryPanelBehaviourAccessor",
     "FactoryPanelBehaviourIMixin",

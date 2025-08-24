@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.api.logistics.ColoredFactoryPanelSupportBehaviour;
 import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
+import net.liukrast.eg.api.util.DCFinder;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.liukrast.eg.registry.EGPanelConnections;
 import net.minecraft.core.BlockPos;
@@ -55,12 +56,21 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
     @Override
     protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         super.write(tag, registries, clientPacket);
-        if(component == null) return;
-        DynamicOps<Tag> dynamicops = registries.createSerializationContext(NbtOps.INSTANCE);
-        ComponentSerialization.FLAT_CODEC
-                .encodeStart(dynamicops, component)
-                .resultOrPartial(EGConstants.LOGGER::error)
-                .ifPresent(tag1 -> tag.put("text", tag1));
+        if(component != null) {
+            DynamicOps<Tag> dynamicops = registries.createSerializationContext(NbtOps.INSTANCE);
+            ComponentSerialization.FLAT_CODEC
+                    .encodeStart(dynamicops, component)
+                    .resultOrPartial(EGConstants.LOGGER::error)
+                    .ifPresent(tag1 -> tag.put("text", tag1));
+        }
+        if(level == null) return;
+        var be = this.level.getBlockEntity(getSourcePosition());
+        if(!(be instanceof DCFinder finder)) return;
+        var set = finder.extra_gauges$targetingDisplayCollectors();
+        var pos = getBlockPos();
+        if(set.contains(pos)) return;
+        set.add(getBlockPos());
+        be.setChanged();
     }
 
     public Component getComponent() {
