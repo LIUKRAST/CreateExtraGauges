@@ -1,6 +1,7 @@
 package net.liukrast.eg.content.logistics;
 
 import com.mojang.serialization.MapCodec;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -19,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.lwjgl.system.NonnullDefault;
 
 @NonnullDefault
-public class IntSelectorBlock extends FaceAttachedHorizontalDirectionalBlock implements IBE<IntSelectorBlockEntity> {
+public class IntSelectorBlock extends FaceAttachedHorizontalDirectionalBlock implements IBE<IntSelectorBlockEntity>, IWrenchable {
     public static final MapCodec<IntSelectorBlock> CODEC = simpleCodec(IntSelectorBlock::new);
 
     public IntSelectorBlock(Properties properties) {
