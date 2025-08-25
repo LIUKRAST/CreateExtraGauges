@@ -8,3 +8,4 @@ gradlew
 gradlew.bat
 /repo/
 /libs/
+/src/generated/resources/.cache

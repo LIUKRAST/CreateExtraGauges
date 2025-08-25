@@ -1,7 +1,0 @@
-// 1.21.1	2025-08-17T13:13:00.1737365	Block Models: extra_gauges
-0fdad0a63f6a59a6425dd1e568311e53b034ca6c assets/extra_gauges/models/block/comparator_gauge.json
-08978d76449c61b3e6d5ea627183bd10a7a13df1 assets/extra_gauges/models/block/counter_gauge.json
-61f977bc44cda66615ed6f97a6fdb3664603fc33 assets/extra_gauges/models/block/integer_gauge.json
-cea80eeba2456f56fefd1da72e67aeefc1c18c97 assets/extra_gauges/models/block/logic_gauge.json
-ca286fea83801aba74a92f6b235eedceb26ec3eb assets/extra_gauges/models/block/passive_gauge.json
-8cbdb7fe503f517b0e3adf094c94d55f990aaf9a assets/extra_gauges/models/block/string_gauge.json

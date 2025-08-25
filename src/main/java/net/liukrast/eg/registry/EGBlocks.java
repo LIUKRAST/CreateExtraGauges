@@ -15,7 +15,7 @@ import org.jetbrains.annotations.ApiStatus;
 
 public class EGBlocks {
     private EGBlocks() {}
-    private static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(EGConstants.MOD_ID);
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(EGConstants.MOD_ID);
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(EGConstants.MOD_ID);
 
     public static final DeferredBlock<IntSelectorBlock> INT_SELECTOR = BLOCKS.register("integer_selector", () -> new IntSelectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get())));

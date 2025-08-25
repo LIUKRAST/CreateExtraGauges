@@ -1,12 +1,12 @@
 package net.liukrast.eg;
 
 import net.liukrast.eg.api.EGRegistries;
-import net.liukrast.eg.datagen.ExtraGaugesBlockModelProvider;
-import net.liukrast.eg.datagen.ExtraGaugesBlockStateProvider;
-import net.liukrast.eg.datagen.ExtraGaugesItemModelProvider;
+import net.liukrast.eg.datagen.*;
 import net.liukrast.eg.registry.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -17,6 +17,10 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 @Mod(EGConstants.MOD_ID)
 public class EG {
@@ -45,9 +49,14 @@ public class EG {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper helper = event.getExistingFileHelper();
+        var provider = event.getLookupProvider();
         generator.addProvider(event.includeClient(), new ExtraGaugesItemModelProvider(packOutput, helper));
         generator.addProvider(event.includeClient(), new ExtraGaugesBlockModelProvider(packOutput, helper));
         generator.addProvider(event.includeClient(), new ExtraGaugesBlockStateProvider(packOutput, helper));
+        generator.addProvider(event.includeServer(), new ExtraGaugesRecipeProvider(packOutput, provider));
+        generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(), List.of(
+                new LootTableProvider.SubProviderEntry(ExtraGaugesLootTableProvider::new, LootContextParamSets.BLOCK)
+        ), provider));
     }
 
     @SubscribeEvent
