@@ -17,8 +17,7 @@ public class ExtraGaugesLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        dropSelf(EGBlocks.DISPLAY_COLLECTOR.get());
-        dropSelf(EGBlocks.INT_SELECTOR.get());
+        EGBlocks.BLOCKS.getEntries().stream().map(Holder::value).forEach(this::dropSelf);
     }
 
     @Override
