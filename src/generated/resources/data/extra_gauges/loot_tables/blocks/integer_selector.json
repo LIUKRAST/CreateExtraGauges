@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "extra_gauges:integer_selector"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "extra_gauges:blocks/integer_selector"
+}

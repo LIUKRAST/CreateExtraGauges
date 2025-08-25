@@ -1,13 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
+  "category": "redstone",
   "ingredients": [
     {
       "item": "extra_gauges:display_collector"
     }
   ],
   "result": {
-    "count": 1,
-    "id": "create:display_link"
+    "item": "create:display_link"
   }
 }

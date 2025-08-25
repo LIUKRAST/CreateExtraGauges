@@ -1,34 +1,39 @@
-[24Aug2025 14:05:52.861] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\darth\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, extra_gauges, --all, --output, C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\src\generated\resources, --existing, C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\src\main\resources, --mixin.config, extra_gauges.mixins.json]
-[24Aug2025 14:05:52.871] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.14 by Amazon.com Inc.; OS Windows 11 arch amd64 version 10.0
-[24Aug2025 14:05:53.070] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[24Aug2025 14:05:53.163] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/darth/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[24Aug2025 14:05:53.540] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\darth\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.0\f0c0b352173d0a378cbdcec9cfc4ba65899a721\javafmllanguage-1.20.1-47.4.0.jar is missing mods.toml file
-[24Aug2025 14:05:53.546] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\darth\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.0\e862740d8c84d08dbfedea412bef88fe42e727c5\lowcodelanguage-1.20.1-47.4.0.jar is missing mods.toml file
-[24Aug2025 14:05:53.558] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\darth\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.0\5719b3a297a33f877ed5dde4cb4bd75c859096af\mclanguage-1.20.1-47.4.0.jar is missing mods.toml file
-[24Aug2025 14:05:53.561] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\darth\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.0\235975dafa4309945b59c56b53f31dc5b65a6051\fmlcore-1.20.1-47.4.0.jar is missing mods.toml file
-[24Aug2025 14:05:53.868] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
-[24Aug2025 14:05:56.041] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[24Aug2025 14:05:56.073] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\darth\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, extra_gauges, --all, --output, C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\src\generated\resources, --existing, C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\src\main\resources]
-[24Aug2025 14:05:56.489] [main/INFO] [mixin/]: Remapping refMap backend-flywheel.refmap.json using C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\build\createSrgToMcp\output.srg
-[24Aug2025 14:05:56.492] [main/INFO] [mixin/]: Remapping refMap flywheel.refmap.json using C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\build\createSrgToMcp\output.srg
-[24Aug2025 14:05:56.495] [main/INFO] [mixin/]: Remapping refMap ponder.refmap.json using C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\build\createSrgToMcp\output.srg
-[24Aug2025 14:05:56.499] [main/INFO] [mixin/]: Remapping refMap create.refmap.json using C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\build\createSrgToMcp\output.srg
-[24Aug2025 14:05:57.366] [main/WARN] [mixin/]: Error loading class: journeymap/client/ui/fullscreen/Fullscreen (java.lang.ClassNotFoundException: journeymap.client.ui.fullscreen.Fullscreen)
-[24Aug2025 14:05:57.366] [main/WARN] [mixin/]: @Mixin target journeymap.client.ui.fullscreen.Fullscreen was not found create.mixins.json:compat.JourneyFullscreenMapMixin
-[24Aug2025 14:05:58.338] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [extra_gauges]
-[24Aug2025 14:05:58.345] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.0).
-[24Aug2025 14:06:10.138] [modloading-worker-0/INFO] [com.simibubi.create.Create/]: Create 6.0.6 initializing! Commit hash: 21a931d2401847acf19416d0812609498e724549
-[24Aug2025 14:06:10.216] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.0, for MC 1.20.1 with MCP 20230612.114412
-[24Aug2025 14:06:10.227] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.0 Initialized
-[24Aug2025 14:06:12.402] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager...
-[24Aug2025 14:06:12.422] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager took 15.76 ms
-[24Aug2025 14:06:22.456] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/darth/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.0_mapped_official_1.20.1/forge-1.20.1-47.4.0_mapped_official_1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[24Aug2025 14:06:22.456] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/darth/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.0_mapped_official_1.20.1/forge-1.20.1-47.4.0_mapped_official_1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[24Aug2025 14:06:23.865] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: extra_gauges
-[24Aug2025 14:06:23.899] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: extra_gauges finished after 33 ms
-[24Aug2025 14:06:23.900] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block Models: extra_gauges
-[24Aug2025 14:06:23.911] [main/INFO] [net.minecraft.data.DataGenerator/]: Block Models: extra_gauges finished after 10 ms
-[24Aug2025 14:06:23.912] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: extra_gauges
-[24Aug2025 14:06:24.151] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: extra_gauges finished after 239 ms
-[24Aug2025 14:06:24.151] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 287 ms
-[24Aug2025 14:06:24.161] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 14, old count: 14, new count: 15, removed stale: 0, written: 0
+[25Aug2025 14:21:18.776] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\darth\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, extra_gauges, --all, --output, C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\src\generated\resources, --existing, C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\src\main\resources, --mixin.config, extra_gauges.mixins.json]
+[25Aug2025 14:21:18.783] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.14 by Amazon.com Inc.; OS Windows 11 arch amd64 version 10.0
+[25Aug2025 14:21:18.920] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[25Aug2025 14:21:18.990] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/darth/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[25Aug2025 14:21:19.321] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\darth\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.0\f0c0b352173d0a378cbdcec9cfc4ba65899a721\javafmllanguage-1.20.1-47.4.0.jar is missing mods.toml file
+[25Aug2025 14:21:19.325] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\darth\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.0\e862740d8c84d08dbfedea412bef88fe42e727c5\lowcodelanguage-1.20.1-47.4.0.jar is missing mods.toml file
+[25Aug2025 14:21:19.335] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\darth\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.0\5719b3a297a33f877ed5dde4cb4bd75c859096af\mclanguage-1.20.1-47.4.0.jar is missing mods.toml file
+[25Aug2025 14:21:19.341] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\darth\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.0\235975dafa4309945b59c56b53f31dc5b65a6051\fmlcore-1.20.1-47.4.0.jar is missing mods.toml file
+[25Aug2025 14:21:19.642] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[25Aug2025 14:21:21.905] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[25Aug2025 14:21:21.931] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\darth\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, extra_gauges, --all, --output, C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\src\generated\resources, --existing, C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\src\main\resources]
+[25Aug2025 14:21:22.055] [main/WARN] [mixin/]: Reference map 'extra_gauges.refmap.json' for extra_gauges.mixins.json could not be read. If this is a development environment you can ignore this message
+[25Aug2025 14:21:22.322] [main/INFO] [mixin/]: Remapping refMap backend-flywheel.refmap.json using C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\build\createSrgToMcp\output.srg
+[25Aug2025 14:21:22.325] [main/INFO] [mixin/]: Remapping refMap flywheel.refmap.json using C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\build\createSrgToMcp\output.srg
+[25Aug2025 14:21:22.331] [main/INFO] [mixin/]: Remapping refMap ponder.refmap.json using C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\build\createSrgToMcp\output.srg
+[25Aug2025 14:21:22.337] [main/INFO] [mixin/]: Remapping refMap create.refmap.json using C:\Users\darth\Documents\MinecraftMods\ExtraGaugesForge\build\createSrgToMcp\output.srg
+[25Aug2025 14:21:23.120] [main/WARN] [mixin/]: Error loading class: journeymap/client/ui/fullscreen/Fullscreen (java.lang.ClassNotFoundException: journeymap.client.ui.fullscreen.Fullscreen)
+[25Aug2025 14:21:23.120] [main/WARN] [mixin/]: @Mixin target journeymap.client.ui.fullscreen.Fullscreen was not found create.mixins.json:compat.JourneyFullscreenMapMixin
+[25Aug2025 14:21:25.002] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [extra_gauges]
+[25Aug2025 14:21:25.023] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.0).
+[25Aug2025 14:21:42.222] [modloading-worker-0/INFO] [com.simibubi.create.Create/]: Create 6.0.6 initializing! Commit hash: 21a931d2401847acf19416d0812609498e724549
+[25Aug2025 14:21:42.450] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.0, for MC 1.20.1 with MCP 20230612.114412
+[25Aug2025 14:21:42.456] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.0 Initialized
+[25Aug2025 14:21:44.329] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager...
+[25Aug2025 14:21:44.348] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager took 11.60 ms
+[25Aug2025 14:21:55.481] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/darth/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.0_mapped_official_1.20.1/forge-1.20.1-47.4.0_mapped_official_1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[25Aug2025 14:21:55.483] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/darth/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.0_mapped_official_1.20.1/forge-1.20.1-47.4.0_mapped_official_1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[25Aug2025 14:21:56.837] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: extra_gauges
+[25Aug2025 14:21:56.860] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: extra_gauges finished after 22 ms
+[25Aug2025 14:21:56.860] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block Models: extra_gauges
+[25Aug2025 14:21:56.865] [main/INFO] [net.minecraft.data.DataGenerator/]: Block Models: extra_gauges finished after 5 ms
+[25Aug2025 14:21:56.865] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: extra_gauges
+[25Aug2025 14:21:57.074] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: extra_gauges finished after 208 ms
+[25Aug2025 14:21:57.074] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[25Aug2025 14:21:57.143] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 67 ms
+[25Aug2025 14:21:57.143] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[25Aug2025 14:21:57.222] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 79 ms
+[25Aug2025 14:21:57.222] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 386 ms
+[25Aug2025 14:21:57.244] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 32, old count: 32, new count: 33, removed stale: 0, written: 0

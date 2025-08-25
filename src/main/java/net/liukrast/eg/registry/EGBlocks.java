@@ -17,7 +17,7 @@ import org.jetbrains.annotations.ApiStatus;
 
 public class EGBlocks {
     private EGBlocks() {}
-    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, EGConstants.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, EGConstants.MOD_ID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EGConstants.MOD_ID);
 
     public static final RegistryObject<IntSelectorBlock> INT_SELECTOR = BLOCKS.register("integer_selector", () -> new IntSelectorBlock(BlockBehaviour.Properties.copy(AllBlocks.ANALOG_LEVER.get())));

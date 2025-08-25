@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "create:precision_mechanism"
+    },
+    {
+      "item": "create:transmitter"
+    }
+  ],
+  "result": {
+    "item": "extra_gauges:counter_gauge"
+  }
+}

@@ -2,12 +2,12 @@ package net.liukrast.eg;
 
 import net.createmod.ponder.foundation.PonderIndex;
 import net.liukrast.eg.api.EGRegistries;
-import net.liukrast.eg.datagen.ExtraGaugesBlockModelProvider;
-import net.liukrast.eg.datagen.ExtraGaugesBlockStateProvider;
-import net.liukrast.eg.datagen.ExtraGaugesItemModelProvider;
+import net.liukrast.eg.datagen.*;
 import net.liukrast.eg.registry.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -19,6 +19,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.NewRegistryEvent;
 import net.minecraftforge.registries.RegistryBuilder;
+
+import java.util.List;
+import java.util.Set;
 
 @Mod(EGConstants.MOD_ID)
 public class EG {
@@ -59,6 +62,10 @@ public class EG {
         generator.addProvider(event.includeClient(), new ExtraGaugesItemModelProvider(packOutput, helper));
         generator.addProvider(event.includeClient(), new ExtraGaugesBlockModelProvider(packOutput, helper));
         generator.addProvider(event.includeClient(), new ExtraGaugesBlockStateProvider(packOutput, helper));
+        generator.addProvider(event.includeServer(), new ExtraGaugesRecipeProvider(packOutput));
+        generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Set.of(), List.of(
+                new LootTableProvider.SubProviderEntry(ExtraGaugesLootTableProvider::new, LootContextParamSets.BLOCK)
+        )));
     }
 
     @SubscribeEvent
