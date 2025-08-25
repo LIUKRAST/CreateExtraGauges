@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "minecraft:stone_button"
+    },
+    {
+      "item": "create:redstone_link"
+    }
+  ],
+  "result": {
+    "item": "extra_gauges:linked_button"
+  }
+}

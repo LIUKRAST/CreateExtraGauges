@@ -51,7 +51,7 @@ public class PassivePanelBehaviour extends AbstractPanelBehaviour {
             if(panel == null || panel.satisfied || panel.promisedSatisfied) continue;
             var by = panel.targetedBy.get(this.getPanelPosition());
             if(by == null) continue;
-            count+=by.amount;
+            count+= (int) (by.amount*Math.ceil((float)panel.count/panel.recipeOutput));
         }
         this.count = count;
         super.tick();

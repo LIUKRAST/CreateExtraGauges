@@ -31,6 +31,16 @@ public class ExtraGaugesRecipeProvider extends RecipeProvider implements ICondit
         makeGauge(EGItems.PASSIVE_GAUGE.get(), AllItems.STURDY_SHEET.get(), output);
         makeGauge(EGItems.STRING_GAUGE.get(), Items.PAPER, output);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.LINKED_LEVER.get())
+                .requires(Items.LEVER)
+                .requires(AllBlocks.REDSTONE_LINK)
+                .unlockedBy("has_lever", has(Items.LEVER)).save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.LINKED_BUTTON.get())
+                .requires(Items.STONE_BUTTON)
+                .requires(AllBlocks.REDSTONE_LINK)
+                .unlockedBy("has_stone_button", has(Items.LEVER)).save(output);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.INT_SELECTOR.get())
                 .requires(AllBlocks.ANALOG_LEVER.get())
                 .requires(Items.QUARTZ)

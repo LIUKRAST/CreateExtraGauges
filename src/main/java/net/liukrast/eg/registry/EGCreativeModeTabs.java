@@ -26,6 +26,9 @@ public class EGCreativeModeTabs {
                     out.accept(EGItems.STRING_GAUGE.get());
                     out.accept(EGBlocks.INT_SELECTOR.get());
                     out.accept(EGBlocks.DISPLAY_COLLECTOR.get());
+                    out.accept(EGBlocks.LINKED_LEVER.get());
+                    out.accept(EGBlocks.LINKED_BUTTON.get());
+
                 })
                 .build());
     }
