@@ -47,7 +47,7 @@ public class ExtraGaugesRecipeProvider extends RecipeProvider implements ICondit
     }
 
     public void makeGauge(Item result, Item ingredient, @NotNull RecipeOutput output) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, result)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, result, 2)
                 .requires(AllItems.PRECISION_MECHANISM)
                 .requires(ingredient)
                 .unlockedBy("has_precision_mechanism", has(AllItems.PRECISION_MECHANISM)).save(output);
