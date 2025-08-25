@@ -38,7 +38,7 @@ public class PackageRepackageHelperMixin {
         return result.stream().map(BigItemStack::new).toList();
     }
 
-    @WrapOperation(method = "repackBasedOnRecipes", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;copyWithCount(I)Lnet/minecraft/world/item/ItemStack;", ordinal = 0))
+    @WrapOperation(method = "repackBasedOnRecipes", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;copyWithCount(I)Lnet/minecraft/world/item/ItemStack;", ordinal = 0, remap = true))
     private ItemStack repackBasedOnRecipes(ItemStack instance, int i, Operation<ItemStack> original) {
         return instance.copy();
     }
