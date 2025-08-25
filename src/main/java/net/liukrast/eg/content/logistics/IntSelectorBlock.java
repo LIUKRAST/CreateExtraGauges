@@ -1,5 +1,6 @@
 package net.liukrast.eg.content.logistics;
 
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -18,7 +19,7 @@ import org.lwjgl.system.NonnullDefault;
 
 @SuppressWarnings("deprecation")
 @NonnullDefault
-public class IntSelectorBlock extends FaceAttachedHorizontalDirectionalBlock implements IBE<IntSelectorBlockEntity> {
+public class IntSelectorBlock extends FaceAttachedHorizontalDirectionalBlock implements IBE<IntSelectorBlockEntity>, IWrenchable {
 
     public IntSelectorBlock(Properties properties) {
         super(properties);
