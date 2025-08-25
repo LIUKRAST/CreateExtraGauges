@@ -20,7 +20,6 @@ import net.neoforged.neoforge.registries.NewRegistryEvent;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Mod(EGConstants.MOD_ID)
 public class EG {
