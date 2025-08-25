@@ -38,6 +38,16 @@ public class ExtraGaugesRecipeProvider extends RecipeProvider implements ICondit
                 .requires(Items.QUARTZ)
                 .unlockedBy("has_analog_lever", has(AllBlocks.ANALOG_LEVER)).save(output);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.LINKED_LEVER.get())
+                .requires(Items.LEVER)
+                .requires(AllBlocks.REDSTONE_LINK)
+                .unlockedBy("has_lever", has(Items.LEVER)).save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.LINKED_BUTTON.get())
+                .requires(Items.STONE_BUTTON)
+                .requires(AllBlocks.REDSTONE_LINK)
+                .unlockedBy("has_stone_button", has(Items.LEVER)).save(output);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.DISPLAY_COLLECTOR.get())
                 .requires(AllBlocks.DISPLAY_LINK)
                 .unlockedBy("has_display_link", has(AllBlocks.DISPLAY_LINK)).save(output);

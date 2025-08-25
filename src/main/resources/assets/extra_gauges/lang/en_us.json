@@ -9,6 +9,11 @@
   "item.extra_gauges.string_gauge": "String Gauge",
   "block.extra_gauges.integer_selector": "Integer Selector",
   "block.extra_gauges.display_collector": "Display Collector",
+  "block.extra_gauges.linked_lever": "Linked Lever",
+  "block.extra_gauges.linked_button": "Linked Button",
+
+  "block.extra_gauges.linked_lever.tooltip.summary": "Works like a redstone link but includes a lever. Connects to gauges and send an update instantly",
+  "block.extra_gauges.linked_button.tooltip.summary": "Works like a redstone link but includes a button. Connects to gauges and send an update instantly",
 
   "extra_gauges.panel.panels_connected": "%s now pointing to %s",
   "extra_gauges.panel.custom_panel_on_restocker": "Cannot place a custom gauge in restocker mode",

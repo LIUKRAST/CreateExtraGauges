@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "minecraft:lever"
+    },
+    {
+      "item": "create:redstone_link"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "extra_gauges:linked_lever"
+  }
+}
