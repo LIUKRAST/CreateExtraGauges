@@ -1,6 +1,7 @@
 package net.liukrast.eg.registry;
 
 import com.simibubi.create.content.redstone.displayLink.LinkBulbRenderer;
+import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.content.logistics.DisplayCollectorBlockEntity;
 import net.liukrast.eg.content.logistics.IntSelectorBlockEntity;
@@ -30,5 +31,6 @@ public class EGBlockEntityTypes {
 
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(DISPLAY_COLLECTOR.get(), LinkBulbRenderer::new);
+        event.registerBlockEntityRenderer(LINKED_LEVER.get(), SmartBlockEntityRenderer::new);
     }
 }

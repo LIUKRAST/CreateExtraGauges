@@ -43,7 +43,7 @@ public class LinkedLeverBlockEntity extends SmartBlockEntity {
 
     protected LinkBehaviour createLink() {
         Pair<ValueBoxTransform, ValueBoxTransform> slots =
-                ValueBoxTransform.Dual.makeSlots(LinkedLeverFrequencySlot::new); //TODO: REPLACE WITH FREQUENCY SLOTS POSITION
+                ValueBoxTransform.Dual.makeSlots(LinkedLeverFrequencySlot::new);
         return LinkBehaviour.transmitter(this, slots, () -> transmittedSignal);
     }
 
