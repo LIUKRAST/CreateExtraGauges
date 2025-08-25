@@ -23,21 +23,26 @@ public class ExtraGaugesRecipeProvider extends RecipeProvider implements ICondit
     }
 
     @Override
-    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> writer) {
-        makeGauge(EGItems.LOGIC_GAUGE.get(), Items.REDSTONE_TORCH, writer);
-        makeGauge(EGItems.INT_GAUGE.get(), Items.QUARTZ, writer);
-        makeGauge(EGItems.COMPARATOR_GAUGE.get(), Items.COMPARATOR, writer);
-        makeGauge(EGItems.COUNTER_GAUGE.get(), AllItems.TRANSMITTER.get(), writer);
-        makeGauge(EGItems.PASSIVE_GAUGE.get(), AllItems.STURDY_SHEET.get(), writer);
-        makeGauge(EGItems.STRING_GAUGE.get(), Items.PAPER, writer);
+    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> output) {
+        makeGauge(EGItems.LOGIC_GAUGE.get(), Items.REDSTONE_TORCH, output);
+        makeGauge(EGItems.INT_GAUGE.get(), Items.QUARTZ, output);
+        makeGauge(EGItems.COMPARATOR_GAUGE.get(), Items.COMPARATOR, output);
+        makeGauge(EGItems.COUNTER_GAUGE.get(), AllItems.TRANSMITTER.get(), output);
+        makeGauge(EGItems.PASSIVE_GAUGE.get(), AllItems.STURDY_SHEET.get(), output);
+        makeGauge(EGItems.STRING_GAUGE.get(), Items.PAPER, output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.INT_SELECTOR.get())
+                .requires(AllBlocks.ANALOG_LEVER.get())
+                .requires(Items.QUARTZ)
+                .unlockedBy("has_analog_lever", has(AllBlocks.ANALOG_LEVER)).save(output);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.DISPLAY_COLLECTOR.get())
                 .requires(AllBlocks.DISPLAY_LINK)
-                .unlockedBy("has_display_link", has(AllBlocks.DISPLAY_LINK)).save(writer);
+                .unlockedBy("has_display_link", has(AllBlocks.DISPLAY_LINK)).save(output);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, AllBlocks.DISPLAY_LINK.get())
                 .requires(EGBlocks.DISPLAY_COLLECTOR.get())
-                .unlockedBy("has_display_collector", has(EGBlocks.DISPLAY_COLLECTOR.get())).save(writer, EGConstants.id("display_link"));
+                .unlockedBy("has_display_collector", has(EGBlocks.DISPLAY_COLLECTOR.get())).save(output, EGConstants.id("display_link"));
     }
 
     public void makeGauge(Item result, Item ingredient, @NotNull Consumer<FinishedRecipe> writer) {

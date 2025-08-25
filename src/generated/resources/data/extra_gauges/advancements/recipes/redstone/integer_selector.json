@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_analog_lever": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "create:analog_lever"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "extra_gauges:integer_selector"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_analog_lever",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "extra_gauges:integer_selector"
+    ]
+  },
+  "sends_telemetry_event": false
+}

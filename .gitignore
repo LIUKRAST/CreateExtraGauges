@@ -3,9 +3,12 @@
 /build/
 /build/classes/java/main/
 /run/
+/run-data/
+/run-data/logs/
+/run-data/config/
 /.idea/
 gradlew
 gradlew.bat
 /repo/
 /src/generated/resources/.cache
-/run-data/
+
