@@ -18,6 +18,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 import static com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockItem.fixCtrlCopiedStack;
+import static com.simibubi.create.content.logistics.packagerLink.LogisticallyLinkedBlockItem.assignFrequency;
+import static com.simibubi.create.content.logistics.packagerLink.LogisticallyLinkedBlockItem.isTuned;
 
 public class LogisticallyLinkedPanelBlockItem extends PanelBlockItem {
     public LogisticallyLinkedPanelBlockItem(Supplier<PanelType<?>> type, Properties properties) {
