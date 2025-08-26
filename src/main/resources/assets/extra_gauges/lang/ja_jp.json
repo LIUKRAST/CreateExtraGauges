@@ -134,5 +134,7 @@
 
   "extra_gauges.gui.string_panel.join": "結合:",
   "extra_gauges.gui.string_panel.regex": "正規表現:",
-  "extra_gauges.gui.string_panel.replacement": "置換:"
+  "extra_gauges.gui.string_panel.replacement": "置換:",
+
+  "extra_gauges.counter_panel.no_limit": "制限なし"
 }
