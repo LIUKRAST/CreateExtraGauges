@@ -63,14 +63,6 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
                     .resultOrPartial(EGConstants.LOGGER::error)
                     .ifPresent(tag1 -> tag.put("text", tag1));
         }
-        if(level == null) return;
-        var be = this.level.getBlockEntity(getSourcePosition());
-        if(!(be instanceof DCFinder finder)) return;
-        var set = finder.extra_gauges$targetingDisplayCollectors();
-        var pos = getBlockPos();
-        if(set.contains(pos)) return;
-        set.add(getBlockPos());
-        be.setChanged();
     }
 
     public Component getComponent() {
@@ -92,5 +84,17 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
         for (FactoryPanelPosition position : factoryPanelSupport.getLinkedPanels())
             return position.pos();
         return worldPosition.relative(getDirection());
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if(level == null) return;
+        var be = this.level.getBlockEntity(getSourcePosition());
+        if(!(be instanceof DCFinder finder)) return;
+        var set = finder.extra_gauges$targetingDisplayCollectors();
+        if(set.contains(getBlockPos())) return;
+        set.add(getBlockPos());
+        be.setChanged();
     }
 }
