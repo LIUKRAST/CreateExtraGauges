@@ -4,8 +4,8 @@ import com.simibubi.create.AllKeys;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsPacket;
 import com.simibubi.create.foundation.gui.widget.IconButton;
 import net.createmod.catnip.platform.CatnipServices;
-import net.liukrast.eg.api.logistics.board.BasicPanelScreen;
-import net.liukrast.eg.registry.EGPanelConnections;
+import net.liukrast.deployer.lib.logistics.board.BasicPanelScreen;
+import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -69,7 +69,7 @@ public class ComparatorPanelScreen extends BasicPanelScreen<ComparatorPanelBehav
 
     @Override
     protected void renderWindow(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        var value = behaviour.getConnectionValue(EGPanelConnections.REDSTONE).orElse(0) > 0;
+        var value = behaviour.getConnectionValue(DeployerPanelConnections.REDSTONE).orElse(0) > 0;
         graphics.drawCenteredString(font,
                 Component.literal((value ? "✔" : "✖") +" input " + ComparatorMode.values()[current].character() + " " + behaviour.value),
                 guiLeft + (windowWidth>>1),

@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 
-import static net.liukrast.eg.content.ponder.scenes.highLogistics.GaugeHelper.*;
+import static net.liukrast.deployer.lib.util.ponder.GaugeHelper.*;
 
 public class StringGaugeScenes {
     public static void stringGauge(SceneBuilder builder, SceneBuildingUtil util) {

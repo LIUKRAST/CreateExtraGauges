@@ -56,6 +56,7 @@ public class ExtraGaugesRecipeProvider extends RecipeProvider implements ICondit
                 .unlockedBy("has_display_collector", has(EGBlocks.DISPLAY_COLLECTOR.get())).save(output, EGConstants.id("display_link"));
     }
 
+    @Deprecated
     public void makeGauge(Item result, Item ingredient, @NotNull RecipeOutput output) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, result, 2)
                 .requires(AllItems.PRECISION_MECHANISM)

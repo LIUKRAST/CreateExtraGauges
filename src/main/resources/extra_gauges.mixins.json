@@ -6,30 +6,14 @@
   "minVersion": "0.8",
   "package": "net.liukrast.eg.mixin",
   "compatibilityLevel": "JAVA_21",
-  "plugin": "net.liukrast.eg.mixin.plugin.ExtraGaugesMixinConfigPlugin",
   "mixins": [
-    "AllIconsMixin",
     "BeltTunnelBlockEntityMixin",
-    "ClientEventsMixin",
+    "ClickToLinkBlockItemMixin",
     "DisplayLinkBlockMixin",
-    "FactoryGaugeDisplaySourceMixin",
-    "FactoryPanelBehaviourAccessor",
-    "FactoryPanelBehaviourIMixin",
-    "FactoryPanelBehaviourMixin",
-    "FactoryPanelBlockEntityMixin",
-    "FactoryPanelBlockMixin",
-    "FactoryPanelConnectionHandlerMixin",
-    "FactoryPanelModelMixin",
-    "FactoryPanelRendererMixin",
-    "FactoryPanelSupportBehaviourMixin",
-    "FilteringBehaviourMixin",
-    "FilteringRendererMixin",
-    "PackageRepackageHelperMixin"
+    "FactoryPanelBehaviourMixin"
   ],
   "client": [
-    "ClickToLinkBlockItemMixin",
-    "FactoryPanelScreenMixin",
-    "ValueSettingsClientMixin"
+    "FactoryPanelScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -4,8 +4,8 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.foundation.networking.BlockEntityConfigurationPacket;
-import net.liukrast.eg.api.util.IFPExtra;
-import net.liukrast.eg.registry.RegisterPackets;
+import net.liukrast.eg.mixinExtension.WidthModifier;
+import net.liukrast.eg.registry.EGPackets;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -28,7 +28,7 @@ public class FactoryPanelChangeSizePacket extends BlockEntityConfigurationPacket
 
     @Override
     public PacketTypeProvider getTypeProvider() {
-        return RegisterPackets.FACTORY_PANEL_CHANGE_SIZE;
+        return EGPackets.FACTORY_PANEL_CHANGE_SIZE;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class FactoryPanelChangeSizePacket extends BlockEntityConfigurationPacket
         FactoryPanelBehaviour behaviour = be.panels.get(position.slot());
         if (behaviour == null)
             return;
-        IFPExtra extra = (IFPExtra) behaviour;
+        WidthModifier extra = (WidthModifier) behaviour;
         if(width > 2) extra.extra_gauges$setWidth(width);
         be.notifyUpdate();
     }

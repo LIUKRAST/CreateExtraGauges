@@ -33,3 +33,8 @@ modId = "create"
 type = "required"
 versionRange = "${create_version_range}"
 ordering = "AFTER"
+[[dependencies."${mod_id}"]]
+modId = "deployer"
+type = "required"
+versionRange = "${deployer_version_range}"
+ordering = "AFTER"

@@ -1,14 +1,15 @@
 package net.liukrast.eg.content.logistics;
 
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelSupportBehaviour;
 import com.simibubi.create.content.redstone.link.LinkBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
-import net.liukrast.eg.api.logistics.ColoredFactoryPanelSupportBehaviour;
-import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
+import net.liukrast.deployer.lib.logistics.board.AbstractPanelBehaviour;
+import net.liukrast.deployer.lib.logistics.board.connection.ColoredFactoryPanelSupportBehaviour;
+import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
-import net.liukrast.eg.registry.EGPanelConnections;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -30,15 +31,18 @@ public class LinkedLeverBlockEntity extends SmartBlockEntity {
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(panelSupport = new ColoredFactoryPanelSupportBehaviour(
-                (be) -> {
-                    boolean bool = !(be instanceof AbstractPanelBehaviour ab) || ab.hasConnection(EGPanelConnections.REDSTONE.get());
-                    return new ColoredFactoryPanelSupportBehaviour.Line(bool ? (transmittedSignal > 0 ? 0xEF0000:0x580101) : 0x888898, false);
-                },
                 this,
                 () -> true,
                 () -> transmittedSignal > 0,
                 () -> {}
-        ));
+        ) {
+
+            @Override
+            public Line getColor(FactoryPanelBehaviour be) {
+                boolean bool = !(be instanceof AbstractPanelBehaviour ab) || ab.hasConnection(DeployerPanelConnections.REDSTONE.get());
+                return new ColoredFactoryPanelSupportBehaviour.Line(bool ? (transmittedSignal > 0 ? 0xEF0000:0x580101) : 0x888898, false);
+            }
+        });
         behaviours.add(link = createLink());
     }
 

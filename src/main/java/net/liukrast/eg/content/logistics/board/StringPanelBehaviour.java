@@ -7,13 +7,14 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntit
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.gui.ScreenOpener;
+import net.liukrast.deployer.lib.DeployerConfig;
+import net.liukrast.deployer.lib.logistics.board.AbstractPanelBehaviour;
+import net.liukrast.deployer.lib.logistics.board.PanelType;
+import net.liukrast.deployer.lib.logistics.board.cache.CacheContainer;
+import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.ExtraGaugesConfig;
-import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
-import net.liukrast.eg.api.registry.PanelType;
-import net.liukrast.eg.api.util.CacheContainer;
 import net.liukrast.eg.content.logistics.DisplayCollectorBlockEntity;
 import net.liukrast.eg.registry.EGItems;
-import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -48,9 +49,9 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
     /* IMPL */
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(EGPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
-        builder.put(EGPanelConnections.INTEGER.get(), () -> intValue);
-        builder.put(EGPanelConnections.REDSTONE.get(), () -> Mth.clamp(intValue, 0, 15));
+        builder.put(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
+        builder.put(DeployerPanelConnections.INTEGER.get(), () -> intValue);
+        builder.put(DeployerPanelConnections.REDSTONE.get(), () -> Mth.clamp(intValue, 0, 15));
     }
 
     @Override
@@ -116,11 +117,11 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
             if (link.blockEntity instanceof DisplayCollectorBlockEntity collector)
                 stringList.add(collector.getComponent().getString());
         });
-        consumeForExtra(EGPanelConnections.STRING.get(), (pos, v) -> {
+        consumeForExtra(DeployerPanelConnections.STRING.get(), (pos, v) -> {
             cache.put(pos, v);
             stringList.add(v);
         });
-        consumeForPanels(EGPanelConnections.STRING.get(), stringList::add);
+        consumeForPanels(DeployerPanelConnections.STRING.get(), stringList::add);
         String result = stringList.toString();
         int maxLength = ExtraGaugesConfig.STRING_MAX_LENGTH.get();
         if (result.length() > maxLength) result = result.substring(0, maxLength);
@@ -178,7 +179,7 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
     /* RENDER */
     @Override
     public int calculatePath(FactoryPanelBehaviour other, int original) {
-        return EGPanelConnections.getConnectionValue(other, EGPanelConnections.STRING).map(str -> 0xFFFFFF).orElse(super.calculatePath(other, original));
+        return DeployerPanelConnections.getConnectionValue(other, DeployerPanelConnections.STRING).map(str -> 0xFFFFFF).orElse(super.calculatePath(other, original));
     }
 
     @Override
@@ -186,12 +187,12 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
         var level = getWorld();
         var state = level.getBlockState(pos);
         var be = level.getBlockEntity(pos);
-        var listener = EGPanelConnections.STRING.get().getListener(state.getBlock());
+        var listener = DeployerPanelConnections.STRING.get().getListener(state.getBlock());
         if (listener != null) {
             var opt = listener.invalidate(level, state, pos, be);
             var cache = this.cache.get(pos);
             if (opt.isPresent())
-                return !ExtraGaugesConfig.PANEL_CACHING.get() || cache != null && cache.equals(opt.get()) ? 0xFFFFFF : WAITING;
+                return !DeployerConfig.PANEL_CACHING.get() || cache != null && cache.equals(opt.get()) ? 0xFFFFFF : WAITING;
         }
         return super.calculateExtraPath(pos);
     }

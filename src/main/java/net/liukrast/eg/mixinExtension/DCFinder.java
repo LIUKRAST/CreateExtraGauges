@@ -1,4 +1,4 @@
-package net.liukrast.eg.api.util;
+package net.liukrast.eg.mixinExtension;
 
 import net.minecraft.core.BlockPos;
 

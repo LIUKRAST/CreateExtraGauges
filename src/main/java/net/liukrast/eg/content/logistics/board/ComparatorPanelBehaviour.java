@@ -8,10 +8,12 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.gui.ScreenOpener;
+import net.liukrast.deployer.lib.DeployerConfig;
+import net.liukrast.deployer.lib.logistics.board.NumericalScrollPanelBehaviour;
+import net.liukrast.deployer.lib.logistics.board.PanelType;
+import net.liukrast.deployer.lib.logistics.board.cache.CacheContainer;
+import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.ExtraGaugesConfig;
-import net.liukrast.eg.api.util.CacheContainer;
-import net.liukrast.eg.registry.EGPanelConnections;
-import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.EGItems;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.ChatFormatting;
@@ -77,8 +79,8 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour impl
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(EGPanelConnections.REDSTONE, () -> !redstonePowered ? 15 : 0);
-        builder.put(EGPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
+        builder.put(DeployerPanelConnections.REDSTONE, () -> !redstonePowered ? 15 : 0);
+        builder.put(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override
@@ -124,8 +126,8 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour impl
                 result.addAndGet(redstoneLink.getReceivedSignal());
             } else result.addAndGet(link.shouldPanelBePowered() ? 1 : 0);
         });
-        consumeForPanels(EGPanelConnections.INTEGER.get(), result::addAndGet);
-        consumeForExtra(EGPanelConnections.INTEGER.get(), (pos, v) -> {
+        consumeForPanels(DeployerPanelConnections.INTEGER.get(), result::addAndGet);
+        consumeForExtra(DeployerPanelConnections.INTEGER.get(), (pos, v) -> {
             result.addAndGet(v);
             cache.put(pos, v);
         });
@@ -150,7 +152,7 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour impl
 
     @Override
     public MutableComponent getDisplayLinkComponent(boolean shortened) {
-        boolean active = getConnectionValue(EGPanelConnections.REDSTONE).orElse(0) > 0;
+        boolean active = getConnectionValue(DeployerPanelConnections.REDSTONE).orElse(0) > 0;
         String t = "✔";
         String f = "✖";
         if(!shortened) {
@@ -169,7 +171,7 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour impl
 
     @Override
     public int calculatePath(FactoryPanelBehaviour other, int original) {
-        if(EGPanelConnections.getConnectionValue(other, EGPanelConnections.INTEGER).isPresent()) return 0x006496;
+        if(DeployerPanelConnections.getConnectionValue(other, DeployerPanelConnections.INTEGER).isPresent()) return 0x006496;
         return super.calculatePath(other, original);
     }
 
@@ -178,18 +180,18 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour impl
         var level = getWorld();
         var state = level.getBlockState(pos);
         var be = level.getBlockEntity(pos);
-        var intListener = EGPanelConnections.INTEGER.get().getListener(state.getBlock());
+        var intListener = DeployerPanelConnections.INTEGER.get().getListener(state.getBlock());
         if(intListener != null) {
             var opt = intListener.invalidate(level, state, pos, be);
             var cache = this.cache.get(pos);
-            if(opt.isPresent()) return !ExtraGaugesConfig.PANEL_CACHING.get() || opt.get().equals(cache) ? 0x006496:WAITING;
+            if(opt.isPresent()) return !DeployerConfig.PANEL_CACHING.get() || opt.get().equals(cache) ? 0x006496:WAITING;
         }
-        var listener = EGPanelConnections.REDSTONE.get().getListener(state.getBlock());
+        var listener = DeployerPanelConnections.REDSTONE.get().getListener(state.getBlock());
         if(listener == null) return super.calculateExtraPath(pos);
         return listener.invalidate(level, state, pos, be).map(v -> {
             boolean k = v == 0;
             var cache = this.cache.get(pos);
-            if(ExtraGaugesConfig.PANEL_CACHING.get() && cache != null && k == cache > 0) return WAITING;
+            if(DeployerConfig.PANEL_CACHING.get() && cache != null && k == cache > 0) return WAITING;
             return k?0x580101:0xEF0000;
         }).orElse(super.calculateExtraPath(pos));
     }

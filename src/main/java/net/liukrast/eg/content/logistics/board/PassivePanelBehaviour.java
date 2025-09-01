@@ -9,11 +9,10 @@ import com.simibubi.create.foundation.utility.CreateLang;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.catnip.nbt.NBTHelper;
-import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
-import net.liukrast.eg.api.registry.PanelType;
-import net.liukrast.eg.mixin.FactoryPanelBehaviourAccessor;
+import net.liukrast.deployer.lib.logistics.board.AbstractPanelBehaviour;
+import net.liukrast.deployer.lib.logistics.board.PanelType;
+import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.registry.EGItems;
-import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
@@ -35,8 +34,8 @@ public class PassivePanelBehaviour extends AbstractPanelBehaviour {
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(EGPanelConnections.FILTER, () -> filter);
-        builder.put(EGPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
+        builder.put(DeployerPanelConnections.ITEMSTACK.get(), () -> filter.item());
+        builder.put(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override
@@ -87,7 +86,7 @@ public class PassivePanelBehaviour extends AbstractPanelBehaviour {
 
     @Override
     public int calculatePath(FactoryPanelBehaviour other, int original) {
-        return other instanceof AbstractPanelBehaviour ? EGPanelConnections.getConnectionValue(other, EGPanelConnections.REDSTONE)
+        return other instanceof AbstractPanelBehaviour ? DeployerPanelConnections.getConnectionValue(other, DeployerPanelConnections.REDSTONE)
                 .map(v -> v == 0 ? 0x580101:0xEF0000)
                 .orElse(original) : original;
     }
@@ -99,11 +98,10 @@ public class PassivePanelBehaviour extends AbstractPanelBehaviour {
         nbt.putInt("PromiseClearingInterval", promiseClearingInterval);
         nbt.putUUID("Freq", network);
         nbt.put("Craft", NBTHelper.writeItemList(activeCraftingArrangement, registries));
-        var asInterface = (FactoryPanelBehaviourAccessor)this;
-        nbt.putInt("Timer", asInterface.getTimer());
-        nbt.putInt("LastLevel", asInterface.getLastReportedLevelInStorage());
-        nbt.putInt("LastPromised", asInterface.getLastReportedPromises());
-        nbt.putInt("LastUnloadedLinks", asInterface.getLastReportedUnloadedLinks());
+        nbt.putInt("Timer", getTimer());
+        nbt.putInt("LastLevel", getLastReportedLevelInStorage());
+        nbt.putInt("LastPromised", getLastReportedPromises());
+        nbt.putInt("LastUnloadedLinks", getLastReportedUnloadedLinks());
     }
 
     @Override

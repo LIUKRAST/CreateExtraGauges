@@ -8,7 +8,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod(value = EGConstants.MOD_ID, dist = Dist.CLIENT)
@@ -19,7 +18,6 @@ public class EGClient {
         EGPartialModels.init();
         bus.register(this);
         bus.addListener(EGBlockEntityTypes::registerRenderers);
-        container.registerConfig(ModConfig.Type.CLIENT, ExtraGaugesConfig.CLIENT_SPEC);
     }
 
     @SubscribeEvent

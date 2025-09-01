@@ -2,7 +2,7 @@ package net.liukrast.eg.mixin;
 
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlockEntity;
 import net.liukrast.eg.EGConstants;
-import net.liukrast.eg.api.util.DCFinder;
+import net.liukrast.eg.mixinExtension.DCFinder;
 import net.liukrast.eg.content.logistics.DisplayCollectorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
