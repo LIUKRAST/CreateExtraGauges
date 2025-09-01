@@ -22,6 +22,7 @@ public class ExtraGaugesItemModelProvider extends ItemModelProvider {
         super(output, EGConstants.MOD_ID, existingFileHelper);
     }
 
+    @Deprecated
     public static ItemModelBuilder createGauge(ItemModelProvider instance, Item item, Function<String, String> texture) {
         var id = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
         return instance.getBuilder(id.toString()).parent(new ModelFile.UncheckedModelFile(ResourceLocation.fromNamespaceAndPath("create", "block/factory_gauge/item")))
@@ -29,16 +30,17 @@ public class ExtraGaugesItemModelProvider extends ItemModelProvider {
                 .texture("particle", ResourceLocation.fromNamespaceAndPath(id.getNamespace(), texture.apply(id.getPath())));
     }
 
-    @SuppressWarnings("unused")
+    @Deprecated
     public static ItemModelBuilder createGauge(ItemModelProvider instance, Item item) {
         return createGauge(instance, item, id -> "block/" + id);
     }
 
-    @SuppressWarnings("UnusedReturnValue")
+    @Deprecated
     public static ItemModelBuilder createPanel(ItemModelProvider instance, Item item) {
         return createGauge(instance, item, id -> "block/" + id.split("_")[0] + "_panel");
     }
 
+    @Deprecated
     private void createGauge(Item item) {
         createPanel(this, item);
     }

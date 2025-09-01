@@ -1,13 +1,14 @@
 package net.liukrast.eg.content.logistics;
 
 import com.google.common.collect.ImmutableList;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.CreateLang;
-import net.liukrast.eg.api.logistics.ColoredFactoryPanelSupportBehaviour;
+import net.liukrast.deployer.lib.logistics.board.connection.ColoredFactoryPanelSupportBehaviour;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -69,8 +70,12 @@ public class IntSelectorBlockEntity extends SmartBlockEntity {
         behaviours.add(behaviour);
         this.behaviour = behaviour;
         behaviours.add(panelSupport = new ColoredFactoryPanelSupportBehaviour(
-                (be) -> new ColoredFactoryPanelSupportBehaviour.Line(0x006496, false),
                 this, () -> true, () -> behaviour.value > 0, () -> {}
-        ));
+        ) {
+            @Override
+            public Line getColor(FactoryPanelBehaviour factoryPanelBehaviour) {
+                return new ColoredFactoryPanelSupportBehaviour.Line(0x006496, false);
+            }
+        });
     }
 }

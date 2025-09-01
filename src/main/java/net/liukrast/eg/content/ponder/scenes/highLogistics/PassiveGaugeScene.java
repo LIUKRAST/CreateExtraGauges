@@ -7,7 +7,7 @@ import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import static net.liukrast.eg.content.ponder.scenes.highLogistics.GaugeHelper.*;
+import static net.liukrast.deployer.lib.util.ponder.GaugeHelper.*;
 
 public class PassiveGaugeScene {
     public static void passiveGauge(SceneBuilder builder, SceneBuildingUtil util) {

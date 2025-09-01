@@ -5,9 +5,10 @@ import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.liukrast.deployer.lib.logistics.board.NumericalScrollPanelBehaviour;
+import net.liukrast.deployer.lib.logistics.board.PanelType;
+import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.ExtraGaugesConfig;
-import net.liukrast.eg.registry.EGPanelConnections;
-import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.EGItems;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.ChatFormatting;
@@ -69,14 +70,14 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
 
     @Override
     public int calculatePath(FactoryPanelBehaviour other, int original) {
-        return EGPanelConnections.getConnectionValue(other, EGPanelConnections.REDSTONE).map(v -> v == 0 ? 0xEF0000 : 0x580101).orElse(super.calculatePath(other, original));
+        return DeployerPanelConnections.getConnectionValue(other, DeployerPanelConnections.REDSTONE).map(v -> v == 0 ? 0xEF0000 : 0x580101).orElse(super.calculatePath(other, original));
     }
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(EGPanelConnections.INTEGER, () -> count);
-        builder.put(EGPanelConnections.REDSTONE, () -> count >= value ? 15 : 0);
-        builder.put(EGPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
+        builder.put(DeployerPanelConnections.INTEGER, () -> count);
+        builder.put(DeployerPanelConnections.REDSTONE, () -> count >= value ? 15 : 0);
+        builder.put(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override
@@ -101,8 +102,8 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
             return;
         AtomicBoolean shouldPower = new AtomicBoolean(false);
         consumeForLinks(link -> shouldPower.set(shouldPower.get() | link.shouldPanelBePowered()));
-        consumeForPanels(EGPanelConnections.REDSTONE.get(), out -> shouldPower.set(shouldPower.get() | out > 0));
-        consumeForExtra(EGPanelConnections.REDSTONE.get(), (pos,out) -> {});
+        consumeForPanels(DeployerPanelConnections.REDSTONE.get(), out -> shouldPower.set(shouldPower.get() | out > 0));
+        consumeForExtra(DeployerPanelConnections.REDSTONE.get(), (pos,out) -> {});
         //End logical mode
         if(shouldPower.get() != redstonePowered)
             return;

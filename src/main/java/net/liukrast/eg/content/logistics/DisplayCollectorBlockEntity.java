@@ -1,15 +1,16 @@
 package net.liukrast.eg.content.logistics;
 
 import com.mojang.serialization.DynamicOps;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.content.redstone.displayLink.DisplayLinkBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import net.liukrast.deployer.lib.logistics.board.AbstractPanelBehaviour;
+import net.liukrast.deployer.lib.logistics.board.connection.ColoredFactoryPanelSupportBehaviour;
+import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.EGConstants;
-import net.liukrast.eg.api.logistics.ColoredFactoryPanelSupportBehaviour;
-import net.liukrast.eg.api.logistics.board.AbstractPanelBehaviour;
-import net.liukrast.eg.api.util.DCFinder;
+import net.liukrast.eg.mixinExtension.DCFinder;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
-import net.liukrast.eg.registry.EGPanelConnections;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -31,15 +32,17 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         behaviours.add(factoryPanelSupport = new ColoredFactoryPanelSupportBehaviour(
-                (be) -> {
-                    boolean bool = !(be instanceof AbstractPanelBehaviour ab) || ab.hasConnection(EGPanelConnections.STRING.get());
-                    return new ColoredFactoryPanelSupportBehaviour.Line(bool ? 0xFFFFFFFF : 0x888898, true);
-                },
                 this,
                 () -> true,
                 () -> false,
                 () -> {}
-        ));
+        ) {
+            @Override
+            public Line getColor(FactoryPanelBehaviour be) {
+                boolean bool = !(be instanceof AbstractPanelBehaviour ab) || ab.hasConnection(DeployerPanelConnections.STRING.get());
+                return new ColoredFactoryPanelSupportBehaviour.Line(bool ? 0xFFFFFFFF : 0x888898, true);
+            }
+        });
     }
 
     @Override

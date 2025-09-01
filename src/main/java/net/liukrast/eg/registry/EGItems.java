@@ -1,8 +1,8 @@
 package net.liukrast.eg.registry;
 
+import net.liukrast.deployer.lib.logistics.board.LogisticallyLinkedPanelBlockItem;
+import net.liukrast.deployer.lib.logistics.board.PanelBlockItem;
 import net.liukrast.eg.EGConstants;
-import net.liukrast.eg.api.logistics.board.PanelBlockItem;
-import net.liukrast.eg.content.item.LogisticallyLinkedPanelBlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;

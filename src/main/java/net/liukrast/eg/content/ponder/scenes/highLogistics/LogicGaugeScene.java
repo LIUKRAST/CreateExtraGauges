@@ -12,7 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import static net.liukrast.eg.content.ponder.scenes.highLogistics.GaugeHelper.*;
+import static net.liukrast.deployer.lib.util.ponder.GaugeHelper.*;
 
 public class LogicGaugeScene {
 

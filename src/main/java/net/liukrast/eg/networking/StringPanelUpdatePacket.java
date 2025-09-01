@@ -5,7 +5,7 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntit
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.foundation.networking.BlockEntityConfigurationPacket;
 import net.liukrast.eg.content.logistics.board.StringPanelBehaviour;
-import net.liukrast.eg.registry.RegisterPackets;
+import net.liukrast.eg.registry.EGPackets;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -32,7 +32,7 @@ public class StringPanelUpdatePacket extends BlockEntityConfigurationPacket<Fact
 
     @Override
     public PacketTypeProvider getTypeProvider() {
-        return RegisterPackets.STRING_PANEL_UPDATE;
+        return EGPackets.STRING_PANEL_UPDATE;
     }
 
     @Override

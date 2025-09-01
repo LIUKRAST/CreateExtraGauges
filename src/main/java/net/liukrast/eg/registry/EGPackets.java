@@ -4,8 +4,8 @@ import com.simibubi.create.Create;
 import net.createmod.catnip.net.base.BasePacketPayload;
 import net.createmod.catnip.net.base.CatnipPacketRegistry;
 import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGaugesConfig;
 import net.liukrast.eg.networking.FactoryPanelChangeSizePacket;
-import net.liukrast.eg.networking.PanelCacheUpdatePacket;
 import net.liukrast.eg.networking.StringPanelUpdatePacket;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -13,17 +13,16 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 import java.util.Locale;
 
-public enum RegisterPackets implements BasePacketPayload.PacketTypeProvider {
+public enum EGPackets implements BasePacketPayload.PacketTypeProvider {
     FACTORY_PANEL_CHANGE_SIZE(FactoryPanelChangeSizePacket.class, FactoryPanelChangeSizePacket.STREAM_CODEC),
-    STRING_PANEL_UPDATE(StringPanelUpdatePacket.class, StringPanelUpdatePacket.STREAM_CODEC),
-    PANEL_CACHE_UPDATE(PanelCacheUpdatePacket.class, PanelCacheUpdatePacket.STREAM_CODEC);
+    STRING_PANEL_UPDATE(StringPanelUpdatePacket.class, StringPanelUpdatePacket.STREAM_CODEC);
 
     private final CatnipPacketRegistry.PacketType<?> type;
 
-    <T extends BasePacketPayload> RegisterPackets(Class<T> clazz, StreamCodec<? super RegistryFriendlyByteBuf, T> codec) {
+    <T extends BasePacketPayload> EGPackets(Class<T> clazz, StreamCodec<? super RegistryFriendlyByteBuf, T> codec) {
         String name = this.name().toLowerCase(Locale.ROOT);
         this.type = new CatnipPacketRegistry.PacketType<>(
-                new CustomPacketPayload.Type<>(Create.asResource(name)),
+                new CustomPacketPayload.Type<>(EGConstants.id(name)),
                 clazz, codec
         );
     }
@@ -36,7 +35,7 @@ public enum RegisterPackets implements BasePacketPayload.PacketTypeProvider {
 
     public static void register() {
         CatnipPacketRegistry packetRegistry = new CatnipPacketRegistry(EGConstants.MOD_ID, "1.0.0");
-        for (RegisterPackets packet : RegisterPackets.values()) {
+        for (EGPackets packet : EGPackets.values()) {
             packetRegistry.registerPacket(packet.type);
         }
         packetRegistry.registerAllPackets();

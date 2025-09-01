@@ -19,7 +19,7 @@ import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.eg.EGConstants;
-import net.liukrast.eg.api.util.IFPExtra;
+import net.liukrast.eg.mixinExtension.WidthModifier;
 import net.liukrast.eg.networking.FactoryPanelChangeSizePacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -66,7 +66,7 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"))
     private void init(FactoryPanelBehaviour behaviour, CallbackInfo ci) {
-        IFPExtra extra = (IFPExtra) behaviour;
+        WidthModifier extra = (WidthModifier) behaviour;
         extra_gauges$width = extra.extra_gauges$getWidth();
     }
 

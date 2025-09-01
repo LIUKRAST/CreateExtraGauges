@@ -10,7 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 
-import static net.liukrast.eg.content.ponder.scenes.highLogistics.GaugeHelper.*;
+import static net.liukrast.deployer.lib.util.ponder.GaugeHelper.*;
 
 public class ExtendedCraftScene {
     public static void autoCrafter(SceneBuilder builder, SceneBuildingUtil util) {

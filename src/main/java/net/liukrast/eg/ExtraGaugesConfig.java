@@ -25,12 +25,4 @@ public class ExtraGaugesConfig {
             .defineInRange("stringGaugeMaxLength", 256, 0, Integer.MAX_VALUE);
 
     static final ModConfigSpec SPEC = BUILDER.build();
-
-    private static final ModConfigSpec.Builder CLIENT = new ModConfigSpec.Builder();
-
-    public static final ModConfigSpec.BooleanValue PANEL_CACHING = CLIENT
-            .comment("Caching all input values to display when non instant updates are still processing")
-            .define("panelCaching", true);
-
-    static final ModConfigSpec CLIENT_SPEC = CLIENT.build();
 }

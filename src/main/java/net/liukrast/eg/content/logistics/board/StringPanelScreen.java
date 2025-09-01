@@ -1,8 +1,8 @@
 package net.liukrast.eg.content.logistics.board;
 
 import net.createmod.catnip.platform.CatnipServices;
+import net.liukrast.deployer.lib.logistics.board.BasicPanelScreen;
 import net.liukrast.eg.EGConstants;
-import net.liukrast.eg.api.logistics.board.BasicPanelScreen;
 import net.liukrast.eg.networking.StringPanelUpdatePacket;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
