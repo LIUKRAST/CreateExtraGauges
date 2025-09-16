@@ -55,10 +55,6 @@ public class EG {
         EGPanelConnections.initDefaults();
     }
 
-    @SubscribeEvent
-    private void fmlCommonSetup(FMLCommonSetupEvent event) {
-        //SafeNbtWriterRegistry.REGISTRY.register(AllBlockEntityTypes.FACTORY_PANEL.get(), (a,b,c) -> {});
-    }
 
     @SubscribeEvent
     public void gatherData(GatherDataEvent event) {
