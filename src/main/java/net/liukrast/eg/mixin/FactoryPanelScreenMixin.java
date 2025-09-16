@@ -53,6 +53,7 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
     @Shadow(remap = false) private List<BigItemStack> inputConfig;
     @Shadow(remap = false) protected abstract void updateConfigs();
     @Shadow(remap = false) private boolean craftingActive;
+    @Shadow(remap = false) private BigItemStack outputConfig;
 
     @Unique private static final ResourceLocation extra_gauges$TEXTURE = EGConstants.id("textures/gui/auto_crafting_gauge.png");
     @Unique private MechanicalCraftingRecipe extra_gauges$availableMechanicalRecipe = null;
@@ -253,12 +254,18 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
         if(mouseX > guiLeft+56+75 && mouseX < guiLeft+56+75+8 && mouseY > guiTop+23+14 && mouseY < guiTop+23+14+16) {
             extra_gauges$width++;
             updateConfigs();
+            assert minecraft != null;
+            assert minecraft.level != null;
+            outputConfig.count = (availableCraftingRecipe == null ? extra_gauges$availableMechanicalRecipe : availableCraftingRecipe).getResultItem(minecraft.level.registryAccess()).getCount();
             cir.setReturnValue(true);
             cir.cancel();
         }
         if(extra_gauges$width > (extra_gauges$availableMechanicalRecipe == null ? 3 : extra_gauges$availableMechanicalRecipe.getWidth()) && mouseX > guiLeft+56+75 && mouseX < guiLeft+56+75+8 && mouseY > guiTop+23+14+22 && mouseY < guiTop+23+14+22+16) {
             extra_gauges$width--;
             updateConfigs();
+            assert minecraft != null;
+            assert minecraft.level != null;
+            outputConfig.count = (availableCraftingRecipe == null ? extra_gauges$availableMechanicalRecipe : availableCraftingRecipe).getResultItem(minecraft.level.registryAccess()).getCount();
             cir.setReturnValue(true);
             cir.cancel();
         }
