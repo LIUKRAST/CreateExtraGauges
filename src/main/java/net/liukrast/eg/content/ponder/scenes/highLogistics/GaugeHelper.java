@@ -1,6 +1,9 @@
 package net.liukrast.eg.content.ponder.scenes.highLogistics;
 
-import com.simibubi.create.content.logistics.factoryBoard.*;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelConnection;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlockEntity;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import com.simibubi.create.foundation.utility.CreateLang;

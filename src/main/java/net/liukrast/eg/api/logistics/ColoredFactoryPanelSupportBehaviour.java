@@ -4,7 +4,8 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelSupportBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 
-import java.util.function.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ColoredFactoryPanelSupportBehaviour extends FactoryPanelSupportBehaviour {
     private final Function<FactoryPanelBehaviour, Line> colorProvider;

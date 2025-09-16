@@ -1,8 +1,8 @@
 package net.liukrast.eg.api.logistics.board;
 
-import com.mojang.serialization.Codec;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
+import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.utility.CreateLang;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
@@ -10,8 +10,6 @@ import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.liukrast.eg.api.EGRegistries;
-import com.simibubi.create.content.schematics.requirement.ItemRequirement;
-import com.simibubi.create.AllBlocks;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.api.util.IFPExtra;
 import net.liukrast.eg.mixin.FactoryPanelBehaviourIMixin;
