@@ -10,6 +10,8 @@ import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.liukrast.eg.api.EGRegistries;
+import com.simibubi.create.content.schematics.requirement.ItemRequirement;
+import com.simibubi.create.AllBlocks;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.api.util.IFPExtra;
 import net.liukrast.eg.mixin.FactoryPanelBehaviourIMixin;
@@ -240,6 +242,8 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         if (panelTag.isEmpty()) {
             active = false;
             return;
+        } else {
+            active = true;
         }
         easyRead(panelTag, clientPacket);
     }
@@ -254,27 +258,6 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         }
     }
 
-
-    /*public <A,B,C,D,E> void consumeForPanels(
-            PanelConnection<A> panelConnectionA, Consumer<A> consumerA,
-            PanelConnection<B> panelConnectionB, Consumer<B> consumerB,
-            PanelConnection<C> panelConnectionC, Consumer<C> consumerC,
-            PanelConnection<D> panelConnectionD, Consumer<D> consumerD,
-            PanelConnection<E> panelConnectionE, Consumer<E> consumerE
-    ) {
-        for(FactoryPanelConnection connection : targetedBy.values()) {
-            if(!getWorld().isLoaded(connection.from.pos())) return;
-            FactoryPanelBehaviour at = at(getWorld(), connection);
-            if(at == null) return;
-            for(PanelConnection<?> c : EGPanelConnections.getConnections(at)) {
-                if(c == panelConnectionA) EGPanelConnections.getConnectionValue(at, panelConnectionA).ifPresent(consumerA);
-                if(c == panelConnectionB) EGPanelConnections.getConnectionValue(at, panelConnectionB).ifPresent(consumerB);
-                if(c == panelConnectionC) EGPanelConnections.getConnectionValue(at, panelConnectionC).ifPresent(consumerC);
-                if(c == panelConnectionD) EGPanelConnections.getConnectionValue(at, panelConnectionD).ifPresent(consumerD);
-                if(c == panelConnectionE) EGPanelConnections.getConnectionValue(at, panelConnectionE).ifPresent(consumerE);
-            }
-        }
-    }*/
 
     public <T> void consumeForPanels(PanelConnection<T> panelConnection, Consumer<T> consumer) {
         for(FactoryPanelConnection connection : targetedBy.values()) {
@@ -308,12 +291,20 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
         if(!toRemove.isEmpty()) blockEntity.notifyUpdate();
     }
 
-    @Override
-    public void write(CompoundTag nbt, boolean clientPacket) {
-        super.write(nbt, clientPacket);
+    //use later
+    public void writeSafe(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.writeSafe(nbt);
         CompoundTag special = nbt.contains("CustomPanels") ? nbt.getCompound("CustomPanels") : new CompoundTag();
         special.putString(CreateLang.asId(slot.name()), Objects.requireNonNull(EGRegistries.PANEL_REGISTRY.get().getKey(type)).toString());
         nbt.put("CustomPanels", special);
+    }
+
+    @Override
+    public void write(CompoundTag nbt, boolean clientPacket) {
+        CompoundTag special = nbt.contains("CustomPanels") ? nbt.getCompound("CustomPanels") : new CompoundTag();
+        special.putString(CreateLang.asId(slot.name()), Objects.requireNonNull(EGRegistries.PANEL_REGISTRY.get().getKey(type)).toString());
+        nbt.put("CustomPanels", special);
+        super.write(nbt, clientPacket);
         //We avoid adding some data that is pointless in a generic gauge.
         // You can re-add it in your custom write method though
         //NOTE: If you feel like some data should not be avoided, please open a GitHub issue to report this.
@@ -373,5 +364,11 @@ public abstract class AbstractPanelBehaviour extends FactoryPanelBehaviour {
     @Override
     public @NotNull Component getDisplayName() {
         return getItem().getDefaultInstance().getHoverName();
+    }
+
+    @Override
+    public ItemRequirement getRequiredItems() {
+        return isActive() ? new ItemRequirement(ItemRequirement.ItemUseType.CONSUME, getItem())
+                : ItemRequirement.NONE;
     }
 }

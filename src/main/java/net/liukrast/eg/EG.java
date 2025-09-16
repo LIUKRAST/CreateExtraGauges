@@ -16,6 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.NewRegistryEvent;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -52,6 +53,11 @@ public class EG {
     public void loadLevel(LevelEvent.Load event) {
         EGExtraPanelConnections.register();
         EGPanelConnections.initDefaults();
+    }
+
+    @SubscribeEvent
+    private void fmlCommonSetup(FMLCommonSetupEvent event) {
+        //SafeNbtWriterRegistry.REGISTRY.register(AllBlockEntityTypes.FACTORY_PANEL.get(), (a,b,c) -> {});
     }
 
     @SubscribeEvent

@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -29,7 +30,7 @@ import java.util.function.Supplier;
 /**
  * The class for a custom panel block item.
  * */
-public class PanelBlockItem extends LogisticallyLinkedBlockItem {
+public class PanelBlockItem extends BlockItem {
 
     private final Supplier<PanelType<?>> type;
 
