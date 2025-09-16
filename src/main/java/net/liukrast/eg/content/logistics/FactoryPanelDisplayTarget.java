@@ -22,11 +22,11 @@ public class FactoryPanelDisplayTarget extends DisplayTarget {
 
     @Override
     public DisplayTargetStats provideStats(DisplayLinkContext context) {
-        if(!(context.blockEntity() instanceof DisplayCollectorBlockEntity collector)) return null;
+        if(!(context.blockEntity() instanceof DisplayCollectorBlockEntity collector)) return new DisplayTargetStats(0,0,this);
         return collector.factoryPanelSupport.getLinkedPanels()
                 .stream()
                 .allMatch(pos -> FactoryPanelBehaviour.at(context.level(), pos) instanceof StringPanelBehaviour)
-                ? new DisplayTargetStats(1, 100, this) : null;
+                ? new DisplayTargetStats(1, 100, this) : new DisplayTargetStats(0,0,this);
     }
 
     @Override

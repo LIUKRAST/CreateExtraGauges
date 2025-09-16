@@ -64,7 +64,8 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
     private void tick(CallbackInfo ci) {if(FactoryPanelBehaviour.class.cast(this) instanceof AbstractPanelBehaviour ab && ab.skipOriginalTick()) ci.cancel();}
 
     @Definition(id = "behaviour", local = @Local(type = FactoryPanelBehaviour.class))
-    @Definition(id = "active", field = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;active:Z") @Expression("behaviour.active") @WrapOperation(method = "at(Lnet/minecraft/world/level/BlockAndTintGetter;Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelPosition;)Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @Definition(id = "active", field = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;active:Z") @Expression("behaviour.active")
+    @WrapOperation(method = "at(Lnet/minecraft/world/level/BlockAndTintGetter;Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelPosition;)Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelBehaviour;", at = @At("MIXINEXTRAS:EXPRESSION"))
     private static boolean at(FactoryPanelBehaviour instance, Operation<Boolean> original) {
         if(instance == null) return true;
         return original.call(instance);

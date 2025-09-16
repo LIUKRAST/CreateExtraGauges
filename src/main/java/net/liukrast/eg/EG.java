@@ -1,5 +1,7 @@
 package net.liukrast.eg;
 
+import com.simibubi.create.AllBlockEntityTypes;
+import com.simibubi.create.api.schematic.nbt.SafeNbtWriterRegistry;
 import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.datagen.*;
 import net.liukrast.eg.registry.*;
@@ -12,6 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -41,6 +44,11 @@ public class EG {
     private void loadLevel(LevelEvent.Load event) {
         EGExtraPanelConnections.register();
         EGPanelConnections.initDefaults();
+    }
+
+    @SubscribeEvent
+    private void fmlCommonSetup(FMLCommonSetupEvent event) {
+        //SafeNbtWriterRegistry.REGISTRY.register(AllBlockEntityTypes.FACTORY_PANEL.get(), (a,b,c) -> {});
     }
 
     @SubscribeEvent
