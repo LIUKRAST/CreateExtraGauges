@@ -1,14 +1,17 @@
 package net.liukrast.eg.content.logistics.board;
 
 import com.google.common.collect.ImmutableList;
-import com.simibubi.create.content.logistics.factoryBoard.*;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.liukrast.eg.ExtraGaugesConfig;
-import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.EGItems;
+import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderLookup;

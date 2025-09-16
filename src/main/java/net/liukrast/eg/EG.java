@@ -1,7 +1,5 @@
 package net.liukrast.eg;
 
-import com.simibubi.create.AllBlockEntityTypes;
-import com.simibubi.create.api.schematic.nbt.SafeNbtWriterRegistry;
 import net.liukrast.eg.api.EGRegistries;
 import net.liukrast.eg.datagen.*;
 import net.liukrast.eg.registry.*;

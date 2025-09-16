@@ -1,15 +1,17 @@
 package net.liukrast.eg.content.logistics.board;
 
 import com.mojang.serialization.Codec;
-import com.simibubi.create.content.logistics.factoryBoard.*;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.content.redstone.link.RedstoneLinkBlockEntity;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.liukrast.eg.ExtraGaugesConfig;
+import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.api.util.CacheContainer;
 import net.liukrast.eg.content.logistics.IntSelectorBlockEntity;
-import net.liukrast.eg.registry.EGPanelConnections;
-import net.liukrast.eg.api.registry.PanelType;
 import net.liukrast.eg.registry.EGItems;
+import net.liukrast.eg.registry.EGPanelConnections;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

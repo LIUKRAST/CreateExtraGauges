@@ -1,7 +1,6 @@
 package net.liukrast.eg.api.logistics.board;
 
 import com.mojang.serialization.Codec;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
