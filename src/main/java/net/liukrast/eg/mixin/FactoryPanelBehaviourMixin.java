@@ -148,7 +148,7 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
     @ModifyVariable(method = "checkForRedstoneInput", at = @At(value = "STORE", ordinal = 0))
     private boolean checkForRedstoneInput(boolean shouldPower, @Cancellable CallbackInfo ci) {
         var i = FactoryPanelBehaviour.class.cast(this);
-        for(FactoryPanelConnection connection : targetedBy.values()) {
+        block: for(FactoryPanelConnection connection : targetedBy.values()) {
             if(!i.getWorld().isLoaded(connection.from.pos())) {
                 ci.cancel();
                 return false;
@@ -157,9 +157,14 @@ public abstract class FactoryPanelBehaviourMixin implements IFPExtra {
             FactoryPanelBehaviour behaviour = at(world, connection);
             if(behaviour == null || !behaviour.isActive()) return false;
             if(!(behaviour instanceof AbstractPanelBehaviour panel)) continue;
-            if(panel.hasConnection(EGPanelConnections.FILTER.get())) continue;
-            if(panel.hasConnection(EGPanelConnections.INTEGER.get())) continue;
-            shouldPower |= panel.getConnectionValue(EGPanelConnections.REDSTONE).orElse(0) > 0;
+            for(var c : panel.getConnections()) {
+                if(c == EGPanelConnections.FILTER.get()) continue block;
+                if(c == EGPanelConnections.INTEGER.get()) continue block;
+                if(c == EGPanelConnections.REDSTONE.get()) {
+                    shouldPower |= panel.getConnectionValue(EGPanelConnections.REDSTONE).orElse(0) > 0;
+                    continue block;
+                }
+            }
         }
         for(var connection : extra_gauges$targetedByExtra.values()) {
             var pos = connection.from.pos();
