@@ -11,4 +11,5 @@ gradlew
 gradlew.bat
 /repo/
 /src/generated/resources/.cache
+/libs/
 
