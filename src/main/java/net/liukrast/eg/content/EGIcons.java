@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.gui.AllIcons;
 import net.createmod.catnip.theme.Color;
 import net.liukrast.deployer.lib.mixin.AllIconsMixin;
-import net.liukrast.deployer.lib.util.AllIconsHelper;
 import net.liukrast.eg.EGConstants;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
@@ -77,8 +76,8 @@ public class EGIcons extends AllIcons {
         Vec3 vec2 = new Vec3(0, 1, 0);
         Vec3 vec3 = new Vec3(1, 1, 0);
         Vec3 vec4 = new Vec3(1, 0, 0);
-        var iconX = AllIconsHelper.getIconX(this);
-        var iconY = AllIconsHelper.getIconY(this);
+        var iconX = ((AllIconsMixin)this).getIconX();
+        var iconY = ((AllIconsMixin)this).getIconY();
 
         float u1 = iconX * 1f / ICON_ATLAS_SIZE;
         float u2 = (iconX + 16) * 1f / ICON_ATLAS_SIZE;
@@ -86,9 +85,9 @@ public class EGIcons extends AllIcons {
         float v2 = (iconY + 16) * 1f / ICON_ATLAS_SIZE;
 
 
-        AllIconsHelper.invokeVertex(this, builder, matrix, vec1, rgb, u1, v1, light);
-        AllIconsHelper.invokeVertex(this, builder, matrix, vec2, rgb, u1, v2, light);
-        AllIconsHelper.invokeVertex(this, builder, matrix, vec3, rgb, u2, v2, light);
-        AllIconsHelper.invokeVertex(this, builder, matrix, vec4, rgb, u2, v1, light);
+        ((AllIconsMixin)this).invokeVertex(builder, matrix, vec1, rgb, u1, v1, light);
+        ((AllIconsMixin)this).invokeVertex(builder, matrix, vec2, rgb, u1, v2, light);
+        ((AllIconsMixin)this).invokeVertex(builder, matrix, vec3, rgb, u2, v2, light);
+        ((AllIconsMixin)this).invokeVertex(builder, matrix, vec4, rgb, u2, v1, light);
     }
 }

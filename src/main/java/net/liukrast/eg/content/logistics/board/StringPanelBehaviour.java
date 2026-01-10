@@ -192,7 +192,7 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
             var opt = listener.invalidate(level, state, pos, be);
             var cache = this.cache.get(pos);
             if (opt.isPresent())
-                return !DeployerConfig.PANEL_CACHING.get() || cache != null && cache.equals(opt.get()) ? 0xFFFFFF : WAITING;
+                return !DeployerConfig.Client.PANEL_CACHING.get() || cache != null && cache.equals(opt.get()) ? 0xFFFFFF : WAITING;
         }
         return super.calculateExtraPath(pos);
     }

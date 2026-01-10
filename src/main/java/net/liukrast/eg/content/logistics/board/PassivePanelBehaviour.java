@@ -34,7 +34,7 @@ public class PassivePanelBehaviour extends AbstractPanelBehaviour {
 
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(DeployerPanelConnections.ITEMSTACK.get(), () -> filter.item());
+        builder.put(DeployerPanelConnections.ITEM_STACK.get(), () -> filter.item());
         builder.put(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 

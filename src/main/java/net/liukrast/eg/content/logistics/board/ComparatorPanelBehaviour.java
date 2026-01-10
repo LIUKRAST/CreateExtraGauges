@@ -184,14 +184,14 @@ public class ComparatorPanelBehaviour extends NumericalScrollPanelBehaviour impl
         if(intListener != null) {
             var opt = intListener.invalidate(level, state, pos, be);
             var cache = this.cache.get(pos);
-            if(opt.isPresent()) return !DeployerConfig.PANEL_CACHING.get() || opt.get().equals(cache) ? 0x006496:WAITING;
+            if(opt.isPresent()) return !DeployerConfig.Client.PANEL_CACHING.get() || opt.get().equals(cache) ? 0x006496:WAITING;
         }
         var listener = DeployerPanelConnections.REDSTONE.get().getListener(state.getBlock());
         if(listener == null) return super.calculateExtraPath(pos);
         return listener.invalidate(level, state, pos, be).map(v -> {
             boolean k = v == 0;
             var cache = this.cache.get(pos);
-            if(DeployerConfig.PANEL_CACHING.get() && cache != null && k == cache > 0) return WAITING;
+            if(DeployerConfig.Client.PANEL_CACHING.get() && cache != null && k == cache > 0) return WAITING;
             return k?0x580101:0xEF0000;
         }).orElse(super.calculateExtraPath(pos));
     }

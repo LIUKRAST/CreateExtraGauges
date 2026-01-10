@@ -113,7 +113,7 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
         return listener.invalidate(level, state, pos, be).map(v -> {
             boolean k = v == 0;
             var cache = this.cache.get(pos);
-            if(DeployerConfig.PANEL_CACHING.get() && cache != null && k == cache) return WAITING;
+            if(DeployerConfig.Client.PANEL_CACHING.get() && cache != null && k == cache) return WAITING;
             return k?0x580101:0xEF0000;
         }).orElse(super.calculateExtraPath(pos));
     }
