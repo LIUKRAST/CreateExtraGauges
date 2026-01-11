@@ -25,6 +25,7 @@ repositories {
     maven { url = "https://maven.blamejared.com/"}
     maven { url = "https://cursemaven.com"}
     maven { url = "https://maven.liukrast.net"} //Deployer
+    maven { url = "https://api.modrinth.com/maven" }
     flatDir {
         dirs 'libs'
     }

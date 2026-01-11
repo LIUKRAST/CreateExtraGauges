@@ -2,15 +2,11 @@ package net.liukrast.eg.datagen;
 
 import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.registry.EGItems;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.model.generators.*;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-import java.util.Objects;
-import java.util.function.Function;
+import static net.liukrast.deployer.lib.helper.MinecraftHelpers.ModelProvider.Blocks.createPanel;
 
 public class ExtraGaugesBlockModelProvider extends BlockModelProvider {
     public ExtraGaugesBlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -19,34 +15,11 @@ public class ExtraGaugesBlockModelProvider extends BlockModelProvider {
 
     @Override
     protected void registerModels() {
-        createGauge(EGItems.LOGIC_GAUGE.get());
-        createGauge(EGItems.INT_GAUGE.get());
-        createGauge(EGItems.COMPARATOR_GAUGE.get());
-        createGauge(EGItems.COUNTER_GAUGE.get());
-        createGauge(EGItems.PASSIVE_GAUGE.get());
-        createGauge(EGItems.STRING_GAUGE.get());
-    }
-
-    @Deprecated
-    public static BlockModelBuilder createGauge(BlockModelProvider instance, Item item, Function<String, String> texture) {
-        var id = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
-        return instance.getBuilder(id.toString()).parent(new ModelFile.UncheckedModelFile(EGConstants.id("block/template_gauge")))
-                .texture("texture", ResourceLocation.fromNamespaceAndPath(id.getNamespace(), texture.apply(id.getPath())))
-                .texture("particle", ResourceLocation.fromNamespaceAndPath(id.getNamespace(), texture.apply(id.getPath())));
-    }
-
-    @Deprecated
-    public static BlockModelBuilder createGauge(BlockModelProvider instance, Item item) {
-        return createGauge(instance, item, id -> "block/" + id);
-    }
-
-    @Deprecated
-    public static BlockModelBuilder createPanel(BlockModelProvider instance, Item item) {
-        return createGauge(instance, item, id -> "block/" + id.split("_")[0] + "_panel");
-    }
-
-    @Deprecated
-    private void createGauge(Item item) {
-        createPanel(this, item);
+        createPanel(this, EGItems.LOGIC_GAUGE.get());
+        createPanel(this, EGItems.INT_GAUGE.get());
+        createPanel(this, EGItems.COMPARATOR_GAUGE.get());
+        createPanel(this, EGItems.COUNTER_GAUGE.get());
+        createPanel(this, EGItems.PASSIVE_GAUGE.get());
+        createPanel(this, EGItems.STRING_GAUGE.get());
     }
 }
