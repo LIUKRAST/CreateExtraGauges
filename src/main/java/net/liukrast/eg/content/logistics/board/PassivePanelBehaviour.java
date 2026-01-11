@@ -46,14 +46,27 @@ public class PassivePanelBehaviour extends AbstractPanelBehaviour {
     @Override
     public void tick() {
         int count = 0;
+        boolean allStacked = true;
         for(var panelPos : targeting) {
             var panel = at(getWorld(), panelPos);
             if(panel == null || panel.satisfied || panel.promisedSatisfied) continue;
             var by = panel.targetedBy.get(this.getPanelPosition());
             if(by == null) continue;
-            count+= (int) (by.amount*Math.ceil((float)panel.count/panel.recipeOutput));
+            if(panel.upTo) allStacked = false;
+        }
+        for(var panelPos : targeting) {
+            var panel = at(getWorld(), panelPos);
+            if(panel == null || panel.satisfied || panel.promisedSatisfied) continue;
+            var by = panel.targetedBy.get(this.getPanelPosition());
+            if(by == null) continue;
+            int toBeAdded = (int) (by.amount*Math.ceil((float)panel.count/panel.recipeOutput));
+            if(!allStacked && !panel.upTo) {
+                toBeAdded *= panel.getMaxStackSize();
+            }
+            count+=toBeAdded;
         }
         this.count = count;
+        this.upTo = !allStacked;
         super.tick();
     }
 
