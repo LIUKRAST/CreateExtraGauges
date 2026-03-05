@@ -12,8 +12,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import static net.liukrast.deployer.lib.helper.PonderSceneHelper.*;
-import static net.liukrast.deployer.lib.helper.PonderSceneHelper.Gauge.*;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.*;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.*;
 
 public class LogicGaugeScene {
 

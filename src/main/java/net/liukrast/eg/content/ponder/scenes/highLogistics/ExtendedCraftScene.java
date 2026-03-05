@@ -10,8 +10,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 
-import static net.liukrast.deployer.lib.helper.PonderSceneHelper.*;
-import static net.liukrast.deployer.lib.helper.PonderSceneHelper.Gauge.*;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.*;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.*;
 
 public class ExtendedCraftScene {
     public static void autoCrafter(SceneBuilder builder, SceneBuildingUtil util) {
