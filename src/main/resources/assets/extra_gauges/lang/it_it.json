@@ -15,9 +15,6 @@
   "block.extra_gauges.linked_lever.tooltip.summary": "Funziona come un Connettore redstone ma include una leva. Si connette ai misuratori e manda un aggiornamento istantaneamente",
   "block.extra_gauges.linked_button.tooltip.summary": "Funziona come un Connettore redstone ma include un bottone. Si connette ai misuratori e manda un aggiornamento istantaneamente",
 
-  "extra_gauges.panel.panels_connected": "%s ora punta a %s",
-  "extra_gauges.panel.custom_panel_on_restocker": "Non puoi mettere un misuratore moddato in modalità rifornimento",
-
   "create.logistics.logic_gate": "Porta Logica",
   "logic_gauge.gate.or": "OR (Attiva se un qualsiasi segnale in entrata è attivo)",
   "logic_gauge.gate.and": "AND (Attiva se ogni segnale in entrata è attivo)",
@@ -32,12 +29,12 @@
   "integer_gauge.mode.multiply": "MULTIPLY (Moltiplica tutti i valori in entrata)",
 
   "create.logistics.comparator_value": "Seleziona il valore da comparare",
-  "comparator_gauge.mode.equals": "Il valore in entrata è uguale alla costante di comparazione",
-  "comparator_gauge.mode.different": "Il valore in entrata è diverso dalla costante di comparazione",
-  "comparator_gauge.mode.greater": "Il valore in entrata è maggiore della costante di comparazione",
-  "comparator_gauge.mode.greater_equals": "Il valore di entrata è uguale o maggiore alla costante di comparazione",
-  "comparator_gauge.mode.less": "Il valore in entrata è minore della costante di comparazione",
-  "comparator_gauge.mode.less_equals": "Il valore in entrata è minore o uguale della costante di comparazione",
+  "comparator_gauge.mode.equals": "Input uguale alla costante",
+  "comparator_gauge.mode.different": "Input diverso dalla costante",
+  "comparator_gauge.mode.greater": "Input maggiore della costante",
+  "comparator_gauge.mode.greater_equals": "Input maggiore o uguale alla costante",
+  "comparator_gauge.mode.less": "Input minore della costante",
+  "comparator_gauge.mode.less_equals": "Input minore o uguale alla costante",
   "create.logistics.comparator_gauge.title": "I valori in entrata verranno sommati",
 
   "create.logistics.counter_threshold": "Seleziona il limite del contatore",

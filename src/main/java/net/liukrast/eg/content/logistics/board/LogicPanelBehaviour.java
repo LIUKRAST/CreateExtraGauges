@@ -1,29 +1,18 @@
 package net.liukrast.eg.content.logistics.board;
 
-import com.mojang.serialization.Codec;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.liukrast.deployer.lib.DeployerConfig;
 import net.liukrast.deployer.lib.logistics.board.PanelType;
 import net.liukrast.deployer.lib.logistics.board.ScrollOptionPanelBehaviour;
-import net.liukrast.deployer.lib.logistics.board.cache.CacheContainer;
+import net.liukrast.deployer.lib.logistics.board.connection.PanelConnectionBuilder;
 import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
-import net.liukrast.eg.ExtraGaugesConfig;
 import net.liukrast.eg.registry.EGItems;
 import net.liukrast.eg.registry.EGPartialModels;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode> implements CacheContainer<Boolean> {
-    private int updated = 0;
-    private final Map<BlockPos, Boolean> cache = new HashMap<>();
+public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode> {
 
     public LogicPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(Component.translatable("create.logistics.logic_gate"), type, be, slot, LogicalMode.class);
@@ -32,9 +21,8 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
     /* IMPL */
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(DeployerPanelConnections.REDSTONE, () -> !redstonePowered ? 15 : 0);
-        builder.put(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
-        builder.put(DeployerPanelConnections.INTEGER.get(), () -> !redstonePowered ? 15 : 0);
+        builder.registerBoth(DeployerPanelConnections.REDSTONE, () -> !redstonePowered);
+        builder.registerOutput(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override
@@ -47,44 +35,20 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
         return EGPartialModels.LOGIC_PANEL;
     }
 
-    /* CACHE */
-    @Override
-    public Map<BlockPos, Boolean> cacheMap() {
-        return cache;
-    }
-
-    @Override
-    public Codec<Boolean> cacheCodec() {
-        return Codec.BOOL;
-    }
-
     /* DATA */
     /* UPDATE */
-    @Override
-    public void tick() {
-        super.tick();
-        updated = 0;
-    }
 
     @Override
-    public void checkForRedstoneInput() {
-        if(!active || updated > ExtraGaugesConfig.LOGIC_MAX_CHAIN.get())
+    public void notifiedFromInput() {
+        if(!active)
             return;
-        List<Boolean> powerList = new ArrayList<>();
-        consumeForLinks(link -> powerList.add(link.shouldPanelBePowered()));
-        consumeForExtra(DeployerPanelConnections.REDSTONE.get(), (pos, out) -> {
-            cache.put(pos, out>0);
-            powerList.add(out>0);
-        });
-        consumeForPanels(DeployerPanelConnections.REDSTONE.get(), out -> powerList.add(out > 0));
-        sendCache(this);
-        boolean shouldPower = get().test(powerList.stream());
-        //End logical mode
+        var result = getAllValues(DeployerPanelConnections.REDSTONE.get());
+        if(result == null) return;
+        boolean shouldPower = get().test(result.stream());
         if(shouldPower != redstonePowered)
             return;
         redstonePowered = !shouldPower;
         blockEntity.notifyUpdate();
-        updated++;
         for(FactoryPanelPosition panelPos : targeting) {
             if(!getWorld().isLoaded(panelPos.pos()))
                 return;
@@ -92,41 +56,18 @@ public class LogicPanelBehaviour extends ScrollOptionPanelBehaviour<LogicalMode>
             if(behaviour == null) continue;
             behaviour.checkForRedstoneInput();
         }
-        notifyRedstoneOutputs();
-    }
-
-    /* RENDER */
-    @Override
-    public int calculatePath(FactoryPanelBehaviour other, int original) {
-        return DeployerPanelConnections.getConnectionValue(other, DeployerPanelConnections.REDSTONE)
-                .map(v -> v == 0 ? 0x580101:0xEF0000)
-                .orElse(super.calculatePath(other, original));
+        notifyOutputs();
     }
 
     @Override
-    public int calculateExtraPath(BlockPos pos) {
-        var level = getWorld();
-        var state = level.getBlockState(pos);
-        var be = level.getBlockEntity(pos);
-        var listener = DeployerPanelConnections.REDSTONE.get().getListener(state.getBlock());
-        if(listener == null) return super.calculateExtraPath(pos);
-        return listener.invalidate(level, state, pos, be).map(v -> {
-            boolean k = v == 0;
-            var cache = this.cache.get(pos);
-            if(DeployerConfig.Client.PANEL_CACHING.get() && cache != null && k == cache) return WAITING;
-            return k?0x580101:0xEF0000;
-        }).orElse(super.calculateExtraPath(pos));
-    }
-
-    @Override
-    public boolean shouldRenderBulb(boolean original) {
-        return true;
+    public BulbState getBulbState() {
+        return redstonePowered ? BulbState.RED : BulbState.DISABLED;
     }
 
     /* DISPLAY LINK */
     @Override
     public MutableComponent getDisplayLinkComponent(boolean shortened) {
-        boolean active = getConnectionValue(DeployerPanelConnections.REDSTONE).orElse(0) > 0;
+        boolean active = getConnectionValue(DeployerPanelConnections.REDSTONE).orElse(false);
         String t = "✔";
         String f = "✖";
         if(!shortened) {

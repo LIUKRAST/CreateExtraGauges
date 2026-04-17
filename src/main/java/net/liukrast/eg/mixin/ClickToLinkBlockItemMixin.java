@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(ClickToLinkBlockItem.class)
 public class ClickToLinkBlockItemMixin {
     @ModifyArg(method = "clientTick", at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/outliner/Outline$OutlineParams;colored(I)Lnet/createmod/catnip/outliner/Outline$OutlineParams;"))
-    private static int clientTick(int color, @Local ClickToLinkBlockItem blockItem) {
+    private static int clientTick(int color, @Local(name = "blockItem") ClickToLinkBlockItem blockItem) {
         return blockItem instanceof DisplayCollectorBlockItem ? 0x7FCDE0 : color;
     }
 }

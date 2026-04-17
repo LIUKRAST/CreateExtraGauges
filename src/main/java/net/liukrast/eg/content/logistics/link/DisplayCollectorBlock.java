@@ -1,4 +1,4 @@
-package net.liukrast.eg.content.logistics;
+package net.liukrast.eg.content.logistics.link;
 
 import com.simibubi.create.content.redstone.displayLink.DisplayLinkBlock;
 import net.liukrast.eg.registry.EGBlockEntityTypes;

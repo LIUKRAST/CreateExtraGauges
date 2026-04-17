@@ -1,12 +1,11 @@
-package net.liukrast.eg.content.logistics;
+package net.liukrast.eg.content.logistics.link;
 
 import com.mojang.serialization.DynamicOps;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.content.redstone.displayLink.DisplayLinkBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import net.liukrast.deployer.lib.logistics.board.AbstractPanelBehaviour;
-import net.liukrast.deployer.lib.logistics.board.connection.ColoredFactoryPanelSupportBehaviour;
+import net.liukrast.deployer.lib.logistics.board.connection.AbstractPanelSupportBehaviour;
+import net.liukrast.deployer.lib.logistics.board.connection.PanelConnectionBuilder;
 import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.mixinExtension.DCFinder;
@@ -31,16 +30,10 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
-        behaviours.add(factoryPanelSupport = new ColoredFactoryPanelSupportBehaviour(
-                this,
-                () -> true,
-                () -> false,
-                () -> {}
-        ) {
+        behaviours.add(factoryPanelSupport = new AbstractPanelSupportBehaviour(this, () -> true, () -> {}) {
             @Override
-            public Line getColor(FactoryPanelBehaviour be) {
-                boolean bool = !(be instanceof AbstractPanelBehaviour ab) || ab.hasConnection(DeployerPanelConnections.STRING.get());
-                return new ColoredFactoryPanelSupportBehaviour.Line(bool ? 0xFFFFFFFF : 0x888898, true);
+            public void addConnections(PanelConnectionBuilder builder) {
+                builder.registerOutput(DeployerPanelConnections.STRING, () -> component.getString());
             }
         });
     }

@@ -10,9 +10,6 @@
   "block.extra_gauges.integer_selector": "整数セレクター",
   "block.extra_gauges.display_collector": "ディスプレイコレクター",
 
-  "extra_gauges.panel.panels_connected": "%sは%sに接続されました",
-  "extra_gauges.panel.custom_panel_on_restocker": "補充モードではカスタムゲージを配置できません",
-
   "create.logistics.logic_gate": "ロジックゲージ",
   "logic_gauge.gate.or": "OR (いずれかの入力が有効なら作動)",
   "logic_gauge.gate.and": "AND (全ての入力が有効なら作動)",

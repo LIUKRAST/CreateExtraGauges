@@ -1,21 +1,22 @@
 {
   "required": true,
   "mixinextras": {
-    "minVersion": "0.5.0"
+	"minVersion": "0.5.0"
   },
   "minVersion": "0.8",
   "package": "net.liukrast.eg.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BeltTunnelBlockEntityMixin",
-    "ClickToLinkBlockItemMixin",
     "DisplayLinkBlockMixin",
-    "FactoryPanelBehaviourMixin"
+    "FactoryPanelBehaviourMixin",
+    "PackagerBlockEntityMixin"
   ],
   "client": [
-    "FactoryPanelScreenMixin"
+    "ClickToLinkBlockItemMixin",
+	"FactoryPanelScreenMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   }
 }

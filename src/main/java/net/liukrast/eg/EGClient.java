@@ -2,7 +2,13 @@ package net.liukrast.eg;
 
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.createmod.ponder.foundation.PonderIndex;
+import net.liukrast.deployer.lib.DeployerClient;
+import net.liukrast.deployer.lib.helper.ClientRegisterHelpers;
+import net.liukrast.deployer.lib.logistics.board.screen.OutputSlot;
+import net.liukrast.eg.content.logistics.board.PassivePanelBehaviour;
+import net.liukrast.eg.content.logistics.board.ShowSourceIdOverlay;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
+import net.liukrast.eg.registry.EGPanels;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -25,6 +31,8 @@ public class EGClient {
     @SubscribeEvent
     private void fMLClientSetup(FMLClientSetupEvent event) {
         PonderIndex.addPlugin(new ExtraGaugesPonderPlugin());
+        ClientRegisterHelpers.registerGaugeSlot(EGPanels.PASSIVE.get(), (a,b) -> new OutputSlot.Item<>(a,b, PassivePanelBehaviour::getFilter));
+        ClientRegisterHelpers.registerSpecialHovering(() -> DeployerClient.SELECTED_CONNECTION != null, new ShowSourceIdOverlay());
     }
 
 }

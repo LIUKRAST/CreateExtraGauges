@@ -4,14 +4,14 @@ import com.google.common.collect.ImmutableList;
 import com.simibubi.create.content.logistics.factoryBoard.*;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
+import com.simibubi.create.foundation.utility.CreateLang;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.liukrast.deployer.lib.logistics.board.NumericalScrollPanelBehaviour;
 import net.liukrast.deployer.lib.logistics.board.PanelType;
+import net.liukrast.deployer.lib.logistics.board.connection.PanelConnectionBuilder;
 import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
-import net.liukrast.eg.ExtraGaugesConfig;
 import net.liukrast.eg.registry.EGItems;
 import net.liukrast.eg.registry.EGPartialModels;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -20,18 +20,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.List;
 
 public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
-    private int updated;
     public CounterPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(Component.translatable("create.logistics.counter_threshold"), type, be, slot);
-        between(0, 256);
+        between(0, 1024);
     }
 
     @Override
-    public boolean shouldRenderBulb(boolean original) {
-        return true;
+    public void addConnections(PanelConnectionBuilder builder) {
+        builder.registerOutput(DeployerPanelConnections.REDSTONE, () -> count >= value);
+        builder.registerOutput(DeployerPanelConnections.NUMBERS, () -> (float)count);
+        builder.registerInput(DeployerPanelConnections.REDSTONE);
+        builder.registerOutput(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override
@@ -42,10 +44,19 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
 
     @Override
     public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
-        ImmutableList<Component> rows = ImmutableList.of(Component.literal("Positive")
-                        .withStyle(ChatFormatting.BOLD));
+        ImmutableList<Component> rows = ImmutableList.of(
+                Component.literal(""),
+                Component.literal(""),
+                Component.literal(""),
+                Component.literal("")
+        );
         ValueSettingsFormatter formatter = new ValueSettingsFormatter(this::formatSettings);
         return new ValueSettingsBoard(label, 256, 32, rows, formatter);
+    }
+
+    @Override
+    public MutableComponent formatSettings(ValueSettings settings) {
+        return CreateLang.number(settings.row()*256 + settings.value()).component();
     }
 
     @Override
@@ -53,7 +64,7 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
         int value = valueSetting.value();
         if (!valueSetting.equals(getValueSettings()))
             playFeedbackSound(this);
-        setValue(value);
+        setValue(valueSetting.row()*256 + value);
     }
 
     @Override
@@ -69,20 +80,13 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     }
 
     @Override
-    public int calculatePath(FactoryPanelBehaviour other, int original) {
-        return DeployerPanelConnections.getConnectionValue(other, DeployerPanelConnections.REDSTONE).map(v -> v == 0 ? 0xEF0000 : 0x580101).orElse(super.calculatePath(other, original));
-    }
-
-    @Override
-    public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(DeployerPanelConnections.INTEGER, () -> count);
-        builder.put(DeployerPanelConnections.REDSTONE, () -> count >= value ? 15 : 0);
-        builder.put(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
-    }
-
-    @Override
     public Item getItem() {
         return EGItems.COUNTER_GAUGE.asItem();
+    }
+
+    @Override
+    public BulbState getBulbState() {
+        return redstonePowered ? BulbState.RED : BulbState.DISABLED;
     }
 
     @Override
@@ -91,29 +95,20 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        updated = 0;
-    }
-
-    @Override
-    public void checkForRedstoneInput() {
-        if(!active || updated > ExtraGaugesConfig.COUNTER_MAX_CHAIN.get())
+    public void notifiedFromInput() {
+        if(!active)
             return;
-        AtomicBoolean shouldPower = new AtomicBoolean(false);
-        consumeForLinks(link -> shouldPower.set(shouldPower.get() | link.shouldPanelBePowered()));
-        consumeForPanels(DeployerPanelConnections.REDSTONE.get(), out -> shouldPower.set(shouldPower.get() | out > 0));
-        consumeForExtra(DeployerPanelConnections.REDSTONE.get(), (pos,out) -> {});
-        //End logical mode
-        if(shouldPower.get() != redstonePowered)
+        List<Boolean> match = getAllValues(DeployerPanelConnections.REDSTONE.get());
+        if(match == null) return;
+        boolean shouldPower = match.stream().anyMatch(b -> b);
+        if(shouldPower != redstonePowered)
             return;
-        redstonePowered = !shouldPower.get();
-        if(shouldPower.get()) {
+        redstonePowered = !shouldPower;
+        if(shouldPower) {
             if (count >= value && value != 0) count = 0;
             else count++;
         }
         blockEntity.notifyUpdate();
-        updated++;
         for(FactoryPanelPosition panelPos : targeting) {
             if(!getWorld().isLoaded(panelPos.pos()))
                 return;
@@ -121,7 +116,7 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
             if(behaviour == null) continue;
             behaviour.checkForRedstoneInput();
         }
-        notifyRedstoneOutputs();
+        notifyOutputs();
     }
 
     @Override

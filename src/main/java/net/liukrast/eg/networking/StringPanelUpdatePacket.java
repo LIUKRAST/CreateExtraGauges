@@ -1,17 +1,16 @@
 package net.liukrast.eg.networking;
 
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
-import com.simibubi.create.foundation.networking.BlockEntityConfigurationPacket;
+import net.liukrast.deployer.lib.logistics.board.PanelConfigurationPacket;
 import net.liukrast.eg.content.logistics.board.StringPanelBehaviour;
 import net.liukrast.eg.registry.EGPackets;
+import net.liukrast.eg.registry.EGPanels;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 
-public class StringPanelUpdatePacket extends BlockEntityConfigurationPacket<FactoryPanelBlockEntity> {
+public class StringPanelUpdatePacket extends PanelConfigurationPacket<StringPanelBehaviour> {
     public static final StreamCodec<RegistryFriendlyByteBuf, StringPanelUpdatePacket> STREAM_CODEC = StreamCodec.composite(
             FactoryPanelPosition.STREAM_CODEC, packet -> packet.position,
             ByteBufCodecs.STRING_UTF8, packet -> packet.join,
@@ -19,12 +18,10 @@ public class StringPanelUpdatePacket extends BlockEntityConfigurationPacket<Fact
             ByteBufCodecs.STRING_UTF8, packet -> packet.replace,
             StringPanelUpdatePacket::new
     );
-    private final FactoryPanelPosition position;
     private final String join,regex,replace;
 
     public StringPanelUpdatePacket(FactoryPanelPosition position, String join, String regex, String replace) {
-        super(position.pos());
-        this.position = position;
+        super(position, EGPanels.STRING.get());
         this.join = join;
         this.regex = regex;
         this.replace = replace;
@@ -36,9 +33,7 @@ public class StringPanelUpdatePacket extends BlockEntityConfigurationPacket<Fact
     }
 
     @Override
-    protected void applySettings(ServerPlayer player, FactoryPanelBlockEntity be) {
-        FactoryPanelBehaviour behaviour = be.panels.get(position.slot());
-        if(!(behaviour instanceof StringPanelBehaviour stringPanel)) return;
-        stringPanel.setFilter(join, regex, replace);
+    protected void applySettings(ServerPlayer serverPlayer, StringPanelBehaviour panel) {
+        panel.setFilter(join, regex, replace);
     }
 }

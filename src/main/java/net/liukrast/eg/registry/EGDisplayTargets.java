@@ -4,7 +4,7 @@ import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.api.behaviour.display.DisplayTarget;
 import com.simibubi.create.api.registry.CreateRegistries;
 import net.liukrast.eg.EGConstants;
-import net.liukrast.eg.content.logistics.FactoryPanelDisplayTarget;
+import net.liukrast.eg.content.logistics.link.FactoryPanelDisplayTarget;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 

@@ -1,14 +1,15 @@
-package net.liukrast.eg.content.logistics;
+package net.liukrast.eg.content.logistics.link;
 
 import com.google.common.collect.ImmutableList;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.CreateLang;
-import net.liukrast.deployer.lib.logistics.board.connection.ColoredFactoryPanelSupportBehaviour;
+import net.liukrast.deployer.lib.logistics.board.connection.AbstractPanelSupportBehaviour;
+import net.liukrast.deployer.lib.logistics.board.connection.PanelConnectionBuilder;
+import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,7 @@ import java.util.List;
 public class IntSelectorBlockEntity extends SmartBlockEntity {
 
     public ScrollValueBehaviour behaviour;
-    public ColoredFactoryPanelSupportBehaviour panelSupport;
+    public AbstractPanelSupportBehaviour panelSupport;
 
     public IntSelectorBlockEntity(BlockPos pos, BlockState state) {
         super(EGBlockEntityTypes.INT_SELECTOR.get(), pos, state);
@@ -69,12 +70,10 @@ public class IntSelectorBlockEntity extends SmartBlockEntity {
         behaviour.between(-256, 256);
         behaviours.add(behaviour);
         this.behaviour = behaviour;
-        behaviours.add(panelSupport = new ColoredFactoryPanelSupportBehaviour(
-                this, () -> true, () -> behaviour.value > 0, () -> {}
-        ) {
+        behaviours.add(panelSupport = new AbstractPanelSupportBehaviour(this, () -> true, () -> {}) {
             @Override
-            public Line getColor(FactoryPanelBehaviour factoryPanelBehaviour) {
-                return new ColoredFactoryPanelSupportBehaviour.Line(0x006496, false);
+            public void addConnections(PanelConnectionBuilder builder) {
+                builder.registerOutput(DeployerPanelConnections.NUMBERS.get(), () -> (float)behaviour.value);
             }
         });
     }

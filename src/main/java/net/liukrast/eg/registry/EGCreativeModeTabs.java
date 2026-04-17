@@ -24,10 +24,14 @@ public class EGCreativeModeTabs {
                     out.accept(EGItems.COUNTER_GAUGE);
                     out.accept(EGItems.PASSIVE_GAUGE);
                     out.accept(EGItems.STRING_GAUGE);
+                    out.accept(EGItems.EXPRESSION_GAUGE);
+                    out.accept(EGItems.FILTER_GAUGE);
                     out.accept(EGBlocks.INT_SELECTOR);
                     out.accept(EGBlocks.DISPLAY_COLLECTOR);
                     out.accept(EGBlocks.LINKED_LEVER);
                     out.accept(EGBlocks.LINKED_BUTTON);
+                    out.accept(EGBlocks.REDSTONE_PORT);
+                    out.accept(EGBlocks.ROSE_QUARTZ_PORT);
                 })
                 .build());
     }

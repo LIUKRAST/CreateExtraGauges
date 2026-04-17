@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "create:precision_mechanism"
+    },
+    {
+      "item": "create:filter"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "extra_gauges:filter_gauge"
+  }
+}

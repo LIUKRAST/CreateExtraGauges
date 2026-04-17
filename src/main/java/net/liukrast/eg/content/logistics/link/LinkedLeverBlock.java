@@ -1,4 +1,4 @@
-package net.liukrast.eg.content.logistics;
+package net.liukrast.eg.content.logistics.link;
 
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.block.IBE;
@@ -80,7 +80,6 @@ public class LinkedLeverBlock extends WrenchableDirectionalBlock implements IBE<
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(level.isClientSide) return InteractionResult.SUCCESS;
         return onBlockEntityUse(level, pos, be -> {
             var cycled = state.cycle(POWERED);
             level.setBlock(pos, cycled, 3);

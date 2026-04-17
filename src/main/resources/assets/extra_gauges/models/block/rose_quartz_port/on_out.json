@@ -1,0 +1,7 @@
+{
+  "parent": "extra_gauges:block/redstone_port/on_out",
+  "textures": {
+	"particle": "extra_gauges:block/rose_quartz_port",
+	"texture": "extra_gauges:block/rose_quartz_port"
+  }
+}

@@ -1,4 +1,4 @@
-package net.liukrast.eg.content.logistics;
+package net.liukrast.eg.content.logistics.link;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.redstone.link.RedstoneLinkBlock;

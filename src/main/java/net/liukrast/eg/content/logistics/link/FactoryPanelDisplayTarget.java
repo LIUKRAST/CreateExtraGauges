@@ -1,4 +1,4 @@
-package net.liukrast.eg.content.logistics;
+package net.liukrast.eg.content.logistics.link;
 
 import com.simibubi.create.api.behaviour.display.DisplayTarget;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;

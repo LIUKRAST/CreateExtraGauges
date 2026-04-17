@@ -1,57 +1,49 @@
 package net.liukrast.eg.content.logistics.board;
 
-import com.mojang.serialization.Codec;
+import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.gui.ScreenOpener;
-import net.liukrast.deployer.lib.DeployerConfig;
 import net.liukrast.deployer.lib.logistics.board.AbstractPanelBehaviour;
 import net.liukrast.deployer.lib.logistics.board.PanelType;
-import net.liukrast.deployer.lib.logistics.board.cache.CacheContainer;
+import net.liukrast.deployer.lib.logistics.board.connection.PanelConnectionBuilder;
+import net.liukrast.deployer.lib.logistics.board.connection.PanelInteractionBuilder;
 import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.ExtraGaugesConfig;
-import net.liukrast.eg.content.logistics.DisplayCollectorBlockEntity;
 import net.liukrast.eg.registry.EGItems;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-public class StringPanelBehaviour extends AbstractPanelBehaviour implements CacheContainer<String> {
-    @Nullable
+public class StringPanelBehaviour extends AbstractPanelBehaviour {
     private String value, join, regex, replacement;
-    private int intValue = 0;
-    private int updated = 0;
-    private final Map<BlockPos, String> cache = new HashMap<>();
+    private float floatValue = 0;
 
     public StringPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);
+        value = join = regex = replacement = "";
     }
 
     /* IMPL */
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.put(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
-        builder.put(DeployerPanelConnections.INTEGER.get(), () -> intValue);
-        builder.put(DeployerPanelConnections.REDSTONE.get(), () -> Mth.clamp(intValue, 0, 15));
+        builder.registerBoth(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
+        builder.registerOutput(DeployerPanelConnections.NUMBERS.get(), () -> floatValue);
+        builder.registerOutput(DeployerPanelConnections.REDSTONE.get(), () -> getDisplayLinkComponent(false).getString().equals("true"));
     }
 
     @Override
@@ -64,88 +56,62 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
         return EGPartialModels.STRING_PANEL;
     }
 
-    /* CACHE */
-    @Override
-    public Map<BlockPos, String> cacheMap() {
-        return cache;
-    }
-
-    @Override
-    public Codec<String> cacheCodec() {
-        return Codec.STRING;
-    }
-
     /* DATA */
     @Override
     public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         super.easyWrite(nbt, registries, clientPacket);
-        if (value != null && !value.isEmpty()) nbt.putString("Value", value);
-        if (join != null && !join.isEmpty()) nbt.putString("Join", join);
-        if (regex != null && !regex.isEmpty()) nbt.putString("Regex", regex);
-        if (replacement != null && !replacement.isEmpty()) nbt.putString("Replacement", replacement);
+        nbt.putString("Value", value);
+        nbt.putString("Join", join);
+        nbt.putString("Regex", regex);
+        nbt.putString("Replacement", replacement);
     }
 
     @Override
     public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         super.easyRead(nbt, registries, clientPacket);
-        value = nbt.contains("Value") ? nbt.getString("Value") : null;
-        join = nbt.contains("Join") ? nbt.getString("Join") : null;
-        regex = nbt.contains("Regex") ? nbt.getString("Regex") : null;
-        replacement = nbt.contains("Replacement") ? nbt.getString("Replacement") : null;
+        value = nbt.getString("Value");
+        join = nbt.getString("Join");
+        regex = nbt.getString("Regex");
+        replacement = nbt.getString("Replacement");
         if (value != null) {
             try {
-                intValue = Integer.parseInt(value);
+                floatValue = Integer.parseInt(value);
             } catch (NumberFormatException ignored) {
-                intValue = 0;
+                floatValue = 0;
             }
         }
     }
 
     /* UPDATE */
-    @Override
-    public void tick() {
-        super.tick();
-        updated = 0;
-    }
 
     @Override
-    public void checkForRedstoneInput() {
-        if (!active || updated > ExtraGaugesConfig.STRING_MAX_CHAIN.get())
+    public void notifiedFromInput() {
+        if (!active)
             return;
-        StringJoiner stringList = new StringJoiner(join == null ? "" : join);
-        consumeForLinks(link -> {
-            if (link.blockEntity instanceof DisplayCollectorBlockEntity collector)
-                stringList.add(collector.getComponent().getString());
-        });
-        consumeForExtra(DeployerPanelConnections.STRING.get(), (pos, v) -> {
-            cache.put(pos, v);
-            stringList.add(v);
-        });
-        consumeForPanels(DeployerPanelConnections.STRING.get(), stringList::add);
-        String result = stringList.toString();
+        List<String> result = getAllValues(DeployerPanelConnections.STRING.get());
+        if(result == null) return;
+        String res = String.join(join, result);
         int maxLength = ExtraGaugesConfig.STRING_MAX_LENGTH.get();
-        if (result.length() > maxLength) result = result.substring(0, maxLength);
+        if (res.length() > maxLength) res = res.substring(0, maxLength);
 
-        if (regex != null && !regex.isEmpty()) {
+        if (!regex.isEmpty()) {
             try {
                 Pattern pattern = Pattern.compile(regex);
-                result = pattern.matcher(result).replaceAll(replacement == null ? "" : replacement);
+                res = pattern.matcher(res).replaceAll(replacement);
             } catch (PatternSyntaxException e) {
-                result = "RegexError";
+                res = "RegexError";
             }
         }
-        sendCache(this);
-        if (result.equals(value))
+        if (res.equals(value))
             return;
-        value = result;
+        value = res;
         try {
-            intValue = Math.round(Float.parseFloat(value));
+            floatValue = Float.parseFloat(value);
         } catch (NumberFormatException ignored) {
-            intValue = 0;
+            floatValue = 0;
         }
 
         blockEntity.notifyUpdate();
-        updated++;
         for (FactoryPanelPosition panelPos : targeting) {
             if (!getWorld().isLoaded(panelPos.pos()))
                 return;
@@ -153,7 +119,7 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
             if (behaviour == null) continue;
             behaviour.checkForRedstoneInput();
         }
-        notifyRedstoneOutputs();
+        notifyOutputs();
     }
 
     public void setFilter(String join, String regex, String replace) {
@@ -164,37 +130,16 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
         checkForRedstoneInput();
     }
 
-    public @Nullable String getJoin() {
+    public String getJoin() {
         return join;
     }
 
-    public @Nullable String getRegex() {
+    public String getRegex() {
         return regex;
     }
 
-    public @Nullable String getReplacement() {
+    public String getReplacement() {
         return replacement;
-    }
-
-    /* RENDER */
-    @Override
-    public int calculatePath(FactoryPanelBehaviour other, int original) {
-        return DeployerPanelConnections.getConnectionValue(other, DeployerPanelConnections.STRING).map(str -> 0xFFFFFF).orElse(super.calculatePath(other, original));
-    }
-
-    @Override
-    public int calculateExtraPath(BlockPos pos) {
-        var level = getWorld();
-        var state = level.getBlockState(pos);
-        var be = level.getBlockEntity(pos);
-        var listener = DeployerPanelConnections.STRING.get().getListener(state.getBlock());
-        if (listener != null) {
-            var opt = listener.invalidate(level, state, pos, be);
-            var cache = this.cache.get(pos);
-            if (opt.isPresent())
-                return !DeployerConfig.Client.PANEL_CACHING.get() || cache != null && cache.equals(opt.get()) ? 0xFFFFFF : WAITING;
-        }
-        return super.calculateExtraPath(pos);
     }
 
     /* DISPLAY LINK */
@@ -208,7 +153,24 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour implements Cach
     @Override
     public void displayScreen(Player player) {
         if (player instanceof LocalPlayer)
-            ScreenOpener.open(new StringPanelScreen(this));
+            ScreenOpener.open(new StringPanelScreen(this, hasInteraction("rewriter")));
+    }
+
+    @Override
+    public void addInteractions(PanelInteractionBuilder builder) {
+        builder.registerEntity("rewriter", AllBlockEntityTypes.PACKAGER.get());
+    }
+
+    @Override
+    public String canConnect(FactoryPanelBehaviour from) {
+        if(hasInteraction("rewriter")) return "string_panel.input_in_rewrite_mode";
+        return super.canConnect(from);
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        join = regex = replacement = value = "";
     }
 }
 

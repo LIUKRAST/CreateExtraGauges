@@ -10,9 +10,6 @@
   "block.extra_gauges.integer_selector": "Целочисленный селектор",
   "block.extra_gauges.display_collector": "Коллектор отображения",
 
-  "extra_gauges.panel.panels_connected": "%s теперь указывает на %s",
-  "extra_gauges.panel.custom_panel_on_restocker": "Нельзя установить пользовательский фабричный датчик в режиме пополнения",
-
   "create.logistics.logic_gate": "Логический вентиль",
   "logic_gauge.gate.or": "ИЛИ (OR; активируется, если любой вход активен)",
   "logic_gauge.gate.and": "И (AND; активируется, если все входы активны)",

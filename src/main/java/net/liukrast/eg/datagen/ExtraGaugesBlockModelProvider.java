@@ -21,5 +21,7 @@ public class ExtraGaugesBlockModelProvider extends BlockModelProvider {
         createPanel(this, EGItems.COUNTER_GAUGE.get());
         createPanel(this, EGItems.PASSIVE_GAUGE.get());
         createPanel(this, EGItems.STRING_GAUGE.get());
+        createPanel(this, EGItems.EXPRESSION_GAUGE.get());
+        createPanel(this, EGItems.FILTER_GAUGE.get());
     }
 }

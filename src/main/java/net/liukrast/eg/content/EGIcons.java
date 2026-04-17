@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.gui.AllIcons;
 import net.createmod.catnip.theme.Color;
-import net.liukrast.deployer.lib.mixin.AllIconsMixin;
+import net.liukrast.deployer.lib.mixin.accessors.AllIconsAccessor;
 import net.liukrast.eg.EGConstants;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
@@ -34,13 +34,9 @@ public class EGIcons extends AllIcons {
             I_SUBTRACT = next(),
             I_MULTIPLY = next(),
 
-            I_EQUALS = newRow(),
-            I_DIFFERENT = next(),
-            I_GREATER = next(),
-            I_GREATER_EQUALS = next(),
-
-            I_LESS = newRow(),
-            I_LESS_EQUALS = next();
+            I_STATIC = newRow(),
+            I_ADVANCED = next(),
+            I_MEMORY = next();
 
     private static EGIcons next() {
         return new EGIcons(++x, y);
@@ -62,7 +58,7 @@ public class EGIcons extends AllIcons {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void render(GuiGraphics graphics, int x, int y) {
-        graphics.blit(ICON_ATLAS, x, y, 0, ((AllIconsMixin)this).getIconX(), ((AllIconsMixin)this).getIconY(), 16, 16, ICON_ATLAS_SIZE, ICON_ATLAS_SIZE);
+        graphics.blit(ICON_ATLAS, x, y, 0, ((AllIconsAccessor)this).getIconX(), ((AllIconsAccessor)this).getIconY(), 16, 16, ICON_ATLAS_SIZE, ICON_ATLAS_SIZE);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -76,8 +72,8 @@ public class EGIcons extends AllIcons {
         Vec3 vec2 = new Vec3(0, 1, 0);
         Vec3 vec3 = new Vec3(1, 1, 0);
         Vec3 vec4 = new Vec3(1, 0, 0);
-        var iconX = ((AllIconsMixin)this).getIconX();
-        var iconY = ((AllIconsMixin)this).getIconY();
+        var iconX = ((AllIconsAccessor)this).getIconX();
+        var iconY = ((AllIconsAccessor)this).getIconY();
 
         float u1 = iconX * 1f / ICON_ATLAS_SIZE;
         float u2 = (iconX + 16) * 1f / ICON_ATLAS_SIZE;
@@ -85,9 +81,9 @@ public class EGIcons extends AllIcons {
         float v2 = (iconY + 16) * 1f / ICON_ATLAS_SIZE;
 
 
-        ((AllIconsMixin)this).invokeVertex(builder, matrix, vec1, rgb, u1, v1, light);
-        ((AllIconsMixin)this).invokeVertex(builder, matrix, vec2, rgb, u1, v2, light);
-        ((AllIconsMixin)this).invokeVertex(builder, matrix, vec3, rgb, u2, v2, light);
-        ((AllIconsMixin)this).invokeVertex(builder, matrix, vec4, rgb, u2, v1, light);
+        ((AllIconsAccessor)this).invokeVertex(builder, matrix, vec1, rgb, u1, v1, light);
+        ((AllIconsAccessor)this).invokeVertex(builder, matrix, vec2, rgb, u1, v2, light);
+        ((AllIconsAccessor)this).invokeVertex(builder, matrix, vec3, rgb, u2, v2, light);
+        ((AllIconsAccessor)this).invokeVertex(builder, matrix, vec4, rgb, u2, v1, light);
     }
 }

@@ -11,7 +11,8 @@ import java.util.stream.Stream;
 public enum IntOperationMode implements INamedIconOptions {
     ADD(AllIcons.I_ADD, stream -> stream.mapToInt(Integer::intValue).sum()),
     SUBTRACT(EGIcons.I_SUBTRACT, stream -> -stream.mapToInt(Integer::intValue).sum()),
-    MULTIPLY(EGIcons.I_MULTIPLY, stream -> stream.mapToInt(Integer::intValue).reduce(1, (left, right) -> left*right));
+    MULTIPLY(EGIcons.I_MULTIPLY, stream -> stream.mapToInt(Integer::intValue).reduce(1, (left, right) -> left*right)),
+    MEMORY(EGIcons.I_MEMORY, stream -> stream.mapToInt(Integer::intValue).sum());
 
     private final String translationKey;
     private final AllIcons icon;
@@ -33,7 +34,7 @@ public enum IntOperationMode implements INamedIconOptions {
         return translationKey;
     }
 
-    public int test(Stream<Integer> booleanStream) {
+    public int process(Stream<Integer> booleanStream) {
         return function.apply(booleanStream);
     }
 }

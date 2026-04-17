@@ -1,7 +1,7 @@
 package net.liukrast.eg.content.logistics.board;
 
 import net.createmod.catnip.platform.CatnipServices;
-import net.liukrast.deployer.lib.logistics.board.BasicPanelScreen;
+import net.liukrast.deployer.lib.logistics.board.screen.BasicPanelScreen;
 import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.networking.StringPanelUpdatePacket;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,24 +17,18 @@ public class StringPanelScreen extends BasicPanelScreen<StringPanelBehaviour> {
     public static final Component REGEX = Component.translatable("extra_gauges.gui.string_panel.regex");
     public static final Component REPLACEMENT = Component.translatable("extra_gauges.gui.string_panel.replacement");
 
+    private final boolean rewriter;
     private EditBox joinBox,regexBox,replaceBox;
-    public StringPanelScreen(StringPanelBehaviour behaviour) {
-        super(behaviour);
+    public StringPanelScreen(StringPanelBehaviour behaviour, boolean rewriter) {
+        super(behaviour, !rewriter, !rewriter);
+        this.rewriter = rewriter;
     }
 
     @Override
     protected void init() {
         super.init();
         int x = guiLeft;
-        int y = guiTop;
-        var joinText = joinBox == null ? behaviour.getJoin() : joinBox.getValue();
-        joinBox = new EditBox(font, x+32, y+40, 130, 20, Component.empty());
-        if(joinText != null) joinBox.setValue(joinText);
-        joinBox.setMaxLength(100);
-        joinBox.setTextColor(0xFF545454);
-        joinBox.setTextShadow(false);
-        joinBox.setBordered(false);
-        addRenderableWidget(joinBox);
+        int y = guiTop + (rewriter ? -34 : 0);
         var regexText = regexBox == null ? behaviour.getRegex() : regexBox.getValue();
         regexBox = new EditBox(font, x+32, y+40+34, 130, 20, Component.empty());
         if(regexText != null) regexBox.setValue(regexText);
@@ -51,6 +45,16 @@ public class StringPanelScreen extends BasicPanelScreen<StringPanelBehaviour> {
         replaceBox.setTextShadow(false);
         replaceBox.setBordered(false);
         addRenderableWidget(replaceBox);
+
+        if(rewriter) return;
+        var joinText = joinBox == null ? behaviour.getJoin() : joinBox.getValue();
+        joinBox = new EditBox(font, x+32, y+40, 130, 20, Component.empty());
+        if(joinText != null) joinBox.setValue(joinText);
+        joinBox.setMaxLength(100);
+        joinBox.setTextColor(0xFF545454);
+        joinBox.setTextShadow(false);
+        joinBox.setBordered(false);
+        addRenderableWidget(joinBox);
     }
 
     @Override
@@ -60,12 +64,12 @@ public class StringPanelScreen extends BasicPanelScreen<StringPanelBehaviour> {
 
     @Override
     public int getWindowHeight() {
-        return 120;
+        return rewriter ? 80 : 120;
     }
 
     @Override
     public void onConfirm() {
-        StringPanelUpdatePacket packet = new StringPanelUpdatePacket(behaviour.getPanelPosition(), joinBox.getValue(), regexBox.getValue(), replaceBox.getValue());
+        StringPanelUpdatePacket packet = new StringPanelUpdatePacket(behaviour.getPanelPosition(), joinBox == null ? "" : joinBox.getValue(), regexBox.getValue(), replaceBox.getValue());
         CatnipServices.NETWORK.sendToServer(packet);
         super.onConfirm();
     }
@@ -73,11 +77,13 @@ public class StringPanelScreen extends BasicPanelScreen<StringPanelBehaviour> {
     @Override
     protected void renderWindow(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         super.renderWindow(graphics, mouseX, mouseY, partialTicks);
-        graphics.drawString(font, JOIN, guiLeft+20, guiTop+24, 0xFF442b28, false);
-        graphics.blit(TEXTURE, guiLeft+8, guiTop+30, 0,0, 160, 32);
-        graphics.drawString(font, REGEX, guiLeft+20, guiTop+24+34, 0xFF442b28, false);
-        graphics.blit(TEXTURE, guiLeft+8, guiTop+30+34, 0,0, 160, 32);
-        graphics.drawString(font, REPLACEMENT, guiLeft+20, guiTop+24+34+34, 0xFF442b28, false);
-        graphics.blit(TEXTURE, guiLeft+8, guiTop+30+34+34, 0,0, 160, 32);
+        int y = guiTop + (rewriter ? -34 : 0);
+        graphics.drawString(font, REGEX, guiLeft+20, y+24+34, 0xFF442b28, false);
+        graphics.blit(TEXTURE, guiLeft+8, y+30+34, 0,0, 160, 32);
+        graphics.drawString(font, REPLACEMENT, guiLeft+20, y+24+34+34, 0xFF442b28, false);
+        graphics.blit(TEXTURE, guiLeft+8, y+30+34+34, 0,0, 160, 32);
+        if(rewriter) return;
+        graphics.drawString(font, JOIN, guiLeft+20, y+24, 0xFF442b28, false);
+        graphics.blit(TEXTURE, guiLeft+8, y+30, 0,0, 160, 32);
     }
 }

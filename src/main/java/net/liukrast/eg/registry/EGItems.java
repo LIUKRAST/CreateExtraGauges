@@ -19,6 +19,8 @@ public class EGItems {
     public static final DeferredItem<PanelBlockItem> COUNTER_GAUGE = ITEMS.register("counter_gauge", () -> new PanelBlockItem(EGPanels.COUNTER::get, new Item.Properties()));
     public static final DeferredItem<PanelBlockItem> PASSIVE_GAUGE = ITEMS.register("passive_gauge", () -> new LogisticallyLinkedPanelBlockItem(EGPanels.PASSIVE::get, new Item.Properties()));
     public static final DeferredItem<PanelBlockItem> STRING_GAUGE = ITEMS.register("string_gauge", () -> new PanelBlockItem(EGPanels.STRING::get, new Item.Properties()));
+    public static final DeferredItem<PanelBlockItem> EXPRESSION_GAUGE = ITEMS.register("expression_gauge", () -> new PanelBlockItem(EGPanels.EXPRESSION::get, new Item.Properties()));
+    public static final DeferredItem<PanelBlockItem> FILTER_GAUGE = ITEMS.register("filter_gauge", () -> new LogisticallyLinkedPanelBlockItem(EGPanels.FILTER::get, new Item.Properties()));
 
     @ApiStatus.Internal
     public static void register(IEventBus eventBus) {

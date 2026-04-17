@@ -7,10 +7,7 @@ import net.liukrast.eg.registry.EGBlocks;
 import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
@@ -32,6 +29,7 @@ public class ExtraGaugesRecipeProvider extends RecipeProvider implements ICondit
         makeGauge(EGItems.COUNTER_GAUGE.get(), AllItems.TRANSMITTER.get(), output);
         makeGauge(EGItems.PASSIVE_GAUGE.get(), AllItems.STURDY_SHEET.get(), output);
         makeGauge(EGItems.STRING_GAUGE.get(), Items.PAPER, output);
+        makeGauge(EGItems.EXPRESSION_GAUGE.get(), EGItems.INT_GAUGE.asItem(), output);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.INT_SELECTOR.get())
                 .requires(AllBlocks.ANALOG_LEVER.get())
@@ -54,9 +52,30 @@ public class ExtraGaugesRecipeProvider extends RecipeProvider implements ICondit
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, AllBlocks.DISPLAY_LINK.get())
                 .requires(EGBlocks.DISPLAY_COLLECTOR.get())
                 .unlockedBy("has_display_collector", has(EGBlocks.DISPLAY_COLLECTOR.get())).save(output, EGConstants.id("display_link"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGItems.PASSIVE_GAUGE)
+                .requires(EGItems.PASSIVE_GAUGE)
+                .unlockedBy("has_passive_gauge", has(EGItems.PASSIVE_GAUGE)).save(output, "passive_gauge_clear");
+
+        makeGauge(EGItems.FILTER_GAUGE.get(), AllItems.FILTER.get(), output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGItems.FILTER_GAUGE)
+                .requires(EGItems.FILTER_GAUGE)
+                .unlockedBy("has_filter_gauge", has(EGItems.FILTER_GAUGE)).save(output, "filter_gauge_clear");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, EGBlocks.REDSTONE_PORT)
+                .pattern("a").pattern("b")
+                .define('a', Items.REDSTONE_LAMP)
+                .define('b', AllItems.IRON_SHEET)
+                .unlockedBy("has_iron_sheet", has(AllItems.IRON_SHEET)).save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, EGBlocks.ROSE_QUARTZ_PORT)
+                .pattern("a").pattern("b")
+                .define('a', AllBlocks.ROSE_QUARTZ_LAMP)
+                .define('b', AllItems.IRON_SHEET)
+                .unlockedBy("has_iron_sheet", has(AllItems.IRON_SHEET)).save(output);
     }
 
-    @Deprecated
     public void makeGauge(Item result, Item ingredient, @NotNull RecipeOutput output) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, result, 2)
                 .requires(AllItems.PRECISION_MECHANISM)

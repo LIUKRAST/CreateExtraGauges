@@ -7,16 +7,17 @@
   "item.extra_gauges.counter_gauge": "Counter Gauge",
   "item.extra_gauges.passive_gauge": "Passive Gauge",
   "item.extra_gauges.string_gauge": "String Gauge",
+  "item.extra_gauges.expression_gauge": "Expression Gauge",
+  "item.extra_gauges.filter_gauge": "Filter Gauge",
   "block.extra_gauges.integer_selector": "Integer Selector",
   "block.extra_gauges.display_collector": "Display Collector",
   "block.extra_gauges.linked_lever": "Linked Lever",
   "block.extra_gauges.linked_button": "Linked Button",
+  "block.extra_gauges.redstone_port": "Redstone Port",
+  "block.extra_gauges.rose_quartz_port": "Rose Quartz Port",
 
   "block.extra_gauges.linked_lever.tooltip.summary": "Works like a redstone link but includes a lever. Connects to gauges and send an update instantly",
   "block.extra_gauges.linked_button.tooltip.summary": "Works like a redstone link but includes a button. Connects to gauges and send an update instantly",
-
-  "extra_gauges.panel.panels_connected": "%s now pointing to %s",
-  "extra_gauges.panel.custom_panel_on_restocker": "Cannot place a custom gauge in restocker mode",
 
   "create.logistics.logic_gate": "Logic Gate",
   "logic_gauge.gate.or": "OR (Activate if any inputs are active)",
@@ -30,20 +31,49 @@
   "integer_gauge.mode.add": "ADD (Sums all inputs)",
   "integer_gauge.mode.subtract": "SUBTRACT (Sums all inputs but gives negative result)",
   "integer_gauge.mode.multiply": "MULTIPLY (Multiplies all inputs)",
+  "integer_gauge.mode.memory": "MEMORY (Saves sum of inputs if redstone is off)",
 
-  "create.logistics.comparator_value": "Choose the comparing constant",
+  "create.logistics.comparator_value": "Choose the comparator mode",
+  "comparator_gauge.mode.static": "STATIC (Compares a static value to sum of inputs)",
+  "comparator_gauge.mode.advanced": "ADVANCES (Let's you control which inputs are compared to which)",
   "comparator_gauge.mode.equals": "Input equals constant",
   "comparator_gauge.mode.different": "Input differs constant",
   "comparator_gauge.mode.greater": "Input is greater than constant",
   "comparator_gauge.mode.greater_equals": "Input is greater than or equals constant",
   "comparator_gauge.mode.less": "Input is less than constant",
   "comparator_gauge.mode.less_equals": "Input is less than or equals constant",
-  "create.logistics.comparator_gauge.title": "Inputs will be summed",
+
+  "comparator_gauge.info.title": "Drag'n drop",
+  "comparator_gauge.info.line_1": "Visualize inputs outside with a wrench,",
+  "comparator_gauge.info.line_2": "then drag them on one side of the equation",
+
+  "expression_gauge.info.title": "What are variables?",
+  "expression_gauge.info.line_1": "Each connection coming into the gauge",
+  "expression_gauge.info.line_2": "is a unique number you can use for your equations.",
+  "expression_gauge.info.line_3": "Hover a connection with a wrench to see what variable you're looking at",
+
+  "create.string_panel.input_in_rewrite_mode": "Input gauge cannot be in rewrite mode",
 
   "create.logistics.counter_threshold": "Choose the threshold",
 
   "create.display_collector.set": "Source position selected",
   "create.display_collector.success": "Successfully bound to source position",
+
+  "filter_panel.no_filter": "No filter selected",
+  "filter_panel.active": "Filter panel active",
+
+  "create.logistics.int_selection": "Select the integer value",
+
+  "extra_gauges.gui.string_panel.join": "Join:",
+  "extra_gauges.gui.string_panel.regex": "Regex:",
+  "extra_gauges.gui.string_panel.replacement": "Replacement:",
+
+  "extra_gauges.counter_panel.no_limit": "No limit",
+
+  "extra_gauges.gui.filter_panel.eject": "Eject filter",
+
+  "extra_gauges.gui.variable_connection.info_header": "Selected connection",
+  "extra_gauges.gui.variable_connection.name": "Variable:",
 
   "extra_gauges.ponder.logic_gauge.header": "Using Logic Gauges to transmit redstone signals",
   "extra_gauges.ponder.logic_gauge.text_1": "Logic Gauges can transmit redstone over several wall-attached objects",
@@ -130,17 +160,14 @@
   "extra_gauges.ponder.expanded_factory_recipes.text_3": "But smaller recipes can also match larger auto crafter setups, by increasing the §9width §rin the §eGUI§r.",
   "extra_gauges.ponder.expanded_factory_recipes.text_4": "Don't get scared about your setup height, as soon as it matches the minimum required for the recipe, you're good to go!",
 
-  "create.logistics.int_selection": "Select the integer value",
+
+
   "extra_gauges.gui.factory_panel.crafting_input_tip_1": "mechanical crafters (%s blocks wide)",
   "extra_gauges.gui.factory_panel.crafting_input_tip_2": "Minimum height: %s blocks",
   "extra_gauges.gui.factory_panel.auto_crafting_input": "Recipe too big to render",
   "extra_gauges.gui.factory_panel.extend_width": "Extend width (%s)",
   "extra_gauges.gui.factory_panel.reduce_width": "Reduce width (%s)",
-  "extra_gauges.gui.passive_panel.no_recipe": "Missing recipe",
+  "extra_gauges.gui.passive_panel.no_recipe": "Missing recipe"
 
-  "extra_gauges.gui.string_panel.join": "Join:",
-  "extra_gauges.gui.string_panel.regex": "Regex:",
-  "extra_gauges.gui.string_panel.replacement": "Replacement:",
 
-  "extra_gauges.counter_panel.no_limit": "No limit"
 }

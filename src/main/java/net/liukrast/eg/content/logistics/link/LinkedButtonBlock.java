@@ -1,4 +1,4 @@
-package net.liukrast.eg.content.logistics;
+package net.liukrast.eg.content.logistics.link;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 import org.lwjgl.system.NonnullDefault;
 
 @NonnullDefault
@@ -20,12 +19,10 @@ public class LinkedButtonBlock extends LinkedLeverBlock {
     }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(level.isClientSide) return InteractionResult.SUCCESS;
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         return onBlockEntityUse(level, pos, be -> {
             level.setBlock(pos, state.setValue(POWERED, true), 3);
-            float f = 0.6F;
-            level.playSound(player, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
+            level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS);
             be.transmit(15);
             level.scheduleTick(pos, this, 30);
             return InteractionResult.SUCCESS;
@@ -37,6 +34,8 @@ public class LinkedButtonBlock extends LinkedLeverBlock {
         super.tick(state, level, pos, random);
         withBlockEntityDo(level, pos, be -> {
             level.setBlock(pos, state.setValue(POWERED, false), 3);
+            var sound = Math.random() < 0.0001 ? SoundEvents.WARDEN_AGITATED : SoundEvents.STONE_BUTTON_CLICK_OFF;
+            level.playSound(null, pos, sound, SoundSource.BLOCKS);
             be.transmit(0);
         });
 

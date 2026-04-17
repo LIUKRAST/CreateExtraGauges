@@ -12,6 +12,8 @@ public class EGPartialModels {
     public static final PartialModel COUNTER_PANEL = block("counter_gauge");
     public static final PartialModel PASSIVE_PANEL = block("passive_gauge");
     public static final PartialModel STRING_PANEL = block("string_gauge");
+    public static final PartialModel EXPRESSION_PANEL = block("expression_gauge");
+    public static final PartialModel FILTER_PANEL = block("filter_gauge");
 
     private static PartialModel block(String path) {
         return PartialModel.of(EGConstants.id("block/" + path));

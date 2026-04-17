@@ -1,0 +1,7 @@
+{
+  "parent": "deployer:block/template_gauge",
+  "textures": {
+    "particle": "extra_gauges:block/filter_panel",
+    "texture": "extra_gauges:block/filter_panel"
+  }
+}
