@@ -164,14 +164,18 @@ publishing {
     publications {
         register('mavenJava', MavenPublication) {
             from components.java
+
+            artifactId = "${mod_id}-${minecraft_version}"
+            version = "${mod_version}"
         }
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url = uri("${project.projectDir}/repo")
         }
     }
 }
+
 
 idea {
     module {
