@@ -1,0 +1,17 @@
+name: Publish Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-shared-workflow:
+    uses: LIUKRAST/LIUKRAST/.github/workflows/publish.yml@main
+    permissions:
+      contents: write
+    secrets:
+      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_PASS: ${{ secrets.SSH_PASS }}
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
