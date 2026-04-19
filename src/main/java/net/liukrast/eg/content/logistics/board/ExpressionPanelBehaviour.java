@@ -93,6 +93,18 @@ public class ExpressionPanelBehaviour extends AbstractPanelBehaviour {
                 public double apply(double... args) {
                     return (int)args[0] >>> (int)args[1];
                 }
+            },
+            new Function("imply", 2) {
+                @Override
+                public double apply(double... args) {
+                    return ~(int)args[0] | (int)args[1];
+                }
+            },
+            new Function("nimply", 2) {
+                @Override
+                public double apply(double... args) {
+                    return (int)args[0] & ~ (int)args[1];
+                }
             }
     );
 
