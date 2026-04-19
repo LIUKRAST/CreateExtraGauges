@@ -1,0 +1,7 @@
+// 1.21.1	2026-04-19T01:03:11.7585175	Loot Tables
+e41add38a204756ee25c7e61071455f39bd639a4 data/extra_gauges/loot_table/blocks/display_collector.json
+8be05910269276a2435e83e9cf31aaa892c061ea data/extra_gauges/loot_table/blocks/integer_selector.json
+95fbc7d5c468d6cb981da99b55a6a84dadbd7597 data/extra_gauges/loot_table/blocks/linked_button.json
+a234a5e3822cd472320f1429a737a6e701aef502 data/extra_gauges/loot_table/blocks/linked_lever.json
+5cebf541c323dec908b877a910143a2ffab597cd data/extra_gauges/loot_table/blocks/redstone_port.json
+5bfd0ffe18b8bc66cbd3cf856d99d8bc88d15222 data/extra_gauges/loot_table/blocks/rose_quartz_port.json

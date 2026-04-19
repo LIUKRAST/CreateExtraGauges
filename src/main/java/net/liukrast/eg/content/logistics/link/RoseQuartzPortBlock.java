@@ -1,6 +1,7 @@
 package net.liukrast.eg.content.logistics.link;
 
 import com.mojang.serialization.MapCodec;
+import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,18 +14,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.lwjgl.system.NonnullDefault;
 
+import java.util.List;
+
 @NonnullDefault
-public class RedstonePortBlock extends PortBlock<RedstonePortBlockEntity> {
+public class RoseQuartzPortBlock extends PortBlock<RoseQuartzPortBlockEntity> {
 
-    public static final MapCodec<RedstonePortBlock> CODEC = simpleCodec(RedstonePortBlock::new);
-    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final MapCodec<RoseQuartzPortBlock> CODEC = simpleCodec(RoseQuartzPortBlock::new);
+    public static final IntegerProperty POWER = BlockStateProperties.POWER;
 
-    public RedstonePortBlock(Properties properties) {
+    public RoseQuartzPortBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(POWERED, false));
     }
 
     @Override
@@ -34,45 +36,38 @@ public class RedstonePortBlock extends PortBlock<RedstonePortBlockEntity> {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder.add(POWERED));
+        super.createBlockStateDefinition(builder.add(POWER));
     }
 
+    @Override
     public void updateSignalIn(BlockState state, Level level, BlockPos pos) {
         if(level.isClientSide) return;
         if(!state.getValue(OUTPUT)) return;
-        boolean old = state.getValue(POWERED);
-        if(old == level.hasNeighborSignal(pos)) return;
-        level.setBlock(pos, state.setValue(POWERED, !old), 3);
+        int old = state.getValue(POWER);
+        int signal = level.getBestNeighborSignal(pos);
+        if(old == signal) return;
+        level.setBlock(pos, state.setValue(POWER, signal), 3);
         withBlockEntityDo(level, pos, port -> port.panelSupport.notifyPanels());
     }
 
+    @Override
     public void updateSignalOut(BlockState state, Level level, BlockPos pos) {
         if(level.isClientSide) return;
         if(state.getValue(OUTPUT)) return;
-        int powerFromPanels = getBlockEntityOptional(level, pos).map(be -> {
-                    if (be.panelSupport == null)
-                        return 0;
-                    Boolean tri = be.panelSupport.shouldBePoweredTristate();
-                    if (tri == null)
-                        return -1;
-                    return tri ? 15 : 0;
-                })
-                .orElse(0);
-
-        // Suppress update if an input panel exists but is not loaded
-        if (powerFromPanels == -1)
-            return;
-
-        boolean previouslyPowered = state.getValue(POWERED);
-        if (previouslyPowered != powerFromPanels > 0) {
-            level.setBlock(pos, state.cycle(POWERED), 3);
+        List<Float> result = getBlockEntityOptional(level, pos)
+                .map(be -> be.panelSupport)
+                .map(support -> support.getAllValues(DeployerPanelConnections.NUMBERS.get()))
+                .orElse(null);
+        if(result == null) return;
+        int total = result.stream().mapToInt(f -> (int)(float)f).sum();
+        int previous = state.getValue(POWER);
+        if(total != previous) {
+            level.setBlock(pos, state.setValue(POWER, total), 3);
             for (Direction direction : Direction.values()) {
                 level.updateNeighborsAt(pos.relative(direction), this);
             }
         }
-
     }
-
 
     @Override
     public int getDirectSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
@@ -94,16 +89,17 @@ public class RedstonePortBlock extends PortBlock<RedstonePortBlockEntity> {
 
     @Override
     protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return !state.getValue(OUTPUT) && state.getValue(POWERED) ? 15 : 0;
+        return !state.getValue(OUTPUT) ? state.getValue(POWER) : 0;
+    }
+
+
+    @Override
+    public Class<RoseQuartzPortBlockEntity> getBlockEntityClass() {
+        return RoseQuartzPortBlockEntity.class;
     }
 
     @Override
-    public Class<RedstonePortBlockEntity> getBlockEntityClass() {
-        return RedstonePortBlockEntity.class;
-    }
-
-    @Override
-    public BlockEntityType<? extends RedstonePortBlockEntity> getBlockEntityType() {
-        return EGBlockEntityTypes.REDSTONE_PORT.get();
+    public BlockEntityType<? extends RoseQuartzPortBlockEntity> getBlockEntityType() {
+        return EGBlockEntityTypes.ROSE_QUARTZ_PORT.get();
     }
 }

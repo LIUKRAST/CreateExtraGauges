@@ -1,0 +1,4 @@
+// 1.21.1	2026-04-19T01:03:11.7630823	Block States: extra_gauges
+a402bccc75810873f0502b03898635703664c646 assets/extra_gauges/blockstates/integer_selector.json
+31704be3a96fc680bf4b2ccaca98fa9767586039 assets/extra_gauges/blockstates/redstone_port.json
+4638e71d706b27fd934a64cd93fea21559ed57a7 assets/extra_gauges/blockstates/rose_quartz_port.json

@@ -1,14 +1,1 @@
-- Added new Expression gauge to handle complex mathematical expressions
-- Entire base-code rewritten, now using Deployer
-- Added new Filter gauge to craft items with filters
-- Added new Comparator gauge advanced mode
-- Added redstone port and rose quartz port to interact with gauges
-- Added linked lever and linked button
-- String gauge can now be attached to a packager to get in rewrite mode
-- Fixed [#64](https://github.com/LIUKRAST/CreateExtraGauges/issues/64)
-- Fixed [#63](https://github.com/LIUKRAST/CreateExtraGauges/issues/63)
-- Fixed [#59](https://github.com/LIUKRAST/CreateExtraGauges/issues/59)
-- Fixed [#58](https://github.com/LIUKRAST/CreateExtraGauges/issues/58)
-- Fixed [#52](https://github.com/LIUKRAST/CreateExtraGauges/issues/52)
-- Fixed [#56](https://github.com/LIUKRAST/CreateExtraGauges/issues/56)
-- Fixed [#50](https://github.com/LIUKRAST/CreateExtraGauges/issues/50)
+- Rose quartz port now transfers numbers instead of redstone, allowing 16 values

@@ -1,213 +1,1697 @@
 {
   "variants": {
-    "face=ceiling,facing=east,output=false,powered=false": {
+    "face=ceiling,facing=east,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "x": 180,
       "y": 270
     },
-    "face=ceiling,facing=east,output=false,powered=true": {
+    "face=ceiling,facing=east,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "x": 180,
       "y": 270
     },
-    "face=ceiling,facing=east,output=true,powered=false": {
+    "face=ceiling,facing=east,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "x": 180,
       "y": 270
     },
-    "face=ceiling,facing=east,output=true,powered=true": {
+    "face=ceiling,facing=east,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "x": 180,
       "y": 270
     },
-    "face=ceiling,facing=north,output=false,powered=false": {
+    "face=ceiling,facing=east,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=east,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=north,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "x": 180,
       "y": 180
     },
-    "face=ceiling,facing=north,output=false,powered=true": {
+    "face=ceiling,facing=north,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "x": 180,
       "y": 180
     },
-    "face=ceiling,facing=north,output=true,powered=false": {
+    "face=ceiling,facing=north,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "x": 180,
       "y": 180
     },
-    "face=ceiling,facing=north,output=true,powered=true": {
+    "face=ceiling,facing=north,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "x": 180,
       "y": 180
     },
-    "face=ceiling,facing=south,output=false,powered=false": {
+    "face=ceiling,facing=north,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=north,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=south,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "x": 180
     },
-    "face=ceiling,facing=south,output=false,powered=true": {
+    "face=ceiling,facing=south,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "x": 180
     },
-    "face=ceiling,facing=south,output=true,powered=false": {
+    "face=ceiling,facing=south,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "x": 180
     },
-    "face=ceiling,facing=south,output=true,powered=true": {
+    "face=ceiling,facing=south,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "x": 180
     },
-    "face=ceiling,facing=west,output=false,powered=false": {
+    "face=ceiling,facing=south,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=south,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180
+    },
+    "face=ceiling,facing=west,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "x": 180,
       "y": 90
     },
-    "face=ceiling,facing=west,output=false,powered=true": {
+    "face=ceiling,facing=west,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "x": 180,
       "y": 90
     },
-    "face=ceiling,facing=west,output=true,powered=false": {
+    "face=ceiling,facing=west,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "x": 180,
       "y": 90
     },
-    "face=ceiling,facing=west,output=true,powered=true": {
+    "face=ceiling,facing=west,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "x": 180,
       "y": 90
     },
-    "face=floor,facing=east,output=false,powered=false": {
+    "face=ceiling,facing=west,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 180,
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "y": 90
     },
-    "face=floor,facing=east,output=false,powered=true": {
+    "face=floor,facing=east,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "y": 90
     },
-    "face=floor,facing=east,output=true,powered=false": {
+    "face=floor,facing=east,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "y": 90
     },
-    "face=floor,facing=east,output=true,powered=true": {
+    "face=floor,facing=east,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "y": 90
     },
-    "face=floor,facing=north,output=false,powered=false": {
+    "face=floor,facing=east,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=east,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 90
+    },
+    "face=floor,facing=north,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in"
     },
-    "face=floor,facing=north,output=false,powered=true": {
+    "face=floor,facing=north,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in"
     },
-    "face=floor,facing=north,output=true,powered=false": {
+    "face=floor,facing=north,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in"
+    },
+    "face=floor,facing=north,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out"
     },
-    "face=floor,facing=north,output=true,powered=true": {
+    "face=floor,facing=north,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out"
     },
-    "face=floor,facing=south,output=false,powered=false": {
+    "face=floor,facing=north,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=north,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out"
+    },
+    "face=floor,facing=south,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "y": 180
     },
-    "face=floor,facing=south,output=false,powered=true": {
+    "face=floor,facing=south,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "y": 180
     },
-    "face=floor,facing=south,output=true,powered=false": {
+    "face=floor,facing=south,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "y": 180
     },
-    "face=floor,facing=south,output=true,powered=true": {
+    "face=floor,facing=south,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "y": 180
     },
-    "face=floor,facing=west,output=false,powered=false": {
+    "face=floor,facing=south,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=south,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 180
+    },
+    "face=floor,facing=west,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "y": 270
     },
-    "face=floor,facing=west,output=false,powered=true": {
+    "face=floor,facing=west,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "y": 270
     },
-    "face=floor,facing=west,output=true,powered=false": {
+    "face=floor,facing=west,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "y": 270
     },
-    "face=floor,facing=west,output=true,powered=true": {
+    "face=floor,facing=west,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "y": 270
     },
-    "face=wall,facing=east,output=false,powered=false": {
+    "face=floor,facing=west,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=floor,facing=west,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "y": 270
+    },
+    "face=wall,facing=east,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "x": 90,
       "y": 90
     },
-    "face=wall,facing=east,output=false,powered=true": {
+    "face=wall,facing=east,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "x": 90,
       "y": 90
     },
-    "face=wall,facing=east,output=true,powered=false": {
+    "face=wall,facing=east,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "x": 90,
       "y": 90
     },
-    "face=wall,facing=east,output=true,powered=true": {
+    "face=wall,facing=east,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "x": 90,
       "y": 90
     },
-    "face=wall,facing=north,output=false,powered=false": {
+    "face=wall,facing=east,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=north,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "x": 90
     },
-    "face=wall,facing=north,output=false,powered=true": {
+    "face=wall,facing=north,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "x": 90
     },
-    "face=wall,facing=north,output=true,powered=false": {
+    "face=wall,facing=north,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "x": 90
     },
-    "face=wall,facing=north,output=true,powered=true": {
+    "face=wall,facing=north,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "x": 90
     },
-    "face=wall,facing=south,output=false,powered=false": {
+    "face=wall,facing=north,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=north,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90
+    },
+    "face=wall,facing=south,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "x": 90,
       "y": 180
     },
-    "face=wall,facing=south,output=false,powered=true": {
+    "face=wall,facing=south,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "x": 90,
       "y": 180
     },
-    "face=wall,facing=south,output=true,powered=false": {
+    "face=wall,facing=south,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "x": 90,
       "y": 180
     },
-    "face=wall,facing=south,output=true,powered=true": {
+    "face=wall,facing=south,output=true,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "x": 90,
       "y": 180
     },
-    "face=wall,facing=west,output=false,powered=false": {
+    "face=wall,facing=south,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,output=true,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=west,output=false,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_in",
       "x": 90,
       "y": 270
     },
-    "face=wall,facing=west,output=false,powered=true": {
+    "face=wall,facing=west,output=false,power=1": {
       "model": "extra_gauges:block/rose_quartz_port/on_in",
       "x": 90,
       "y": 270
     },
-    "face=wall,facing=west,output=true,powered=false": {
+    "face=wall,facing=west,output=false,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=false,power=9": {
+      "model": "extra_gauges:block/rose_quartz_port/on_in",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=0": {
       "model": "extra_gauges:block/rose_quartz_port/off_out",
       "x": 90,
       "y": 270
     },
-    "face=wall,facing=west,output=true,powered=true": {
+    "face=wall,facing=west,output=true,power=1": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=10": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=11": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=12": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=13": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=14": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=15": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=2": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=3": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=4": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=5": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=6": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=7": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=8": {
+      "model": "extra_gauges:block/rose_quartz_port/on_out",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,output=true,power=9": {
       "model": "extra_gauges:block/rose_quartz_port/on_out",
       "x": 90,
       "y": 270

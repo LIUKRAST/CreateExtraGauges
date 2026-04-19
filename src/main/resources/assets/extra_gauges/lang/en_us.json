@@ -19,6 +19,13 @@
   "block.extra_gauges.linked_lever.tooltip.summary": "Works like a redstone link but includes a lever. Connects to gauges and send an update instantly",
   "block.extra_gauges.linked_button.tooltip.summary": "Works like a redstone link but includes a button. Connects to gauges and send an update instantly",
 
+  "block.extra_gauges.redstone_port.tooltip.summary": "Connects real-world redstone to gauges (only ON/OFF)",
+  "block.extra_gauges.redstone_port.tooltip.condition1": "When Wrenched",
+  "block.extra_gauges.redstone_port.tooltip.behaviour1": "Switches from input to output and viceversa",
+  "block.extra_gauges.rose_quartz_port.tooltip.summary": "Connects real-world redstone to gauges (Number connection, 0-15)",
+  "block.extra_gauges.rose_quartz_port.tooltip.condition1": "When Wrenched",
+  "block.extra_gauges.rose_quartz_port.tooltip.behaviour1": "Switches from input to output and viceversa",
+
   "create.logistics.logic_gate": "Logic Gate",
   "logic_gauge.gate.or": "OR (Activate if any inputs are active)",
   "logic_gauge.gate.and": "AND (Activate if all inputs are active)",
