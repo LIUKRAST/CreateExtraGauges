@@ -5,6 +5,7 @@ import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -62,7 +63,7 @@ public class RoseQuartzPortBlock extends PortBlock<RoseQuartzPortBlockEntity> {
         int total = result.stream().mapToInt(f -> (int)(float)f).sum();
         int previous = state.getValue(POWER);
         if(total != previous) {
-            level.setBlock(pos, state.setValue(POWER, total), 3);
+            level.setBlock(pos, state.setValue(POWER, Mth.clamp(total, 0, 15)), 3);
             for (Direction direction : Direction.values()) {
                 level.updateNeighborsAt(pos.relative(direction), this);
             }
