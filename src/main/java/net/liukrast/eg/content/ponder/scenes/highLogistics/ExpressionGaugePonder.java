@@ -8,6 +8,7 @@ import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.foundation.instruction.RotateSceneInstruction;
 import net.liukrast.deployer.lib.helper.ponder.Ponder;
+import net.liukrast.eg.content.logistics.board.IntPanelBehaviour;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 
@@ -82,6 +83,28 @@ public class ExpressionGaugePonder implements Ponder {
         scene.overlay().showControls(nixie.getCenter(), Pointing.DOWN, 20).showing(AllIcons.I_ACTIVE);
         setNixieTubeText(scene, nixie, Component.literal("14.28"), 7, Direction.NORTH);
 
+        scene.idle(40);
+        scene.addKeyframe();
+        scene.idle(20);
 
+        scene.world().showIndependentSection(util.select().position(lever), Direction.WEST);
+        scene.idle(10);
+
+        addPanelConnection(scene, gauge, new FactoryPanelPosition(lever, FactoryPanelBlock.PanelSlot.TOP_LEFT));
+
+        scene.idle(10);
+        displayText(scene, lever, 60, false);
+
+        displayText(scene, gauge.pos(), 60, false);
+        scene.world().toggleRedstonePower(util.select().position(lever));
+        IntGaugePonder.setLinkTransmit(scene, lever, 1);
+        scene.effects().indicateRedstone(lever);
+        scene.idle(10);
+
+        scene.world().flashDisplayLink(display);
+        scene.overlay().showControls(nixie.getCenter(), Pointing.DOWN, 20).showing(AllIcons.I_ACTIVE);
+        setNixieTubeText(scene, nixie, Component.literal("0"), 7, Direction.NORTH);
+
+        scene.idle(50);
     }
 }

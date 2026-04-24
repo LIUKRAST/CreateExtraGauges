@@ -207,7 +207,7 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
                 "Set-up a mathematical expression inside the gauge...",
                 "a + log(b) - sqrt(2)",
 
-                "When a redstone connection points to an expression gauge gauge...",
+                "When a redstone connection points to an expression gauge...",
                 "...the output will immediately be cancelled, and 0 is returned"
         );
 
