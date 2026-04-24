@@ -120,6 +120,7 @@ public class ExpressionPanelBehaviour extends AbstractPanelBehaviour {
     public void addConnections(PanelConnectionBuilder builder) {
         builder.registerBoth(DeployerPanelConnections.NUMBERS, () -> output);
         builder.registerInput(DeployerPanelConnections.REDSTONE);
+        builder.registerOutput(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
     }
 
     @Override

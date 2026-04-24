@@ -26,11 +26,12 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class StringPanelBehaviour extends AbstractPanelBehaviour {
-    private String value, join, regex, replacement;
+    public String value, join, regex, replacement;
     private float floatValue = 0;
 
     public StringPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
@@ -43,7 +44,30 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour {
     public void addConnections(PanelConnectionBuilder builder) {
         builder.registerBoth(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
         builder.registerOutput(DeployerPanelConnections.NUMBERS.get(), () -> floatValue);
-        builder.registerOutput(DeployerPanelConnections.REDSTONE.get(), () -> getDisplayLinkComponent(false).getString().equals("true"));
+        builder.registerOutput(DeployerPanelConnections.REDSTONE.get(), () -> isTruthy(getDisplayLinkComponent(false).getString().toLowerCase()));
+    }
+
+    private float parseFlexibleFloat(String in) {
+        if (in.isEmpty()) return 0f;
+        try {
+            Pattern pattern = Pattern.compile(ExtraGaugesConfig.STRING_TO_FLOAT_REGEX.get());
+            Matcher matcher = pattern.matcher(in);
+
+            if (matcher.find()) {
+                try {
+                    return Float.parseFloat(matcher.group());
+                } catch (NumberFormatException e) {
+                    return 0;
+                }
+            }
+        } catch (PatternSyntaxException ignored) {}
+        return 0;
+    }
+
+    public boolean isTruthy(String input) {
+        if (input.isEmpty()) return false;
+        var regex = ExtraGaugesConfig.STRING_TO_REDSTONE_REGEX.get();
+        return input.toLowerCase().matches(regex);
     }
 
     @Override
@@ -73,13 +97,7 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour {
         join = nbt.getString("Join");
         regex = nbt.getString("Regex");
         replacement = nbt.getString("Replacement");
-        if (value != null) {
-            try {
-                floatValue = Integer.parseInt(value);
-            } catch (NumberFormatException ignored) {
-                floatValue = 0;
-            }
-        }
+        floatValue = parseFlexibleFloat(value);
     }
 
     /* UPDATE */
@@ -105,11 +123,7 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour {
         if (res.equals(value))
             return;
         value = res;
-        try {
-            floatValue = Float.parseFloat(value);
-        } catch (NumberFormatException ignored) {
-            floatValue = 0;
-        }
+        floatValue = parseFlexibleFloat(value);
 
         blockEntity.notifyUpdate();
         for (FactoryPanelPosition panelPos : targeting) {

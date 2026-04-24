@@ -43,16 +43,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.UUID;
 
 public class FilterPanelBehaviour extends AbstractPanelBehaviour implements RenderFilterSlot {
-    private FilterItemStack cachedFilter = FilterItemStack.empty();
+    public FilterItemStack cachedFilter = FilterItemStack.empty();
 
     public FilterPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);
@@ -87,6 +89,12 @@ public class FilterPanelBehaviour extends AbstractPanelBehaviour implements Rend
         blockEntity.setChanged();
         blockEntity.sendData();
         return true;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        Block.popResource(getWorld(), getPos(), cachedFilter.item().copy());
     }
 
     @Override
@@ -156,6 +164,11 @@ public class FilterPanelBehaviour extends AbstractPanelBehaviour implements Rend
 
     }
 
+    @ApiStatus.Internal
+    public void ponder$setFilter(ItemStack stack) {
+        this.filter = FilterItemStack.of(stack);
+    }
+
     private InventorySummary getRelevantSummary() {
         FactoryPanelBlockEntity panelBE = panelBE();
         if (!panelBE.restocker)
@@ -205,7 +218,7 @@ public class FilterPanelBehaviour extends AbstractPanelBehaviour implements Rend
     }
 
     public String canConnect(FactoryPanelBehaviour from) {
-        return getFilter().isEmpty() ? "factory_panel.no_item" : super.canConnect(from);
+        return getFilter().isEmpty() || cachedFilter.isEmpty() ? "factory_panel.no_item" : super.canConnect(from);
     }
 
     @Override
