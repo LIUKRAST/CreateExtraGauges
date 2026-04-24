@@ -8,7 +8,6 @@ import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.crafter.MechanicalCraftingRecipe;
 import com.simibubi.create.content.logistics.BigItemStack;
@@ -18,7 +17,7 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelScreen;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.platform.CatnipServices;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.mixinExtension.WidthModifier;
 import net.liukrast.eg.networking.FactoryPanelChangeSizePacket;
 import net.minecraft.ChatFormatting;
@@ -35,6 +34,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -50,7 +50,7 @@ import java.util.Set;
 
 @Mixin(FactoryPanelScreen.class)
 public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
-    @Unique private static final ResourceLocation extra_gauges$TEXTURE = EGConstants.id("textures/gui/auto_crafting_gauge.png");
+    @Unique private static final ResourceLocation extra_gauges$TEXTURE = ExtraGauges.CONSTANTS.id("textures/gui/auto_crafting_gauge.png");
 
     @Unique private MechanicalCraftingRecipe extra_gauges$availableMechanicalRecipe = null;
 
@@ -71,7 +71,7 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
     }
 
     @Inject(method = "searchForCraftingRecipe", at = @At("TAIL"))
-    private void searchForCraftingRecipe(CallbackInfo ci, @Local ItemStack output, @Local Set<Item> itemsToUse, @Local ClientLevel level) {
+    private void searchForCraftingRecipe(CallbackInfo ci, @Local(name = "output") ItemStack output, @Local(name = "itemsToUse") Set<Item> itemsToUse, @Local(name = "level") ClientLevel level) {
         if(availableCraftingRecipe != null) return;
         extra_gauges$availableMechanicalRecipe = level.getRecipeManager()
                 .getAllRecipesFor(AllRecipeTypes.MECHANICAL_CRAFTING.<CraftingInput, MechanicalCraftingRecipe>getType())
@@ -124,13 +124,13 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
     }
 
     @WrapOperation(method = "updateConfigs", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelScreen;convertRecipeToPackageOrderContext(Lnet/minecraft/world/item/crafting/CraftingRecipe;Ljava/util/List;Z)Ljava/util/List;"))
-    private List<BigItemStack> updateConfigs(CraftingRecipe shaped, List<BigItemStack> i, boolean bigItemStack, Operation<List<BigItemStack>> original) {
+    private List<BigItemStack> updateConfigs(CraftingRecipe availableCraftingRecipe, List<BigItemStack> inputs, boolean respectAmounts, Operation<List<BigItemStack>> original) {
         List<BigItemStack> list;
         if(extra_gauges$availableMechanicalRecipe != null) {
             if(extra_gauges$width < extra_gauges$availableMechanicalRecipe.getWidth()) extra_gauges$width = extra_gauges$availableMechanicalRecipe.getWidth();
             if(extra_gauges$height < extra_gauges$availableMechanicalRecipe.getHeight()) extra_gauges$height = extra_gauges$availableMechanicalRecipe.getHeight();
-            list = extra_gauges$convertMechanicalToPackageOrderContext(extra_gauges$availableMechanicalRecipe, i, bigItemStack);
-        } else list = original.call(shaped, i, bigItemStack);
+            list = extra_gauges$convertMechanicalToPackageOrderContext(extra_gauges$availableMechanicalRecipe, inputs, respectAmounts);
+        } else list = original.call(availableCraftingRecipe, inputs, respectAmounts);
         BigItemStack emptyIngredient = new BigItemStack(ItemStack.EMPTY, 0);
         int k = 0;
         var finalList = ImmutableList.<BigItemStack>builder();
@@ -191,7 +191,7 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
     @Definition(id = "slot", local = @Local(type = int.class, ordinal = 4))
     @Expression("slot = 0")
     @Inject(method = "renderWindow", at = @At("MIXINEXTRAS:EXPRESSION"))
-    private void renderWindow(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci, @Local(ordinal = 2) int x, @Local(ordinal = 3) int y) {
+    private void renderWindow(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci, @Local(name = "x") int x, @Local(name = "y") int y) {
         if(!craftingActive) return;
         if(extra_gauges$availableMechanicalRecipe != null) {
             graphics.blit(extra_gauges$TEXTURE, x + 56, y + 23, 0, 0, 79, 72);
@@ -213,7 +213,7 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
         if(extra_gauges$width > (extra_gauges$availableMechanicalRecipe == null ? 3 : extra_gauges$availableMechanicalRecipe.getWidth())) extra_gauges$generateButton(graphics, x+56+75, y+23+14+22, 88, mouseX, mouseY, Component.translatable("extra_gauges.gui.factory_panel.reduce_width", extra_gauges$width));
     }
 
-    @ModifyExpressionValue(method = "renderWindow", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelScreen;craftingIngredients:Ljava/util/List;"))
+    @ModifyExpressionValue(method = "renderWindow", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelScreen;craftingIngredients:Ljava/util/List;", opcode = Opcodes.GETFIELD))
     private List<BigItemStack> renderWindow(List<BigItemStack> original) {
         if(extra_gauges$width==0) return original;
         int k = 0;
@@ -226,7 +226,7 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
     }
 
     @WrapWithCondition(method = "renderWindow", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/factoryBoard/FactoryPanelScreen;renderInputItem(Lnet/minecraft/client/gui/GuiGraphics;ILcom/simibubi/create/content/logistics/BigItemStack;II)V", ordinal = 0))
-    private boolean renderWindow(FactoryPanelScreen instance, GuiGraphics graphics, int slot, BigItemStack itemStack, int mouseX, int mouseY, @Local(ordinal = 4) LocalIntRef slotRef) {
+    private boolean renderWindow(FactoryPanelScreen instance, GuiGraphics graphics, int slot, BigItemStack itemStack, int mouseX, int mouseY) {
         return extra_gauges$availableMechanicalRecipe == null;
     }
 
@@ -276,7 +276,7 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
     }
 
     @Inject(method = "sendIt", at = @At("TAIL"))
-    private void sendIt(FactoryPanelPosition toRemove, boolean clearPromises, CallbackInfo ci, @Local(ordinal = 1) FactoryPanelPosition pos) {
+    private void sendIt(FactoryPanelPosition toRemove, boolean clearPromises, CallbackInfo ci, @Local(name = "pos") FactoryPanelPosition pos) {
         FactoryPanelChangeSizePacket packet = new FactoryPanelChangeSizePacket(pos, extra_gauges$width);
         CatnipServices.NETWORK.sendToServer(packet);
     }

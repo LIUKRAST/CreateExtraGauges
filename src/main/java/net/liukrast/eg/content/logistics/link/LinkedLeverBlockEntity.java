@@ -15,7 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.List;
 
 public class LinkedLeverBlockEntity extends SmartBlockEntity {
-    private int transmittedSignal;
+    public int transmittedSignal;
     private LinkBehaviour link;
 
     public FactoryPanelSupportBehaviour panelSupport;

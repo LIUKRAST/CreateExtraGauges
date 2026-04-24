@@ -136,6 +136,8 @@ dependencies {
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
     implementation fileTree(dir: "${rootDir}/libs", include: ['*.jar'])
+
+    // Compat
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }

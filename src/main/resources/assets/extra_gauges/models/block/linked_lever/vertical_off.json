@@ -94,7 +94,7 @@
 		{
 			"from": [7, 4, 5.5],
 			"to": [9, 10, 7.5],
-			"rotation": {"angle": 45, "axis": "x", "origin": [8, 4, 6.5]},
+			"rotation": {"angle": -45, "axis": "x", "origin": [8, 4, 6.5]},
 			"faces": {
 				"north": {"uv": [7, 6, 9, 12], "texture": "#lever"},
 				"east": {"uv": [7, 6, 9, 12], "texture": "#lever"},
@@ -115,6 +115,7 @@
 		{
 			"name": "group",
 			"origin": [0, 0, 0],
+			"scope": 0,
 			"color": 0,
 			"children": [1, 2, 3]
 		},

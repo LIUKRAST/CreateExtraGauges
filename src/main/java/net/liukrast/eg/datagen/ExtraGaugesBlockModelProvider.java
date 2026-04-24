@@ -1,6 +1,6 @@
 package net.liukrast.eg.datagen;
 
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.registry.EGItems;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.*;
@@ -10,7 +10,7 @@ import static net.liukrast.deployer.lib.helper.MinecraftHelpers.ModelProvider.Bl
 
 public class ExtraGaugesBlockModelProvider extends BlockModelProvider {
     public ExtraGaugesBlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, EGConstants.MOD_ID, existingFileHelper);
+        super(output, ExtraGauges.CONSTANTS.getModId(), existingFileHelper);
     }
 
     @Override

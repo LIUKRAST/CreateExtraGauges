@@ -1,6 +1,6 @@
 package net.liukrast.eg.datagen;
 
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.registry.EGItems;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -11,7 +11,7 @@ import static net.liukrast.deployer.lib.helper.MinecraftHelpers.ModelProvider.It
 
 public class ExtraGaugesItemModelProvider extends ItemModelProvider {
     public ExtraGaugesItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, EGConstants.MOD_ID, existingFileHelper);
+        super(output, ExtraGauges.CONSTANTS.getModId(), existingFileHelper);
     }
 
     @Override
@@ -24,6 +24,6 @@ public class ExtraGaugesItemModelProvider extends ItemModelProvider {
         createPanel(this, EGItems.STRING_GAUGE.get());
         createPanel(this, EGItems.EXPRESSION_GAUGE.get());
         createPanel(this, EGItems.FILTER_GAUGE.get());
-        withExistingParent("integer_selector", EGConstants.id("block/integer_selector"));
+        withExistingParent("integer_selector", ExtraGauges.CONSTANTS.id("block/integer_selector"));
     }
 }

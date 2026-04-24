@@ -2,7 +2,7 @@ package net.liukrast.eg.registry;
 
 import net.createmod.catnip.net.base.BasePacketPayload;
 import net.createmod.catnip.net.base.CatnipPacketRegistry;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.networking.*;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -22,7 +22,7 @@ public enum EGPackets implements BasePacketPayload.PacketTypeProvider {
     <T extends BasePacketPayload> EGPackets(Class<T> clazz, StreamCodec<? super RegistryFriendlyByteBuf, T> codec) {
         String name = this.name().toLowerCase(Locale.ROOT);
         this.type = new CatnipPacketRegistry.PacketType<>(
-                new CustomPacketPayload.Type<>(EGConstants.id(name)),
+                new CustomPacketPayload.Type<>(ExtraGauges.CONSTANTS.id(name)),
                 clazz, codec
         );
     }
@@ -34,7 +34,7 @@ public enum EGPackets implements BasePacketPayload.PacketTypeProvider {
     }
 
     public static void register() {
-        CatnipPacketRegistry packetRegistry = new CatnipPacketRegistry(EGConstants.MOD_ID, "1.0.0");
+        CatnipPacketRegistry packetRegistry = new CatnipPacketRegistry(ExtraGauges.CONSTANTS.getModId(), ExtraGauges.CONSTANTS.getProtocol());
         for (EGPackets packet : EGPackets.values()) {
             packetRegistry.registerPacket(packet.type);
         }

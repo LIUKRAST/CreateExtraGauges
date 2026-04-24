@@ -1,7 +1,7 @@
 package net.liukrast.eg.registry;
 
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import org.jetbrains.annotations.ApiStatus;
 
 public class EGPartialModels {
@@ -16,7 +16,7 @@ public class EGPartialModels {
     public static final PartialModel FILTER_PANEL = block("filter_gauge");
 
     private static PartialModel block(String path) {
-        return PartialModel.of(EGConstants.id("block/" + path));
+        return PartialModel.of(ExtraGauges.CONSTANTS.id("block/" + path));
     }
 
     @ApiStatus.Internal

@@ -7,7 +7,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import net.liukrast.deployer.lib.logistics.board.connection.AbstractPanelSupportBehaviour;
 import net.liukrast.deployer.lib.logistics.board.connection.PanelConnectionBuilder;
 import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.mixinExtension.DCFinder;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -33,7 +33,7 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
         behaviours.add(factoryPanelSupport = new AbstractPanelSupportBehaviour(this, () -> true, () -> {}) {
             @Override
             public void addConnections(PanelConnectionBuilder builder) {
-                builder.registerOutput(DeployerPanelConnections.STRING, () -> component.getString());
+                builder.registerOutput(DeployerPanelConnections.STRING, () -> component == null ? null : component.getString());
             }
         });
     }
@@ -45,7 +45,7 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
         DynamicOps<Tag> dynamicops = registries.createSerializationContext(NbtOps.INSTANCE);
         ComponentSerialization.FLAT_CODEC
                 .parse(dynamicops, tag.get("text"))
-                .resultOrPartial(EGConstants.LOGGER::error)
+                .resultOrPartial(ExtraGauges.CONSTANTS.getLogger()::error)
                 .ifPresent(text -> component = text);
     }
 
@@ -56,7 +56,7 @@ public class DisplayCollectorBlockEntity extends DisplayLinkBlockEntity {
             DynamicOps<Tag> dynamicops = registries.createSerializationContext(NbtOps.INSTANCE);
             ComponentSerialization.FLAT_CODEC
                     .encodeStart(dynamicops, component)
-                    .resultOrPartial(EGConstants.LOGGER::error)
+                    .resultOrPartial(ExtraGauges.CONSTANTS.getLogger()::error)
                     .ifPresent(tag1 -> tag.put("text", tag1));
         }
     }

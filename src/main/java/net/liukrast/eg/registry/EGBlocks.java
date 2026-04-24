@@ -1,7 +1,7 @@
 package net.liukrast.eg.registry;
 
 import com.simibubi.create.AllBlocks;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.content.item.DisplayCollectorBlockItem;
 import net.liukrast.eg.content.logistics.link.*;
 import net.minecraft.world.item.BlockItem;
@@ -14,8 +14,8 @@ import org.jetbrains.annotations.ApiStatus;
 
 public class EGBlocks {
     private EGBlocks() {}
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(EGConstants.MOD_ID);
-    private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(EGConstants.MOD_ID);
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ExtraGauges.CONSTANTS.getModId());
+    private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ExtraGauges.CONSTANTS.getModId());
 
     public static final DeferredBlock<IntSelectorBlock> INT_SELECTOR = BLOCKS.register("integer_selector", () -> new IntSelectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get())));
     public static final DeferredBlock<DisplayCollectorBlock> DISPLAY_COLLECTOR = BLOCKS.register("display_collector", () -> new DisplayCollectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.DISPLAY_LINK.get())));
@@ -27,10 +27,10 @@ public class EGBlocks {
     static {
         ITEMS.register("integer_selector", () -> new BlockItem(INT_SELECTOR.get(), new Item.Properties()));
         ITEMS.register("display_collector", () -> new DisplayCollectorBlockItem(DISPLAY_COLLECTOR.get(), new Item.Properties()));
-        ITEMS.register("linked_lever", () -> EGConstants.wrapWithShiftSummary(new BlockItem(LINKED_LEVER.get(), new Item.Properties())));
-        ITEMS.register("linked_button", () -> EGConstants.wrapWithShiftSummary(new BlockItem(LINKED_BUTTON.get(), new Item.Properties())));
-        ITEMS.register("redstone_port", () -> EGConstants.wrapWithShiftSummary(new BlockItem(REDSTONE_PORT.get(), new Item.Properties())));
-        ITEMS.register("rose_quartz_port", () -> EGConstants.wrapWithShiftSummary(new BlockItem(ROSE_QUARTZ_PORT.get(), new Item.Properties())));
+        ITEMS.register("linked_lever", () -> ExtraGauges.CONSTANTS.wrapWithShiftSummary(new BlockItem(LINKED_LEVER.get(), new Item.Properties())));
+        ITEMS.register("linked_button", () -> ExtraGauges.CONSTANTS.wrapWithShiftSummary(new BlockItem(LINKED_BUTTON.get(), new Item.Properties())));
+        ITEMS.register("redstone_port", () -> ExtraGauges.CONSTANTS.wrapWithShiftSummary(new BlockItem(REDSTONE_PORT.get(), new Item.Properties())));
+        ITEMS.register("rose_quartz_port", () -> ExtraGauges.CONSTANTS.wrapWithShiftSummary(new BlockItem(ROSE_QUARTZ_PORT.get(), new Item.Properties())));
     }
 
     @ApiStatus.Internal

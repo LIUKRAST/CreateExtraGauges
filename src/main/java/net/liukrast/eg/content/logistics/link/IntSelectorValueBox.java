@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.phys.Vec3;
 
 public class IntSelectorValueBox extends ValueBoxTransform {
@@ -25,8 +26,9 @@ public class IntSelectorValueBox extends ValueBoxTransform {
 
     @Override
     public void rotate(LevelAccessor level, BlockPos pos, BlockState state, PoseStack ms) {
+        var toAdd = state.getValue(IntSelectorBlock.FACE) == AttachFace.FLOOR ? 0 : Mth.PI;
         TransformStack.of(ms)
-                .rotate(FactoryPanelBlock.getYRot(state) + Mth.PI, Direction.UP)
+                .rotate(FactoryPanelBlock.getYRot(state) + toAdd, Direction.UP)
                 .rotate(-FactoryPanelBlock.getXRot(state), Direction.EAST);
     }
 }

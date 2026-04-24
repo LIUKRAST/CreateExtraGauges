@@ -5,7 +5,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsPacket;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.deployer.lib.logistics.board.screen.BasicPanelScreen;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.networking.ComparatorAdvancedSetupPacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,7 +21,7 @@ import java.util.Optional;
 
 public class ComparatorPanelScreen extends BasicPanelScreen<ComparatorPanelBehaviour> {
 
-    public static final ResourceLocation TEXTURE = EGConstants.id("textures/gui/comparator_gauge.png");
+    public static final ResourceLocation TEXTURE = ExtraGauges.CONSTANTS.id("textures/gui/comparator_gauge.png");
 
     private int[] right,left;
     private int[] variables;

@@ -5,24 +5,17 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public class ExtraGaugesConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static final ModConfigSpec.IntValue LOGIC_MAX_CHAIN = BUILDER
-            .comment("Defines the max amount of times a logic gauge can update itself in a single tick")
-            .defineInRange("logicGaugeMaxChain", 15,0, Integer.MAX_VALUE);
-    public static final ModConfigSpec.IntValue INT_MAX_CHAIN = BUILDER
-            .comment("Defines the max amount of times an int gauge can update itself in a single tick")
-            .defineInRange("intGaugeMaxChain", 15,0, Integer.MAX_VALUE);
-    public static final ModConfigSpec.IntValue COMPARATOR_MAX_CHAIN = BUILDER
-            .comment("Defines the max amount of times a comparator gauge can update itself in a single tick")
-            .defineInRange("comparatorGaugeMaxChain", 15,0, Integer.MAX_VALUE);
-    public static final ModConfigSpec.IntValue COUNTER_MAX_CHAIN = BUILDER
-            .comment("Defines the max amount of times a counter gauge can update itself in a single tick")
-            .defineInRange("counterGaugeMaxChain", 15,0, Integer.MAX_VALUE);
-    public static final ModConfigSpec.IntValue STRING_MAX_CHAIN = BUILDER
-            .comment("Defines the max amount of times a string gauge can update itself in a single tick")
-            .defineInRange("stringGaugeMaxChain", 15,0, Integer.MAX_VALUE);
     public static final ModConfigSpec.IntValue STRING_MAX_LENGTH = BUILDER
             .comment("Defines the max length of a string collected by a string gauge. Increase at your own risk")
             .defineInRange("stringGaugeMaxLength", 256, 0, Integer.MAX_VALUE);
+
+    public static final ModConfigSpec.ConfigValue<String> STRING_TO_FLOAT_REGEX = BUILDER
+            .comment("Defines the regex used by string gauge to convert from string to number")
+            .define("stringGaugeToFloatRegex", "-?\\d+(\\.\\d+)?");
+
+    public static final ModConfigSpec.ConfigValue<String> STRING_TO_REDSTONE_REGEX = BUILDER
+            .comment("Defines the regex used by string gauge to convert from string to redstone")
+            .define("stringGaugeToRedstoneRegex", "\\s*(true|1|on|yes|active|y)\\s*");
 
     static final ModConfigSpec SPEC = BUILDER.build();
 }

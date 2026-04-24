@@ -3,7 +3,7 @@ package net.liukrast.eg.content.logistics.board;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.deployer.lib.logistics.board.screen.BasicPanelScreen;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.networking.ExpressionPanelUpdatePacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ExpressionPanelScreen extends BasicPanelScreen<ExpressionPanelBehaviour> {
-    public static final ResourceLocation TEXTURE = EGConstants.id("textures/gui/expression_gauge.png");
+    public static final ResourceLocation TEXTURE = ExtraGauges.CONSTANTS.id("textures/gui/expression_gauge.png");
 
     private EditBox expressionBox;
     private final char[] variables;

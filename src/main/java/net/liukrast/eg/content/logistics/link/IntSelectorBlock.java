@@ -40,15 +40,15 @@ public class IntSelectorBlock extends FaceAttachedHorizontalDirectionalBlock imp
         boolean z = dir == Direction.SOUTH;
         return switch (state.getValue(FACE)) {
             case WALL -> box(
-                    x1 ? x ? 0 : 14 : 4,
-                    4,
-                    z1 ? z ? 0 : 14 : 4,
-                    x1 ? x ? 2 : 16 : 12,
-                    12,
-                    z1 ? z ? 2 : 16 : 12
+                    x1 ? x ? 0 : 14 : 3,
+                    3,
+                    z1 ? z ? 0 : 14 : 3,
+                    x1 ? x ? 2 : 16 : 13,
+                    13,
+                    z1 ? z ? 2 : 16 : 13
             );
-            case FLOOR -> box(4, 0, 4, 12, 2, 12);
-            case CEILING -> box(4, 14, 4, 12, 16, 12);
+            case FLOOR -> box(3, 0, 3, 13, 2, 13);
+            case CEILING -> box(3, 14, 3, 13, 16, 13);
         };
     }
 

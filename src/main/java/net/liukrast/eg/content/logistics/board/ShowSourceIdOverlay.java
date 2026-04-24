@@ -4,7 +4,7 @@ import com.simibubi.create.api.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.liukrast.deployer.lib.DeployerClient;
-import net.liukrast.eg.EGLang;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.content.logistics.board.comparator.ComparatorPanelBehaviour;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -19,12 +19,12 @@ public class ShowSourceIdOverlay implements IHaveHoveringInformation {
         assert Minecraft.getInstance().level != null;
         var fpb = FactoryPanelBehaviour.at(Minecraft.getInstance().level, DeployerClient.SELECTED_SOURCE);
         if(!(fpb instanceof ComparatorPanelBehaviour comp && comp.advanced) && !(fpb instanceof ExpressionPanelBehaviour)) return false;
-        EGLang.translate("gui.variable_connection.info_header")
+        ExtraGauges.CONSTANTS.translate("gui.variable_connection.info_header")
                 .color(BaseConfigScreen.COLOR_TITLE_A)
                 .forGoggles(tooltip);
-        EGLang.translate("gui.variable_connection.name")
+        ExtraGauges.CONSTANTS.translate("gui.variable_connection.name")
                 .style(ChatFormatting.GRAY)
-                .add(EGLang.builder()
+                .add(ExtraGauges.CONSTANTS.langBuilder()
                         .add(Component.literal(" " + (char)('a' + DeployerClient.SELECTED_CONNECTION.amount)))
                         .color(BaseConfigScreen.COLOR_TITLE_C)
                 )

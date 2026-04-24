@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.gui.AllIcons;
 import net.createmod.catnip.theme.Color;
 import net.liukrast.deployer.lib.mixin.accessors.AllIconsAccessor;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -18,7 +18,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
 
 public class EGIcons extends AllIcons {
-    public static final ResourceLocation ICON_ATLAS = EGConstants.id("textures/gui/icons.png");
+    public static final ResourceLocation ICON_ATLAS = ExtraGauges.CONSTANTS.id("textures/gui/icons.png");
     public static final int ICON_ATLAS_SIZE = 64;
 
     private static int x = 0, y = -1;
@@ -32,11 +32,9 @@ public class EGIcons extends AllIcons {
             I_XOR = newRow(),
             I_XNOR = next(),
             I_SUBTRACT = next(),
-            I_MULTIPLY = next(),
+            I_STATIC = next(),
 
-            I_STATIC = newRow(),
-            I_ADVANCED = next(),
-            I_MEMORY = next();
+            I_ADVANCED = newRow();
 
     private static EGIcons next() {
         return new EGIcons(++x, y);

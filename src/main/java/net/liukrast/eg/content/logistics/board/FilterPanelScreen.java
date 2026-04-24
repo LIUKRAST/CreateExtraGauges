@@ -2,7 +2,7 @@ package net.liukrast.eg.content.logistics.board;
 
 import net.createmod.catnip.platform.CatnipServices;
 import net.liukrast.deployer.lib.logistics.board.screen.BasicPanelScreen;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.networking.FilterPanelEjectPacket;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class FilterPanelScreen extends BasicPanelScreen<FilterPanelBehaviour> {
-    private static final ResourceLocation TEXTURE = EGConstants.id("textures/gui/filter_gauge.png");
+    private static final ResourceLocation TEXTURE = ExtraGauges.CONSTANTS.id("textures/gui/filter_gauge.png");
 
     public FilterPanelScreen(FilterPanelBehaviour behaviour) {
         super(behaviour, false, true);

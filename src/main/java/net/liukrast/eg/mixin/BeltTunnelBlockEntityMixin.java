@@ -1,7 +1,7 @@
 package net.liukrast.eg.mixin;
 
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlockEntity;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.mixinExtension.DCFinder;
 import net.liukrast.eg.content.logistics.link.DisplayCollectorBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,7 @@ public abstract class BeltTunnelBlockEntityMixin extends BlockEntity implements 
         var ops = registries.createSerializationContext(NbtOps.INSTANCE);
         for(BlockPos pos : extra_gauges$targetingDisplayCollectors) {
             BlockPos.CODEC.encodeStart(ops, pos)
-                    .resultOrPartial(EGConstants.LOGGER::error)
+                    .resultOrPartial(ExtraGauges.CONSTANTS.getLogger()::error)
                     .ifPresent(list::add);
         }
         tag.put("extra_gauges$targetingDisplayCollectors", list);
@@ -54,7 +54,7 @@ public abstract class BeltTunnelBlockEntityMixin extends BlockEntity implements 
         for(Tag tag1 : list) {
             BlockPos.CODEC
                     .parse(ops, tag1)
-                    .resultOrPartial(EGConstants.LOGGER::error)
+                    .resultOrPartial(ExtraGauges.CONSTANTS.getLogger()::error)
                     .ifPresent(pos -> {
                         var level = getLevel();
                         if(level == null || !level.isLoaded(pos)) {

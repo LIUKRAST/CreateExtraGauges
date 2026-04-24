@@ -18,7 +18,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-@Mod(value = EGConstants.MOD_ID, dist = Dist.CLIENT)
+@Mod(value = "extra_gauges", dist = Dist.CLIENT)
 public class EGClient {
 
     public EGClient(IEventBus bus, ModContainer container) {

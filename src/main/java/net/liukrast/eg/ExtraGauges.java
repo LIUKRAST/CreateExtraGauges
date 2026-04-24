@@ -1,5 +1,6 @@
 package net.liukrast.eg;
 
+import net.liukrast.deployer.lib.helper.Constants;
 import net.liukrast.eg.datagen.*;
 import net.liukrast.eg.registry.*;
 import net.minecraft.data.DataGenerator;
@@ -17,10 +18,11 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import java.util.Collections;
 import java.util.List;
 
-@Mod(EGConstants.MOD_ID)
-public class EG {
+@Mod("extra_gauges")
+public class ExtraGauges {
+    public static final Constants CONSTANTS = Constants.of("extra_gauges");
 
-    public EG(IEventBus modEventBus, ModContainer modContainer) {
+    public ExtraGauges(IEventBus modEventBus, ModContainer modContainer) {
         EGItems.register(modEventBus);
         EGPanels.register(modEventBus);
         EGCreativeModeTabs.register(modEventBus);
@@ -28,7 +30,7 @@ public class EG {
         EGBlockEntityTypes.register(modEventBus);
         EGDisplayTargets.register(modEventBus);
         modEventBus.register(this);
-        modContainer.registerConfig(ModConfig.Type.COMMON, ExtraGaugesConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, ExtraGaugesConfig.SPEC);
         EGPackets.register();
     }
 
@@ -39,6 +41,7 @@ public class EG {
         ExistingFileHelper helper = event.getExistingFileHelper();
         var provider = event.getLookupProvider();
         generator.addProvider(event.includeClient(), new ExtraGaugesItemModelProvider(packOutput, helper));
+        generator.addProvider(event.includeClient(), new EGLanguageProvider(packOutput));
         generator.addProvider(event.includeClient(), new ExtraGaugesBlockModelProvider(packOutput, helper));
         generator.addProvider(event.includeClient(), new ExtraGaugesBlockStateProvider(packOutput, helper));
         generator.addProvider(event.includeServer(), new ExtraGaugesRecipeProvider(packOutput, provider));

@@ -2,7 +2,7 @@ package net.liukrast.eg.datagen;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import net.liukrast.eg.EGConstants;
+import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.registry.EGBlocks;
 import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.HolderLookup;
@@ -51,7 +51,7 @@ public class ExtraGaugesRecipeProvider extends RecipeProvider implements ICondit
                 .unlockedBy("has_display_link", has(AllBlocks.DISPLAY_LINK)).save(output);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, AllBlocks.DISPLAY_LINK.get())
                 .requires(EGBlocks.DISPLAY_COLLECTOR.get())
-                .unlockedBy("has_display_collector", has(EGBlocks.DISPLAY_COLLECTOR.get())).save(output, EGConstants.id("display_link"));
+                .unlockedBy("has_display_collector", has(EGBlocks.DISPLAY_COLLECTOR.get())).save(output, ExtraGauges.CONSTANTS.id("display_link"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGItems.PASSIVE_GAUGE)
                 .requires(EGItems.PASSIVE_GAUGE)
