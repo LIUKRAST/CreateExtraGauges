@@ -2,10 +2,18 @@ name: Publish Release
 
 on:
   workflow_dispatch:
+    inputs:
+      major_release:
+        description: "Major release"
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   call-shared-workflow:
     uses: LIUKRAST/LIUKRAST/.github/workflows/publish.yml@main
+    with:
+      major_release: ${{ inputs.major_release }}
     permissions:
       contents: write
     secrets:
