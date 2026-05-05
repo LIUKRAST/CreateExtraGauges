@@ -15,9 +15,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ExtraGaugesRecipeProvider extends RecipeProvider implements IConditionBuilder {
+public class EGRecipeProvider extends RecipeProvider implements IConditionBuilder {
 
-    public ExtraGaugesRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+    public EGRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
     }
 

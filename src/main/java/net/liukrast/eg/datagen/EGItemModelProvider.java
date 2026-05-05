@@ -3,13 +3,14 @@ package net.liukrast.eg.datagen;
 import net.liukrast.eg.ExtraGauges;
 import net.liukrast.eg.registry.EGItems;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.client.model.generators.*;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-import static net.liukrast.deployer.lib.helper.MinecraftHelpers.ModelProvider.Blocks.createPanel;
+import static net.liukrast.deployer.lib.helper.MinecraftHelpers.ModelProvider.Items.createPanel;
 
-public class ExtraGaugesBlockModelProvider extends BlockModelProvider {
-    public ExtraGaugesBlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+
+public class EGItemModelProvider extends ItemModelProvider {
+    public EGItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ExtraGauges.CONSTANTS.getModId(), existingFileHelper);
     }
 
@@ -23,5 +24,6 @@ public class ExtraGaugesBlockModelProvider extends BlockModelProvider {
         createPanel(this, EGItems.STRING_GAUGE.get());
         createPanel(this, EGItems.EXPRESSION_GAUGE.get());
         createPanel(this, EGItems.FILTER_GAUGE.get());
+        withExistingParent("integer_selector", ExtraGauges.CONSTANTS.id("block/integer_selector"));
     }
 }

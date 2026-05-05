@@ -8,8 +8,8 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class ExtraGaugesBlockStateProvider extends BlockStateProvider {
-    public ExtraGaugesBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+public class EGBlockStateProvider extends BlockStateProvider {
+    public EGBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, ExtraGauges.CONSTANTS.getModId(), exFileHelper);
     }
 

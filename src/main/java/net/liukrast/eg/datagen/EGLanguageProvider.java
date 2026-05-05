@@ -198,6 +198,14 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
         );
 
         createPonder(
+                "string_gauge_rewrite", "Using string gauges to rewrite package addresses",
+                "When a string gauge is attached to a repackager...",
+                "...it will go in rewrite mode.",
+                "Open the string gauge menu, setup a regex and a replacement...",
+                ""
+        );
+
+        createPonder(
                 "expression_gauge", "Calculate expressions with the Expression gauge",
                 "Complex expressions can be evaluated with an expression gauge",
                 "Open the menu and click [+] to add a connection...",
@@ -222,5 +230,15 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
                 "...it will try to look up for other items matching the filter...",
                 "...and update the recipe."
         );
+
+        createPonder(
+                "display_collector", "Using the display collector to get display sources",
+                "Display collectors can send informations to string gauges",
+                "First, right-click the source...",
+                "...then, place on our board...",
+                "...and finally connect with our string gauge.",
+                "Open the menu to start ticking"
+        );
+
     }
 }

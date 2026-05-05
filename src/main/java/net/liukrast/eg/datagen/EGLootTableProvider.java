@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public class ExtraGaugesLootTableProvider extends BlockLootSubProvider {
-    public ExtraGaugesLootTableProvider(HolderLookup.Provider registries) {
+public class EGLootTableProvider extends BlockLootSubProvider {
+    public EGLootTableProvider(HolderLookup.Provider registries) {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
     }
 

@@ -40,13 +40,13 @@ public class ExtraGauges {
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper helper = event.getExistingFileHelper();
         var provider = event.getLookupProvider();
-        generator.addProvider(event.includeClient(), new ExtraGaugesItemModelProvider(packOutput, helper));
+        generator.addProvider(event.includeClient(), new EGItemModelProvider(packOutput, helper));
         generator.addProvider(event.includeClient(), new EGLanguageProvider(packOutput));
-        generator.addProvider(event.includeClient(), new ExtraGaugesBlockModelProvider(packOutput, helper));
-        generator.addProvider(event.includeClient(), new ExtraGaugesBlockStateProvider(packOutput, helper));
-        generator.addProvider(event.includeServer(), new ExtraGaugesRecipeProvider(packOutput, provider));
+        generator.addProvider(event.includeClient(), new EGBlockModelProvider(packOutput, helper));
+        generator.addProvider(event.includeClient(), new EGBlockStateProvider(packOutput, helper));
+        generator.addProvider(event.includeServer(), new EGRecipeProvider(packOutput, provider));
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(), List.of(
-                new LootTableProvider.SubProviderEntry(ExtraGaugesLootTableProvider::new, LootContextParamSets.BLOCK)
+                new LootTableProvider.SubProviderEntry(EGLootTableProvider::new, LootContextParamSets.BLOCK)
         ), provider));
     }
 }
