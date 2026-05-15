@@ -58,7 +58,7 @@ public class IntSelectorBlockEntity extends SmartBlockEntity {
             }
 
             public int formatValue(int row, int val) {
-                return row <= 3 ? ((3-row)*256) + val : -((row-4) + val);
+                return row <= 3 ? ((3-row)*256) + val : -(((row-4)*256) + val);
             }
 
             @Override
