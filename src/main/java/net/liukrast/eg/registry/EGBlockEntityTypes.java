@@ -19,7 +19,7 @@ public class EGBlockEntityTypes {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IntSelectorBlockEntity>> INT_SELECTOR = BLOCK_ENTITY_TYPES.register("integer_selector", () -> BlockEntityType.Builder.of(IntSelectorBlockEntity::new, EGBlocks.INT_SELECTOR.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DisplayCollectorBlockEntity>> DISPLAY_COLLECTOR = BLOCK_ENTITY_TYPES.register("display_collector", () -> BlockEntityType.Builder.of(DisplayCollectorBlockEntity::new, EGBlocks.DISPLAY_COLLECTOR.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LinkedLeverBlockEntity>> LINKED_LEVER = BLOCK_ENTITY_TYPES.register("linked_lever", () -> BlockEntityType.Builder.of(LinkedLeverBlockEntity::new, EGBlocks.LINKED_LEVER.get(), EGBlocks.LINKED_BUTTON.get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LinkedControlBlockEntity>> LINKED_CONTROL = BLOCK_ENTITY_TYPES.register("linked_control", () -> BlockEntityType.Builder.of(LinkedControlBlockEntity::new, EGBlocks.LINKED_LEVER.get(), EGBlocks.LINKED_BUTTON.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstonePortBlockEntity>> REDSTONE_PORT = BLOCK_ENTITY_TYPES.register("redstone_port", () -> BlockEntityType.Builder.of(RedstonePortBlockEntity::new, EGBlocks.REDSTONE_PORT.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RoseQuartzPortBlockEntity>> ROSE_QUARTZ_PORT = BLOCK_ENTITY_TYPES.register("rose_quartz_port", () -> BlockEntityType.Builder.of(RoseQuartzPortBlockEntity::new, EGBlocks.ROSE_QUARTZ_PORT.get()).build(null));
 
@@ -30,6 +30,6 @@ public class EGBlockEntityTypes {
 
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(DISPLAY_COLLECTOR.get(), LinkBulbRenderer::new);
-        event.registerBlockEntityRenderer(LINKED_LEVER.get(), SmartBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(LINKED_CONTROL.get(), SmartBlockEntityRenderer::new);
     }
 }
