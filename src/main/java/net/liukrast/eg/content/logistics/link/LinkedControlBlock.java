@@ -6,8 +6,6 @@ import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import net.liukrast.eg.registry.EGBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -85,7 +83,10 @@ public abstract class LinkedControlBlock extends WrenchableDirectionalBlock impl
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        return this.use(state, level, pos, player);
+        return onBlockEntityUse(level, pos, be -> {
+            this.use(state, level, pos, player);
+            return InteractionResult.SUCCESS;
+        });
     }
 
     @Override
@@ -97,9 +98,7 @@ public abstract class LinkedControlBlock extends WrenchableDirectionalBlock impl
         super.onExplosionHit(state, level, pos, explosion, dropConsumer);
     }
 
-    protected InteractionResult use(BlockState state, Level level, BlockPos pos, @Nullable Player player) {
-        return onBlockEntityUse(level, pos, be -> InteractionResult.SUCCESS);
-    }
+    protected abstract void use(BlockState state, Level level, BlockPos pos, @Nullable Player player);
 
     @Override
     public BlockState getRotatedBlockState(BlockState originalState, Direction _targetedFace) {

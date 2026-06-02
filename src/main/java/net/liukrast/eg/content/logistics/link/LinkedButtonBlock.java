@@ -29,7 +29,10 @@ public class LinkedButtonBlock extends LinkedControlBlock {
         if (state.getValue(POWERED)) {
             return InteractionResult.CONSUME;
         } else {
-            return this.use(state, level, pos, player);
+            return onBlockEntityUse(level, pos, be -> {
+                this.use(state, level, pos, player);
+                return InteractionResult.SUCCESS;
+            });
         }
     }
 
@@ -43,14 +46,13 @@ public class LinkedButtonBlock extends LinkedControlBlock {
     }
 
     @Override
-    protected InteractionResult use(BlockState state, Level level, BlockPos pos, @Nullable Player player) {
-        return onBlockEntityUse(level, pos, be -> {
+    protected void use(BlockState state, Level level, BlockPos pos, @Nullable Player player) {
+        withBlockEntityDo(level, pos, be -> {
             level.setBlock(pos, state.setValue(POWERED, true), 3);
             level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS);
             level.gameEvent(player, GameEvent.BLOCK_ACTIVATE, pos);
             be.transmit(15);
             level.scheduleTick(pos, this, 30);
-            return InteractionResult.SUCCESS;
         });
     }
 
