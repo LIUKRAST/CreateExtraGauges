@@ -30,6 +30,7 @@ public class EGRecipeProvider extends RecipeProvider implements IConditionBuilde
         makeGauge(EGItems.PASSIVE_GAUGE.get(), AllItems.STURDY_SHEET.get(), output);
         makeGauge(EGItems.STRING_GAUGE.get(), Items.PAPER, output);
         makeGauge(EGItems.EXPRESSION_GAUGE.get(), EGItems.INT_GAUGE.asItem(), output);
+        makeGauge(EGItems.FILTER_GAUGE.get(), AllItems.FILTER.get(), output);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGBlocks.INT_SELECTOR.get())
                 .requires(AllBlocks.ANALOG_LEVER.get())
@@ -56,8 +57,6 @@ public class EGRecipeProvider extends RecipeProvider implements IConditionBuilde
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGItems.PASSIVE_GAUGE)
                 .requires(EGItems.PASSIVE_GAUGE)
                 .unlockedBy("has_passive_gauge", has(EGItems.PASSIVE_GAUGE)).save(output, ExtraGauges.CONSTANTS.id("passive_gauge_clear"));
-
-        makeGauge(EGItems.FILTER_GAUGE.get(), AllItems.FILTER.get(), output);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGItems.FILTER_GAUGE)
                 .requires(EGItems.FILTER_GAUGE)

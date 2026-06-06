@@ -21,9 +21,10 @@ public class LinkedLeverBlock extends LinkedControlBlock {
         withBlockEntityDo(level, pos, be -> {
             var cycled = state.cycle(POWERED);
             level.setBlock(pos, cycled, 3);
-            float f = cycled.getValue(POWERED) ? 0.6F : 0.5F;
+            boolean isPowered = cycled.getValue(POWERED);
+            float f = isPowered ? 0.6F : 0.5F;
             level.playSound(player, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
-            level.gameEvent(player, cycled.getValue(POWERED) ? GameEvent.BLOCK_ACTIVATE : GameEvent.BLOCK_DEACTIVATE, pos);
+            level.gameEvent(player, isPowered ? GameEvent.BLOCK_ACTIVATE : GameEvent.BLOCK_DEACTIVATE, pos);
             be.transmit(getPower(cycled));
         });
     }
