@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:passive_gauge_clear"
+        "recipe": "extra_gauges:passive_gauge_clear"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:passive_gauge_clear"
+      "extra_gauges:passive_gauge_clear"
     ]
   }
 }

@@ -55,13 +55,13 @@ public class EGRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGItems.PASSIVE_GAUGE)
                 .requires(EGItems.PASSIVE_GAUGE)
-                .unlockedBy("has_passive_gauge", has(EGItems.PASSIVE_GAUGE)).save(output, "passive_gauge_clear");
+                .unlockedBy("has_passive_gauge", has(EGItems.PASSIVE_GAUGE)).save(output, ExtraGauges.CONSTANTS.id("passive_gauge_clear"));
 
         makeGauge(EGItems.FILTER_GAUGE.get(), AllItems.FILTER.get(), output);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, EGItems.FILTER_GAUGE)
                 .requires(EGItems.FILTER_GAUGE)
-                .unlockedBy("has_filter_gauge", has(EGItems.FILTER_GAUGE)).save(output, "filter_gauge_clear");
+                .unlockedBy("has_filter_gauge", has(EGItems.FILTER_GAUGE)).save(output, ExtraGauges.CONSTANTS.id("filter_gauge_clear"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, EGBlocks.REDSTONE_PORT)
                 .pattern("a").pattern("b")
