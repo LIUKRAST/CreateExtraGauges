@@ -25,7 +25,7 @@ public class EGBlocks {
     public static final RegistryObject<IntSelectorBlock> INT_SELECTOR = BLOCKS.register("integer_selector", () -> new IntSelectorBlock(BlockBehaviour.Properties.copy(AllBlocks.ANALOG_LEVER.get())));
     public static final RegistryObject<DisplayCollectorBlock> DISPLAY_COLLECTOR = BLOCKS.register("display_collector", () -> new DisplayCollectorBlock(BlockBehaviour.Properties.copy(AllBlocks.DISPLAY_LINK.get())));
     public static final RegistryObject<LinkedLeverBlock> LINKED_LEVER = BLOCKS.register("linked_lever", () -> new LinkedLeverBlock(BlockBehaviour.Properties.of()));
-    public static final RegistryObject<LinkedLeverBlock> LINKED_BUTTON = BLOCKS.register("linked_button", () -> new LinkedButtonBlock(BlockBehaviour.Properties.of()));
+    public static final RegistryObject<LinkedButtonBlock> LINKED_BUTTON = BLOCKS.register("linked_button", () -> new LinkedButtonBlock(BlockBehaviour.Properties.of()));
 
 
     static {

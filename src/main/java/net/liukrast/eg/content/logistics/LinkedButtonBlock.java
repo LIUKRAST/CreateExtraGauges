@@ -10,10 +10,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 
-public class LinkedButtonBlock extends LinkedLeverBlock {
+public class LinkedButtonBlock extends LinkedControlBlock {
     public LinkedButtonBlock(Properties properties) {
         super(properties);
     }
@@ -23,8 +23,8 @@ public class LinkedButtonBlock extends LinkedLeverBlock {
         if(level.isClientSide) return InteractionResult.SUCCESS;
         return onBlockEntityUse(level, pos, be -> {
             level.setBlock(pos, state.setValue(POWERED, true), 3);
-            float f = 0.6F;
-            level.playSound(player, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
+            level.playSound(player, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 0.3F, 0.6F);
+            level.gameEvent(player, GameEvent.BLOCK_ACTIVATE, pos);
             be.transmit(15);
             level.scheduleTick(pos, this, 30);
             return InteractionResult.SUCCESS;
@@ -38,6 +38,8 @@ public class LinkedButtonBlock extends LinkedLeverBlock {
         super.tick(state, level, pos, random);
         withBlockEntityDo(level, pos, be -> {
             level.setBlock(pos, state.setValue(POWERED, false), 3);
+            //*Sound*/ level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundSource.BLOCKS, 0.3F, 0.6F);
+            level.gameEvent(null, GameEvent.BLOCK_DEACTIVATE, pos);
             be.transmit(0);
         });
 
