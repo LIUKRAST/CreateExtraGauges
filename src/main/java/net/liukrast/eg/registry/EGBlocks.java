@@ -20,7 +20,7 @@ public class EGBlocks {
     public static final DeferredBlock<IntSelectorBlock> INT_SELECTOR = BLOCKS.register("integer_selector", () -> new IntSelectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get())));
     public static final DeferredBlock<DisplayCollectorBlock> DISPLAY_COLLECTOR = BLOCKS.register("display_collector", () -> new DisplayCollectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.DISPLAY_LINK.get())));
     public static final DeferredBlock<LinkedLeverBlock> LINKED_LEVER = BLOCKS.register("linked_lever", () -> new LinkedLeverBlock(BlockBehaviour.Properties.of()));
-    public static final DeferredBlock<LinkedLeverBlock> LINKED_BUTTON = BLOCKS.register("linked_button", () -> new LinkedButtonBlock(BlockBehaviour.Properties.of()));
+    public static final DeferredBlock<LinkedButtonBlock> LINKED_BUTTON = BLOCKS.register("linked_button", () -> new LinkedButtonBlock(BlockBehaviour.Properties.of()));
     public static final DeferredBlock<RedstonePortBlock> REDSTONE_PORT = BLOCKS.register("redstone_port", () -> new RedstonePortBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get()).lightLevel(state -> state.getValue(RedstonePortBlock.POWERED) ? 15 : 0)));
     public static final DeferredBlock<RoseQuartzPortBlock> ROSE_QUARTZ_PORT = BLOCKS.register("rose_quartz_port", () -> new RoseQuartzPortBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get()).lightLevel(state -> state.getValue(RoseQuartzPortBlock.POWER) > 0 ? 15 : 0)));
 

@@ -8,7 +8,7 @@ import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.foundation.instruction.RotateSceneInstruction;
 import net.liukrast.deployer.lib.helper.ponder.Ponder;
-import net.liukrast.eg.content.logistics.link.LinkedLeverBlockEntity;
+import net.liukrast.eg.content.logistics.link.LinkedControlBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -130,7 +130,7 @@ public class IntGaugePonder implements Ponder {
     }
 
     public static void setLinkTransmit(SceneBuilder scene, BlockPos pos, int signal) {
-        scene.world().modifyBlockEntity(pos, LinkedLeverBlockEntity.class, be -> be.transmittedSignal = signal);
+        scene.world().modifyBlockEntity(pos, LinkedControlBlockEntity.class, be -> be.transmittedSignal = signal);
     }
 
 
