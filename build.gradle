@@ -114,7 +114,10 @@ dependencies {
 
     implementation fg.deobf("curse.maven:jei-238222:6075247")
 
-    jarJar(implementation("io.github.llamalad7:mixinextras-common:0.5.0"))
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.4"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.4")) {
+        jarJar.ranged(it, "[0.5.4,)")
+    }
 
 }
 

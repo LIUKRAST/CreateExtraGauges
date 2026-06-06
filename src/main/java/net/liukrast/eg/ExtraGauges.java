@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Set;
 
 @Mod(EGConstants.MOD_ID)
-public class EG {
+public class ExtraGauges {
 
-    public EG(FMLJavaModLoadingContext ctx) {
+    public ExtraGauges(FMLJavaModLoadingContext ctx) {
         var modEventBus = ctx.getModEventBus();
         EGItems.register(modEventBus);
         EGPanels.register(modEventBus);
