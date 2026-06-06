@@ -16,14 +16,14 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
-public class LinkedLeverBlockEntity extends SmartBlockEntity {
+public class LinkedControlBlockEntity extends SmartBlockEntity {
     private int transmittedSignal;
     private LinkBehaviour link;
 
     public FactoryPanelSupportBehaviour panelSupport;
 
-    public LinkedLeverBlockEntity(BlockPos pos, BlockState state) {
-        super(EGBlockEntityTypes.LINKED_LEVER.get(), pos, state);
+    public LinkedControlBlockEntity(BlockPos pos, BlockState state) {
+        super(EGBlockEntityTypes.LINKED_CONTROL.get(), pos, state);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class LinkedLeverBlockEntity extends SmartBlockEntity {
 
     protected LinkBehaviour createLink() {
         Pair<ValueBoxTransform, ValueBoxTransform> slots =
-                ValueBoxTransform.Dual.makeSlots(LinkedLeverFrequencySlot::new);
+                ValueBoxTransform.Dual.makeSlots(LinkedControlFrequencySlot::new);
         return LinkBehaviour.transmitter(this, slots, () -> transmittedSignal);
     }
 

@@ -5,7 +5,7 @@ import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRende
 import net.liukrast.eg.EGConstants;
 import net.liukrast.eg.content.logistics.DisplayCollectorBlockEntity;
 import net.liukrast.eg.content.logistics.IntSelectorBlockEntity;
-import net.liukrast.eg.content.logistics.LinkedLeverBlockEntity;
+import net.liukrast.eg.content.logistics.LinkedControlBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -21,7 +21,7 @@ public class EGBlockEntityTypes {
 
     public static final RegistryObject<BlockEntityType<IntSelectorBlockEntity>> INT_SELECTOR = BLOCK_ENTITY_TYPES.register("integer_selector", () -> BlockEntityType.Builder.of(IntSelectorBlockEntity::new, EGBlocks.INT_SELECTOR.get()).build(null));
     public static final RegistryObject<BlockEntityType<DisplayCollectorBlockEntity>> DISPLAY_COLLECTOR = BLOCK_ENTITY_TYPES.register("display_collector", () -> BlockEntityType.Builder.of(DisplayCollectorBlockEntity::new, EGBlocks.DISPLAY_COLLECTOR.get()).build(null));
-    public static final RegistryObject<BlockEntityType<LinkedLeverBlockEntity>> LINKED_LEVER = BLOCK_ENTITY_TYPES.register("linked_lever", () -> BlockEntityType.Builder.of(LinkedLeverBlockEntity::new, EGBlocks.LINKED_LEVER.get(), EGBlocks.LINKED_BUTTON.get()).build(null));
+    public static final RegistryObject<BlockEntityType<LinkedControlBlockEntity>> LINKED_CONTROL = BLOCK_ENTITY_TYPES.register("linked_control", () -> BlockEntityType.Builder.of(LinkedControlBlockEntity::new, EGBlocks.LINKED_LEVER.get(), EGBlocks.LINKED_BUTTON.get()).build(null));
 
 
     @ApiStatus.Internal
@@ -31,6 +31,6 @@ public class EGBlockEntityTypes {
 
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(DISPLAY_COLLECTOR.get(), LinkBulbRenderer::new);
-        event.registerBlockEntityRenderer(LINKED_LEVER.get(), SmartBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(LINKED_CONTROL.get(), SmartBlockEntityRenderer::new);
     }
 }
