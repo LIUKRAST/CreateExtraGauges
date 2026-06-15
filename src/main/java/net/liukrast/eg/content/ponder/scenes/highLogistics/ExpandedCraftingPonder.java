@@ -5,16 +5,26 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
+import net.liukrast.deployer.lib.helper.ponder.Ponder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 
-import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.*;
 import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.*;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.addPanelConnection;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.setPanelItem;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.displayText;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.simpleInit;
 
-public class ExtendedCraftScene {
-    public static void autoCrafter(SceneBuilder builder, SceneBuildingUtil util) {
+public class ExpandedCraftingPonder implements Ponder {
+    @Override
+    public String getSchematicPath() {
+        return "high_logistics/expanded_factory_recipes";
+    }
+
+    @Override
+    public void create(SceneBuilder builder, SceneBuildingUtil util) {
         var scene = simpleInit(builder, util, "expanded_factory_recipes");
         var gauge = new FactoryPanelPosition(new BlockPos(0,3,4), FactoryPanelBlock.PanelSlot.TOP_RIGHT);
         var diamond = new FactoryPanelPosition(new BlockPos(0,3,2), FactoryPanelBlock.PanelSlot.TOP_RIGHT);
@@ -58,6 +68,5 @@ public class ExtendedCraftScene {
         scene.idle(30);
         scene.overlay().chaseBoundingBoxOutline(PonderPalette.GREEN, new BlockPos(3,3,1), new AABB(6, 1, 1, 3, 6, 2), 30);
         scene.idle(60);
-
     }
 }

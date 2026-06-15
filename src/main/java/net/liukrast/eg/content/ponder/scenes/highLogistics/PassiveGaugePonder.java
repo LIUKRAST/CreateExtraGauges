@@ -5,13 +5,25 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
+import net.liukrast.deployer.lib.helper.ponder.Ponder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
 import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.*;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.addPanelConnection;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.setConnectionAmount;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.setPanelCrafting;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.setPanelNotSatisfied;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.setPanelSatisfied;
 
-public class PassiveGaugeScene {
-    public static void passiveGauge(SceneBuilder builder, SceneBuildingUtil util) {
+public class PassiveGaugePonder implements Ponder {
+    @Override
+    public String getSchematicPath() {
+        return "high_logistics/passive_gauge";
+    }
+
+    @Override
+    public void create(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = new CreateSceneBuilder(builder);
         scene.title("passive_gauge", "Using Passive Gauges to optimize Automated Recipes");
         scene.configureBasePlate(0, 0, 7);

@@ -5,7 +5,6 @@ import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
-import net.liukrast.deployer.lib.helper.ponder.SmartMultiSceneBuilder;
 import net.liukrast.deployer.lib.helper.ponder.SmartPonderRegistrationHelper;
 import net.liukrast.eg.content.ponder.scenes.highLogistics.*;
 import net.liukrast.eg.registry.EGBlocks;
@@ -41,15 +40,14 @@ public class ExtraGaugesPonderPlugin implements PonderPlugin {
                 .addPonder(new ExpressionGaugePonder());
         HELPER.forComponents(EGItems.FILTER_GAUGE.get())
                 .addPonder(new FilterGaugePonder());
-
-        // Legacy ponders
-        HELPER.getHelper().forComponents(EGItems.PASSIVE_GAUGE.get())
-                .addStoryBoard("high_logistics/passive_gauge", PassiveGaugeScene::passiveGauge)
-                .addStoryBoard("high_logistics/expanded_factory_recipes", ExtendedCraftScene::autoCrafter);
-        HELPER.getHelper().forComponents(EGBlocks.DISPLAY_COLLECTOR.asItem())
-                .addStoryBoard("high_logistics/display_collector", StringGaugeScenes::displayCollector);
-        HELPER.getHelper().forComponents(AllBlocks.FACTORY_GAUGE.asItem())
-                .addStoryBoard("high_logistics/expanded_factory_recipes", ExtendedCraftScene::autoCrafter);
+        HELPER.forComponents(EGBlocks.DISPLAY_COLLECTOR.asItem())
+                .addPonder(new DisplayCollectorPonder());
+        var ext = new ExpandedCraftingPonder();
+        HELPER.forComponents(EGItems.PASSIVE_GAUGE.get())
+                .addPonder(new PassiveGaugePonder())
+                .addPonder(ext);
+        HELPER.forComponents(AllBlocks.FACTORY_GAUGE.asItem())
+                .addPonder(ext);
     }
 
     @Override

@@ -7,6 +7,7 @@ import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
+import net.liukrast.deployer.lib.helper.ponder.Ponder;
 import net.liukrast.eg.registry.EGBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,11 +16,16 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 
 import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.*;
-import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.*;
+import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.addPanelConnection;
 
-public class StringGaugeScenes {
+public class DisplayCollectorPonder implements Ponder {
+    @Override
+    public String getSchematicPath() {
+        return "high_logistics/display_collector";
+    }
 
-    public static void displayCollector(SceneBuilder builder, SceneBuildingUtil util) {
+    @Override
+    public void create(SceneBuilder builder, SceneBuildingUtil util) {
         var scene = simpleInit(builder, util, "display_collector");
         var observer = new BlockPos(4,1,2);
         var collector = new BlockPos(3,1,3);
@@ -46,8 +52,8 @@ public class StringGaugeScenes {
         scene.world().showIndependentSection(util.select().position(collector1), Direction.SOUTH);
         displayText(scene, collector1, 60, false);
         addPanelConnection(scene, gauge, new FactoryPanelPosition(collector1, FactoryPanelBlock.PanelSlot.TOP_RIGHT));
-        displayText(scene, gauge.pos(), 60, false);
-        displayText(scene, gauge.pos(), 20, true);
+        displayText(scene, gauge, Direction.NORTH, 60, false);
+        displayText(scene, gauge, Direction.NORTH, 80, true);
         scene.overlay().showControls(new BlockPos(5,1,2).getCenter(), Pointing.RIGHT, 60).withItem(Items.DIAMOND.getDefaultInstance());
         scene.idle(40);
         scene.world().flashDisplayLink(collector1);

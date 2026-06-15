@@ -202,7 +202,9 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
                 "When a string gauge is attached to a repackager...",
                 "...it will go in rewrite mode.",
                 "Open the string gauge menu, setup a regex and a replacement...",
-                ""
+                "§cHello!",
+                "§aHi!",
+                "When powered, the gauge will now change the address in outgoing packages"
         );
 
         createPonder(
@@ -231,13 +233,14 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
                 "...and update the recipe."
         );
 
+        
         createPonder(
-                "display_collector", "Using the display collector to get display sources",
-                "Display collectors can send informations to string gauges",
-                "First, right-click the source...",
-                "...then, place on our board...",
-                "...and finally connect with our string gauge.",
-                "Open the menu to start ticking"
+                "display_collector","Using the display collector to gather text data",
+                "The display collector can send text data to gauges",
+                "Click on the source you want to gather text from...",
+                "...and place your display collector.",
+                "Open a gauge and connect it to the display collector",
+                "After opening the display collector menu, it will now send text to gauges"
         );
 
     }
