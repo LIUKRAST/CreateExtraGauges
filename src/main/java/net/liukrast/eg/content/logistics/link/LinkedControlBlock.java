@@ -50,6 +50,10 @@ public abstract class LinkedControlBlock extends WrenchableDirectionalBlock impl
                 level.destroyBlock(pos, true);
             }
         }
+
+        if (!level.getBlockTicks()
+                .willTickThisTick(pos, this))
+            level.scheduleTick(pos, this, 1);
     }
 
     @Override
