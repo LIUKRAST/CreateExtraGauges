@@ -11,6 +11,8 @@
     "ContraptionMixin",
 	"DisplayLinkBlockMixin",
 	"FactoryPanelBehaviourMixin",
+    "LinkHandlerMixin",
+    "LinkRendererMixin",
 	"PackagerBlockEntityMixin",
 	"PackageRepackageHelperMixin",
 	"ServerboundConfigPacketMixin"

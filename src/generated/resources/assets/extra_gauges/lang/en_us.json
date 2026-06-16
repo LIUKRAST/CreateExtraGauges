@@ -24,6 +24,8 @@
   "create.display_collector.success": "Successfully bound to source position",
   "create.logistics.comparator_value": "Select the comparator mode",
   "create.logistics.counter_threshold": "Choose the threshold",
+  "create.logistics.filter.shift_click_to_replace": "Sneak-Click with item to replace",
+  "create.logistics.filter.shift_click_to_set": "Sneak-Click with item to set",
   "create.logistics.int_operation": "Int Operation",
   "create.logistics.int_selection": "Select the integer value",
   "create.logistics.logic_gate": "Logic Gate",

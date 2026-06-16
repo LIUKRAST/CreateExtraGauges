@@ -27,6 +27,9 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
         addShiftSummary(EGBlocks.ROSE_QUARTZ_PORT.asItem(), "Connects real-world redstone to gauges (Number connection, 0-15)")
                 .addLine("When Wrenched", "Switches from input to output and viceversa");
 
+        add("create.logistics.filter.shift_click_to_set", "Sneak-Click with item to set");
+        add("create.logistics.filter.shift_click_to_replace", "Sneak-Click with item to replace");
+
         add("create.logistics.logic_gate", "Logic Gate");
         add("create.logistics.int_operation", "Int Operation");
         add("create.logistics.comparator_value", "Select the comparator mode");
