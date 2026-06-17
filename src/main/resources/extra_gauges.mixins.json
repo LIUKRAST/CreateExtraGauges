@@ -15,7 +15,8 @@
     "LinkRendererMixin",
 	"PackagerBlockEntityMixin",
 	"PackageRepackageHelperMixin",
-	"ServerboundConfigPacketMixin"
+	"ServerboundConfigPacketMixin",
+    "ValueSettingsInputHandlerMixin"
   ],
   "client": [
 	"ClickToLinkBlockItemMixin",

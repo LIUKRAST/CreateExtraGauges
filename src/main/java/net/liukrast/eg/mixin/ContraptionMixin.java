@@ -3,6 +3,7 @@ package net.liukrast.eg.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.contraptions.Contraption;
 import net.liukrast.eg.content.logistics.link.LinkedButtonBlock;
+import net.liukrast.eg.content.logistics.link.LinkedControlBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,9 +17,10 @@ public class ContraptionMixin {
     private BlockState capture(BlockState blockState,
                                @Local(name = "world") Level world,
                                @Local(name = "pos") BlockPos pos) {
-        if (blockState.getBlock() instanceof LinkedButtonBlock block) {
+        if (blockState.getBlock() instanceof LinkedControlBlock block) {
             block.onContraption();
-            blockState = blockState.setValue(LinkedButtonBlock.POWERED, false);
+            if (block instanceof LinkedButtonBlock)
+                blockState = blockState.setValue(LinkedButtonBlock.POWERED, false);
             world.scheduleTick(pos, block, -1);
         }
         return blockState;
