@@ -15,6 +15,9 @@
   "block.extra_gauges.linked_lever.tooltip.summary": "Works like a redstone link but includes a lever. Connects to gauges and send an update instantly",
   "block.extra_gauges.linked_button.tooltip.summary": "Works like a redstone link but includes a button. Connects to gauges and send an update instantly",
 
+  "create.logistics.filter.shift_click_to_replace": "Sneak-Click with item to replace",
+  "create.logistics.filter.shift_click_to_set": "Sneak-Click with item to set",
+
   "extra_gauges.panel.panels_connected": "%s now pointing to %s",
   "extra_gauges.panel.custom_panel_on_restocker": "Cannot place a custom gauge in restocker mode",
 

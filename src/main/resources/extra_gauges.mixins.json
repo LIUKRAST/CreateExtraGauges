@@ -12,6 +12,7 @@
     "AllIconsMixin",
     "BeltTunnelBlockEntityMixin",
     "ClientEventsMixin",
+    "ContraptionMixin",
     "DisplayLinkBlockMixin",
     "FactoryGaugeDisplaySourceMixin",
     "FactoryPanelBehaviourAccessor",
@@ -25,7 +26,10 @@
     "FactoryPanelSupportBehaviourMixin",
     "FilteringBehaviourMixin",
     "FilteringRendererMixin",
-    "PackageRepackageHelperMixin"
+    "LinkHandlerMixin",
+    "LinkRendererMixin",
+    "PackageRepackageHelperMixin",
+    "ValueSettingsInputHandlerMixin"
   ],
   "client": [
     "ClickToLinkBlockItemMixin",
