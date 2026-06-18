@@ -18,7 +18,6 @@ public class ContraptionMixin {
                                @Local(name = "world") Level world,
                                @Local(name = "pos") BlockPos pos) {
         if (blockState.getBlock() instanceof LinkedControlBlock block) {
-            block.onContraption();
             if (block instanceof LinkedButtonBlock)
                 blockState = blockState.setValue(LinkedButtonBlock.POWERED, false);
             world.scheduleTick(pos, block, -1);

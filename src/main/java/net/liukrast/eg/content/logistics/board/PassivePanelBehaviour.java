@@ -22,6 +22,7 @@ import net.liukrast.deployer.lib.logistics.board.PanelType;
 import net.liukrast.deployer.lib.logistics.board.connection.PanelConnectionBuilder;
 import net.liukrast.deployer.lib.logistics.board.connection.StockConnection;
 import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
+import net.liukrast.eg.mixinExtension.WidthModifier;
 import net.liukrast.eg.registry.EGItems;
 import net.liukrast.eg.registry.EGPartialModels;
 import net.minecraft.ChatFormatting;
@@ -44,7 +45,10 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
-public class PassivePanelBehaviour extends OrderingPanelBehaviour {
+public class PassivePanelBehaviour extends OrderingPanelBehaviour implements WidthModifier {
+
+    private int width = 3;
+
     public PassivePanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);
     }
@@ -207,6 +211,7 @@ public class PassivePanelBehaviour extends OrderingPanelBehaviour {
         nbt.put("Filter", getFilter().saveOptional(registries));
         nbt.putInt("FilterAmount", count);
         nbt.putBoolean("UpTo", upTo);
+        if(width != 3) nbt.putInt("extra_gauges$CraftWidth", width);
     }
 
     @Override
@@ -215,6 +220,7 @@ public class PassivePanelBehaviour extends OrderingPanelBehaviour {
         filter = FilterItemStack.of(registries, nbt.getCompound("Filter"));
         count = nbt.getInt("FilterAmount");
         upTo = nbt.getBoolean("UpTo");
+        width = nbt.contains("extra_gauges$CraftWidth") ? nbt.getInt("extra_gauges$CraftWidth") : 3;
     }
 
     @Override
@@ -266,4 +272,10 @@ public class PassivePanelBehaviour extends OrderingPanelBehaviour {
     public int getMultiplier() {
         return upTo ? 1 : getMaxStackSize();
     }
+
+    @Override
+    public int extra_gauges$getWidth() {return width;}
+
+    @Override
+    public void extra_gauges$setWidth(int width) {this.width = width;}
 }

@@ -32,7 +32,6 @@ import java.util.function.BiConsumer;
 @NonnullDefault
 public abstract class LinkedControlBlock extends WrenchableDirectionalBlock implements IBE<LinkedControlBlockEntity> {
 
-    private boolean wasOnContraption = false;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public LinkedControlBlock(Properties properties) {
@@ -52,10 +51,7 @@ public abstract class LinkedControlBlock extends WrenchableDirectionalBlock impl
             }
         }
 
-        if (wasOnContraption) {
-            withBlockEntityDo(level, pos, be -> be.transmit(getPower(state)));
-            wasOnContraption = false;
-        }
+        withBlockEntityDo(level, pos, be -> be.transmit(getPower(state)));
     }
 
     @Override
@@ -144,10 +140,6 @@ public abstract class LinkedControlBlock extends WrenchableDirectionalBlock impl
     @Override
     public BlockEntityType<? extends LinkedControlBlockEntity> getBlockEntityType() {
         return EGBlockEntityTypes.LINKED_CONTROL.get();
-    }
-
-    public void onContraption() {
-        wasOnContraption = true;
     }
 
 }
