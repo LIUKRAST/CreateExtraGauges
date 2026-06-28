@@ -3,7 +3,6 @@ package net.liukrast.eg.content.ponder.scenes.highLogistics;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
-import com.simibubi.create.foundation.gui.AllIcons;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;

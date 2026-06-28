@@ -8,7 +8,6 @@ import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.foundation.instruction.RotateSceneInstruction;
 import net.liukrast.deployer.lib.helper.ponder.Ponder;
-import net.liukrast.eg.content.logistics.board.IntPanelBehaviour;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 
