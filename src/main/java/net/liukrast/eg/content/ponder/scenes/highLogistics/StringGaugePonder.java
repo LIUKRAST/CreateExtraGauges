@@ -37,7 +37,7 @@ public class StringGaugePonder implements Ponder {
         scene.world().showIndependentSection(util.select().position(gauge.pos()), Direction.WEST);
         scene.idle(40);
 
-        displayText(scene, gauge.pos(), 60, false);
+        displayText(scene, gauge, Direction.EAST, 60, false);
 
 
         scene.world().showIndependentSection(util.select().position(sign), Direction.WEST);
@@ -47,7 +47,7 @@ public class StringGaugePonder implements Ponder {
         scene.world().showIndependentSection(nixie, Direction.DOWN);
         scene.idle(30);
 
-        displayText(scene, gauge.pos(), 60, false);
+        displayText(scene, gauge, Direction.EAST, 60, false);
         displayText(scene, sign, 60, false);
 
         addPanelConnection(scene, gauge, new FactoryPanelPosition(sign, FactoryPanelBlock.PanelSlot.TOP_RIGHT));
@@ -70,7 +70,7 @@ public class StringGaugePonder implements Ponder {
         var inGauges = scene.world().showIndependentSection(util.select().fromTo(gaugeA.pos(), gaugeB.pos()), Direction.WEST);
         scene.idle(50);
 
-        displayText(scene, gaugeA.pos(), 60, true);
+        displayText(scene, gaugeA, Direction.EAST, 60, true);
 
         addPanelConnection(scene, gauge, gaugeA);
         setArrowMode(scene, gauge, gaugeA, 1);
@@ -79,14 +79,14 @@ public class StringGaugePonder implements Ponder {
         setArrowMode(scene, gauge, gaugeB, 1);
         scene.idle(20);
 
-        displayText(scene, gaugeB.pos(), 40, false);
-        displayText(scene, gaugeA.pos(), 40, false);
+        displayText(scene, gaugeB, Direction.EAST, 40, false);
+        displayText(scene, gaugeA, Direction.EAST, 40, false);
         scene.idle(10);
         scene.world().flashDisplayLink(display);
         setNixieTubeText(scene, util.grid().at(1,4,7), Component.literal("Hello!✖ False0"), 7, Direction.NORTH);
         scene.idle(50);
 
-        displayText(scene, gauge.pos(), 60, true);
+        displayText(scene, gauge, Direction.EAST, 60, true);
 
         scene.overlay().showControls(gauge.pos().getCenter(), Pointing.DOWN, 20).showing(createComponent(Component.literal("&")));
         scene.idle(40);
@@ -96,14 +96,14 @@ public class StringGaugePonder implements Ponder {
 
         displayText(scene, display, 60, false);
 
-        displayText(scene, gauge.pos(), 60, true);
+        displayText(scene, gauge, Direction.EAST, 60, true);
         scene.overlay().showControls(gauge.pos().getCenter(), Pointing.DOWN, 20).showing(createComponent(Component.literal("!").withStyle(ChatFormatting.RED)));
         scene.idle(40);
         scene.overlay().showControls(gauge.pos().getCenter(), Pointing.DOWN, 20).showing(createComponent(Component.literal("?").withStyle(ChatFormatting.BLUE)));
         scene.idle(40);
 
-        displayText(scene, gauge.pos(), 60, false);
-        displayText(scene, gauge.pos(), 60, false);
+        displayText(scene, gauge, Direction.EAST, 60, false);
+        displayText(scene, gauge, Direction.EAST, 60, false);
 
         scene.world().flashDisplayLink(display);
         setNixieTubeText(scene, util.grid().at(1,4,7), Component.literal("Hello?&✖ False&0"), 7, Direction.NORTH);
@@ -130,8 +130,8 @@ public class StringGaugePonder implements Ponder {
         addPanelConnection(scene, gaugeD, gauge);
         scene.idle(30);
 
-        displayText(scene, gaugeD.pos(), 60, false);
-        displayText(scene, gaugeC.pos(), 60, false);
+        displayText(scene, gaugeD, Direction.EAST, 60, false);
+        displayText(scene, gaugeC, Direction.EAST, 60, false);
 
         setSignText(scene, sign,0, Component.literal("129"));
         scene.idle(10);
@@ -141,7 +141,7 @@ public class StringGaugePonder implements Ponder {
         scene.overlay().showControls(gaugeC.pos().getCenter().add(0, 0, -0.5), Pointing.DOWN, 20).showing(AllIcons.I_ACTIVE);
 
         scene.idle(40);
-        displayText(scene, gaugeD.pos(), 60, false);
+        displayText(scene, gaugeD, Direction.EAST, 60, false);
 
         setSignText(scene, sign,0, Component.literal("True"));
         scene.idle(10);

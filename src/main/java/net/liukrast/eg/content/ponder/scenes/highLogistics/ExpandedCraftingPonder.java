@@ -31,7 +31,7 @@ public class ExpandedCraftingPonder implements Ponder {
         var stick = new FactoryPanelPosition(new BlockPos(0,2,2), FactoryPanelBlock.PanelSlot.TOP_RIGHT);
         scene.world().showIndependentSection(util.select().fromTo(1,1,2,0,4,5), Direction.WEST);
         scene.idle(20);
-        displayText(scene, gauge.pos(), 80, true);
+        displayText(scene, gauge, Direction.WEST, 80, true);
         scene.world().showIndependentSection(util.select().fromTo(5,1,1,1,5,1),Direction.NORTH);
         scene.idle(20);
         scene.overlay().chaseBoundingBoxOutline(PonderPalette.GREEN, new BlockPos(3,3,1), new AABB(6,1,1,1,6,2), 60);
@@ -51,7 +51,7 @@ public class ExpandedCraftingPonder implements Ponder {
                 .text("")
                 .placeNearTarget()
                 .attachKeyFrame()
-                .pointAt(gauge.pos().getCenter().add(-0.25f, 0.25f,0));
+                .pointAt(getGaugeWorldCenter(gauge, Direction.WEST));
         scene.overlay().chaseBoundingBoxOutline(PonderPalette.RED, new BlockPos(3,3,1), new AABB(6, 3, 1, 3, 6, 2), 60);
         scene.idle(30);
         scene.overlay().chaseBoundingBoxOutline(PonderPalette.GREEN, new BlockPos(3,3,1), new AABB(6, 3, 1, 1, 6, 2), 60);

@@ -33,18 +33,18 @@ public class LogicGaugePonder implements Ponder {
         scene.world().showIndependentSection(util.select().position(gaugeA.pos()), Direction.WEST);
         scene.idle(40);
 
-        displayText(scene, gaugeA.pos(), 80, false);
+        displayText(scene, gaugeA, Direction.EAST, 80, false);
 
         scene.world().showIndependentSection(util.select().position(gaugeB.pos()), Direction.WEST);
         scene.idle(40);
-        displayText(scene, gaugeB.pos(), 60, false);
-        displayText(scene, gaugeB.pos(), 60, false);
-        displayText(scene, gaugeA.pos(), 60, true);
+        displayText(scene, gaugeB, Direction.EAST, 60, false);
+        displayText(scene, gaugeB, Direction.EAST, 60, false);
+        displayText(scene, gaugeA, Direction.EAST, 60, true);
 
         addPanelConnection(builder, gaugeB, gaugeA);
 
         scene.idle(30);
-        displayText(scene, gaugeA.pos().north(), 60, false);
+        displayText(scene, gaugeA, Direction.EAST, 60, false);
 
         scene.idle(30);
 
@@ -92,7 +92,7 @@ public class LogicGaugePonder implements Ponder {
         scene.idle(30);
 
 
-        displayText(scene, util.grid().at(2,2,5), 60, false);
+        displayText(scene, gaugeA, Direction.EAST, 60, false);
         setPanelPowered(scene, gaugeA, true);
         scene.idle(10);
         setPanelPowered(scene, gaugeB, true);
@@ -104,7 +104,7 @@ public class LogicGaugePonder implements Ponder {
         scene.effects().indicateRedstone(util.grid().at(2,3,7));
 
         scene.idle(10);
-        displayText(scene, util.grid().at(2,2,5), 60, false);
+        displayText(scene, gaugeA, Direction.EAST, 60, false);
 
         setPanelPowered(scene, gaugeA, false);
         scene.idle(10);

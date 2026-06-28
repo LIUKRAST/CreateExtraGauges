@@ -37,9 +37,9 @@ public class ComparatorGaugePonder implements Ponder {
         var analog = util.grid().at(2,1,7);
         var out = util.select().fromTo(2,2,1, 1,3,1);
 
-        displayText(scene, gauge.pos().south(), 60, false);
+        displayText(scene, gauge, Direction.EAST, 60, false);
 
-        displayText(scene, gauge.pos(), 80, false);
+        displayText(scene, gauge, Direction.EAST, 80, false);
 
         scene.addKeyframe();
 
@@ -47,7 +47,7 @@ public class ComparatorGaugePonder implements Ponder {
         scene.idle(40);
         scene.overlay().showControls(gauge.pos().getCenter().add(0, 0.5, 0), Pointing.DOWN, 20).showing(createComponent(Component.literal("5")));
         scene.idle(40);
-        displayText(scene, gauge.pos(), 80, false);
+        displayText(scene, gauge, Direction.EAST, 80, false);
 
         setAnalogLever(scene, util.select().position(analog), 6);
         scene.effects().indicateRedstone(analog);
@@ -66,7 +66,7 @@ public class ComparatorGaugePonder implements Ponder {
         addPanelConnection(scene, gauge, in);
         setArrowMode(scene, gauge, in, 2);
         scene.idle(20);
-        displayText(scene, gauge.pos(), 60, false);
+        displayText(scene, gauge, Direction.EAST, 60, false);
 
 
         displayText(scene, in.pos().north(), 60, false);
@@ -76,11 +76,11 @@ public class ComparatorGaugePonder implements Ponder {
         scene.overlay().showControls(in.pos().north().getCenter().add(0, 0.5, 0), Pointing.DOWN, 20).showing(createComponent(Component.literal("b")));
         scene.idle(40);
 
-        displayText(scene, gauge.pos().south(), 60, false);
+        displayText(scene, gauge, Direction.EAST, 60, false);
 
-        displayText(scene, gauge.pos(), 60, true);
-        displayText(scene, gauge.pos(), 60, false);
-        displayText(scene, gauge.pos(), 40, false);
+        displayText(scene, gauge, Direction.EAST, 60, true);
+        displayText(scene, gauge, Direction.EAST, 60, false);
+        displayText(scene, gauge, Direction.EAST, 40, false);
 
         setPanelPowered(builder, gauge, true);
         scene.world().toggleRedstonePower(out);

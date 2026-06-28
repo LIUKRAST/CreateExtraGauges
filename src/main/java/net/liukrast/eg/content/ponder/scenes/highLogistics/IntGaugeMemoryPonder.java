@@ -39,12 +39,7 @@ public class IntGaugeMemoryPonder implements Ponder {
         var in = util.grid().at(2,2,3);
 
         int time = 60;
-        builder.overlay()
-                .showText(time)
-                .text("")
-                .placeNearTarget()
-                .pointAt(gaugeA.pos().getCenter());
-        builder.idle(time+20);
+        displayText(builder, gaugeA, Direction.EAST, time, false);
         time = 80;
         builder.overlay()
                 .showText(time)
@@ -70,12 +65,7 @@ public class IntGaugeMemoryPonder implements Ponder {
 
         displayText(scene, lever.north(), 60, false);
 
-        builder.overlay()
-                .showText(time)
-                .text("")
-                .placeNearTarget()
-                .pointAt(gaugeA.pos().getCenter());
-        builder.idle(time+20);
+        displayText(builder, gaugeA, Direction.EAST, time, false);
 
 
         scene.overlay().showControls(in.getCenter(), Pointing.DOWN, 20).showing(createComponent(Component.literal("12")));

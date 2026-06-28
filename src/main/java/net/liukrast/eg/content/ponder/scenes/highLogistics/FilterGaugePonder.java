@@ -41,11 +41,11 @@ public class FilterGaugePonder implements Ponder {
         scene.world().showIndependentSection(stock, Direction.DOWN);
         scene.idle(40);
 
-        displayText(scene, filterGauge.pos(), 60, false);
-        displayText(scene, factoryGauge.pos(), 60, false);
+        displayText(scene, filterGauge, Direction.EAST, 60, false);
+        displayText(scene, factoryGauge, Direction.EAST, 60, false);
 
 
-        displayText(scene, filterGauge.pos(), 60, true);
+        displayText(scene, filterGauge, Direction.EAST, 60, true);
 
         scene.overlay().showControls(filterGauge.pos().getCenter().add(0, 0.5, -0.5), Pointing.DOWN, 20).withItem(AllItems.ATTRIBUTE_FILTER.asStack());
         scene.idle(40);
@@ -56,19 +56,19 @@ public class FilterGaugePonder implements Ponder {
         scene.idle(40);
         setFilterGauge(scene, filterGauge, Items.OAK_PLANKS.getDefaultInstance());
         scene.idle(30);
-        displayText(scene, factoryGauge.pos(), 60, false);
+        displayText(scene, factoryGauge, Direction.EAST, 60, false);
 
         addPanelConnection(scene, factoryGauge, filterGauge);
 
         scene.idle(30);
-        displayText(scene, filterGauge.pos(), 60, true);
+        displayText(scene, filterGauge, Direction.EAST, 60, true);
 
         scene.overlay().showControls(util.grid().at(2,1,7).getCenter().add(0, 0.5, -0.5), Pointing.DOWN, 20).withItem(Items.SPRUCE_PLANKS.getDefaultInstance());
         scene.idle(40);
         setFilterGauge(scene, filterGauge, Items.SPRUCE_PLANKS.getDefaultInstance());
 
-        displayText(scene, filterGauge.pos(), 60, false);
-        displayText(scene, filterGauge.pos().north(), 60, false);
+        displayText(scene, filterGauge, Direction.EAST, 60, false);
+        displayText(scene, filterGauge, Direction.EAST, 60, false);
         scene.idle(50);
 
     }
