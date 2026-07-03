@@ -241,7 +241,9 @@ public class FilterPanelBehaviour extends AbstractPanelBehaviour implements Rend
     @Override
     public void onShortInteract(Player player, InteractionHand hand, Direction side, BlockHitResult hitResult, boolean client) {
         ItemStack heldItem = player.getItemInHand(hand);
-        if (cachedFilter.isEmpty()) {
+        if ((heldItem.getItem() instanceof LogisticallyLinkedBlockItem || heldItem.getItem() instanceof LogisticallyLinked) && !client) {
+            LogisticallyLinkedBlockItem.assignFrequency(heldItem, player, network);
+        } else if (cachedFilter.isEmpty()) {
             if (heldItem.isEmpty()) {
                 if (!client && player instanceof ServerPlayer sp) {
                     sp.openMenu(this, (buf) -> FactoryPanelPosition.STREAM_CODEC.encode(buf, this.getPanelPosition()));
@@ -285,9 +287,9 @@ public class FilterPanelBehaviour extends AbstractPanelBehaviour implements Rend
 
                 level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, .25f, .1f);
             }
-        } else if (!(heldItem.getItem() instanceof LogisticallyLinkedBlockItem) && !(heldItem.getItem() instanceof LogisticallyLinked)) {
+        } else {
             super.onShortInteract(player, hand, side, hitResult, client);
-        } else if (!client) LogisticallyLinkedBlockItem.assignFrequency(heldItem, player, this.network);
+        }
     }
 
     @Override
