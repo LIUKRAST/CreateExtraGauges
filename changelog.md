@@ -1,12 +1,16 @@
 Features
-- All ponders have been updated
-- Expression gauge now correctly sends data to string gauges
-- Int selector has a new model and now goes from -1024 to 1024
-- String gauge now uses two special regexes to interpret as redstone/integer, which is configurable
+- Linked button/lever have locked frequencies (Shift + R-Click to change)
 
 
 Fixes
-- Filter gauge doesn't drop filter item
-- Larger auto-crafting was broken when using re-packager
-- Display collector crashes the game
-- Rose quartz port crashes with numbers outside 0-15
+- Passive gauges don't save the crafting grid's width
+- Integer selector value can go down to -1024
+- Misaligned text in ponder
+- String gauge crash when replacing a capture group that doesn't exist
+- Linked Buttons' timer resets when part of Animated Contraption
+
+
+Other changes
+- Changes to the english localisation for ponder scenes
+- `passive_gauge_clear` + `filter_gauge_clear` are now in the `extra_gauges` namespace
+- Adjusted the code for linked button/lever
