@@ -1,5 +1,6 @@
 package net.liukrast.eg.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsInputHandler;
@@ -17,22 +18,19 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ValueSettingsInputHandler.class)
 public class ValueSettingsInputHandlerMixin {
-    @ModifyReturnValue(method = "canInteract", at = @At(value = "RETURN"))
-    private static boolean canInteract(boolean original, @Local(name = "player") Player player) {
-        Minecraft mc = Minecraft.getInstance();
-        Level level = mc.level;
-        Block block = null;
-
-        if (level != null && mc.hitResult instanceof BlockHitResult hitResult) {
-            BlockPos pos = hitResult.getBlockPos();
-            block = level.getBlockState(pos).getBlock();
-        }
-
-        return block instanceof LinkedControlBlock ? createExtraGauges$canInteract(player) : original;
-    }
-
-    @Unique
-    private static boolean createExtraGauges$canInteract(Player player) {
-        return player != null && !player.isSpectator() && !AdventureUtil.isAdventure(player);
+    @ModifyExpressionValue(
+            method = "onBlockActivated",
+            at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/ValueSettingsInputHandler;canInteract(Lnet/minecraft/world/entity/player/Player;)Z")
+    )
+    private static boolean canInteract(
+            boolean original,
+            @Local(name = "world") Level level,
+            @Local(name = "pos") BlockPos pos,
+            @Local(name = "player") Player player
+    ) {
+        Block block = level.getBlockState(pos).getBlock();
+        return block instanceof LinkedControlBlock
+                ? player != null && !player.isSpectator() && !AdventureUtil.isAdventure(player)
+                : original;
     }
 }
