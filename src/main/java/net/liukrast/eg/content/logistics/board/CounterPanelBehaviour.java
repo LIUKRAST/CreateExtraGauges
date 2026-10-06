@@ -6,6 +6,9 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import com.simibubi.create.foundation.utility.CreateLang;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.data.Pair;
+import net.liukrast.deployer.lib.blockEntity.behaviour.advancedValueSettings.AdvancedValueSettingsBehaviour;
+import net.liukrast.deployer.lib.blockEntity.behaviour.advancedValueSettings.RowData;
 import net.liukrast.deployer.lib.logistics.board.NumericalScrollPanelBehaviour;
 import net.liukrast.deployer.lib.logistics.board.PanelType;
 import net.liukrast.deployer.lib.logistics.board.connection.PanelConnectionBuilder;
@@ -21,11 +24,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.List;
+import java.util.function.Function;
 
-public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
+public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour implements AdvancedValueSettingsBehaviour {
     public CounterPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(Component.translatable("create.logistics.counter_threshold"), type, be, slot);
-        between(0, 1024);
+        between(0, Integer.MAX_VALUE);
     }
 
     @Override
@@ -55,8 +59,18 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
     }
 
     @Override
+    public List<RowData> getRowData() {
+        return List.of(new RowData(Component.translatable("extra_gauges.counter_panel.threshold"), 0, Integer.MAX_VALUE));
+    }
+
+    @Override
     public MutableComponent formatSettings(ValueSettings settings) {
         return CreateLang.number(settings.row()*256 + settings.value()).component();
+    }
+
+    @Override
+    public Function<ValueSettings, Pair<Integer, String>> getFormatter() {
+        return vs -> Pair.of(0, Integer.toString(vs.row()*256 + vs.value()));
     }
 
     @Override
@@ -65,6 +79,14 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour {
         if (!valueSetting.equals(getValueSettings()))
             playFeedbackSound(this);
         setValue(valueSetting.row()*256 + value);
+    }
+
+    @Override
+    public void setValueSettings(Player player, int row, double value, boolean b) {
+        var valueSettings = getValueSettings();
+        if (valueSettings.row() != row || valueSettings.value() != value)
+            playFeedbackSound(this);
+        setValue(row * 256 + (int)value);
     }
 
     @Override

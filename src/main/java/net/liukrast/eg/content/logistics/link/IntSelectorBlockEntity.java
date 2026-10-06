@@ -7,6 +7,9 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.CreateLang;
+import net.createmod.catnip.data.Pair;
+import net.liukrast.deployer.lib.blockEntity.behaviour.advancedValueSettings.AdvancedScrollValueBehaviour;
+import net.liukrast.deployer.lib.blockEntity.behaviour.advancedValueSettings.RowData;
 import net.liukrast.deployer.lib.logistics.board.connection.AbstractPanelSupportBehaviour;
 import net.liukrast.deployer.lib.logistics.board.connection.PanelConnectionBuilder;
 import net.liukrast.deployer.lib.registry.DeployerPanelConnections;
@@ -21,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class IntSelectorBlockEntity extends SmartBlockEntity {
 
@@ -33,7 +37,7 @@ public class IntSelectorBlockEntity extends SmartBlockEntity {
 
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        var behaviour = new ScrollValueBehaviour(Component.translatable("create.logistics.int_selection"), this, new IntSelectorValueBox()) {
+        var behaviour = new AdvancedScrollValueBehaviour(Component.translatable("create.logistics.int_selection"), this, new IntSelectorValueBox()) {
             @Override
             public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
                 ImmutableList<Component> rows = ImmutableList.of(
@@ -48,6 +52,18 @@ public class IntSelectorBlockEntity extends SmartBlockEntity {
                 );
                 ValueSettingsFormatter formatter = new ValueSettingsFormatter(this::formatSettings);
                 return new ValueSettingsBoard(label, 256, 32, rows, formatter);
+            }
+
+            @Override
+            public List<RowData> getRowData() {
+                return List.of(
+                        new RowData(Component.literal("Value"), Integer.MIN_VALUE, Integer.MAX_VALUE)
+                );
+            }
+
+            @Override
+            public Function<ValueSettings, Pair<Integer, String>> getFormatter() {
+                return (vs) -> Pair.of(0, Integer.toString(formatValue(vs.row(), vs.value())));
             }
 
             @Override
@@ -87,7 +103,7 @@ public class IntSelectorBlockEntity extends SmartBlockEntity {
                 return "Numerical";
             }
         };
-        behaviour.between(-1024, 1024);
+        behaviour.between(-1_000_000, 1_000_000);
         behaviours.add(behaviour);
         this.behaviour = behaviour;
         behaviours.add(panelSupport = new AbstractPanelSupportBehaviour(this, () -> true, () -> {}) {

@@ -78,6 +78,7 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
         add("extra_gauges.gui.string_panel.replacement", "Replacement:");
 
         add("extra_gauges.counter_panel.no_limit", "No limit");
+        add("extra_gauges.counter_panel.threshold", "Threshold");
 
         add("extra_gauges.gui.filter_panel.eject", "Eject filter");
 
