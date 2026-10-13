@@ -5,6 +5,7 @@ import com.simibubi.create.content.logistics.BigItemStack;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelScreen;
+import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelSetItemMenu;
 import com.simibubi.create.content.logistics.filter.FilterItem;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.content.logistics.packager.InventorySummary;
@@ -36,7 +37,9 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -150,6 +153,11 @@ public class PassivePanelBehaviour extends OrderingPanelBehaviour implements Wid
     }
 
     @Override
+    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+        return FactoryPanelSetItemMenu.create(containerId, playerInventory, this);
+    }
+
+    @Override
     public ValueSettings getValueSettings() {
         return null;
     }
@@ -166,6 +174,10 @@ public class PassivePanelBehaviour extends OrderingPanelBehaviour implements Wid
     public MutableComponent getLabel() {
         String key;
 
+        if (getFilter().isEmpty())
+            return CreateLang.translate("factory_panel.new_factory_task")
+                    .component();
+
         if (targetedBy.isEmpty())
             return Component.translatable("extra_gauges.gui.passive_panel.no_recipe")
                     .withStyle(ChatFormatting.RED);
@@ -175,9 +187,7 @@ public class PassivePanelBehaviour extends OrderingPanelBehaviour implements Wid
                     .style(ChatFormatting.RED)
                     .component();
 
-        if (getFilter().isEmpty())
-            key = "factory_panel.new_factory_task";
-        else if (waitingForNetwork)
+        if (waitingForNetwork)
             key = "factory_panel.some_links_unloaded";
         else if (getAmount() == 0 || targetedBy.isEmpty())
             return getFilter().getHoverName()
@@ -266,6 +276,11 @@ public class PassivePanelBehaviour extends OrderingPanelBehaviour implements Wid
     @Override
     public String getCountName(int i) {
         return i + (upTo ? "" : "▤");
+    }
+
+    @Override
+    public boolean isCountVisible() {
+        return false;
     }
 
     @Override
