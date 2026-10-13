@@ -3,7 +3,6 @@ package net.liukrast.eg.registry;
 import net.liukrast.deployer.lib.logistics.board.PanelType;
 import net.liukrast.deployer.lib.registry.DeployerRegistries;
 import net.liukrast.eg.ExtraGauges;
-import net.liukrast.eg.content.logistics.board.ExpressionPanelBehaviour;
 import net.liukrast.eg.content.logistics.board.*;
 import net.liukrast.eg.content.logistics.board.comparator.ComparatorPanelBehaviour;
 import net.neoforged.bus.api.IEventBus;

@@ -12,8 +12,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 
 import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.*;
-import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.addPanelConnection;
-import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.Gauge.setPanelItem;
 import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.displayText;
 import static net.liukrast.deployer.lib.helper.PonderSceneHelpers.simpleInit;
 
