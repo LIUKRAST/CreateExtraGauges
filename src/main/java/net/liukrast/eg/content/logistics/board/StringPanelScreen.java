@@ -31,16 +31,16 @@ public class StringPanelScreen extends BasicPanelScreen<StringPanelBehaviour> {
         int y = guiTop + (rewriter ? -34 : 0);
         var regexText = regexBox == null ? behaviour.getRegex() : regexBox.getValue();
         regexBox = new EditBox(font, x+32, y+40+34, 130, 20, Component.empty());
-        if(regexText != null) regexBox.setValue(regexText);
         regexBox.setMaxLength(100);
+        if(regexText != null) regexBox.setValue(regexText);
         regexBox.setTextColor(0xFF545454);
         regexBox.setTextShadow(false);
         regexBox.setBordered(false);
         addRenderableWidget(regexBox);
         var replaceText = replaceBox == null ? behaviour.getReplacement() : replaceBox.getValue();
         replaceBox = new EditBox(font,x+32,y+40+34+34,130,30, Component.empty());
-        if(replaceText != null) replaceBox.setValue(replaceText);
         replaceBox.setMaxLength(100);
+        if(replaceText != null) replaceBox.setValue(replaceText);
         replaceBox.setTextColor(0xFF545454);
         replaceBox.setTextShadow(false);
         replaceBox.setBordered(false);
@@ -49,8 +49,8 @@ public class StringPanelScreen extends BasicPanelScreen<StringPanelBehaviour> {
         if(rewriter) return;
         var joinText = joinBox == null ? behaviour.getJoin() : joinBox.getValue();
         joinBox = new EditBox(font, x+32, y+40, 130, 20, Component.empty());
-        if(joinText != null) joinBox.setValue(joinText);
         joinBox.setMaxLength(100);
+        if(joinText != null) joinBox.setValue(joinText);
         joinBox.setTextColor(0xFF545454);
         joinBox.setTextShadow(false);
         joinBox.setBordered(false);

@@ -40,8 +40,8 @@ public class ExpressionPanelScreen extends BasicPanelScreen<ExpressionPanelBehav
         int y = guiTop;
         String oldOrDefault = expressionBox == null ? behaviour.getExpression() : expressionBox.getValue();
         expressionBox = new EditBox(font, x+39, y+54, 130, 20, Component.empty());
-        expressionBox.setValue(oldOrDefault);
         expressionBox.setMaxLength(128);
+        expressionBox.setValue(oldOrDefault);
         expressionBox.setTextColor(0xFF545454);
         expressionBox.setTextShadow(false);
         expressionBox.setBordered(false);
