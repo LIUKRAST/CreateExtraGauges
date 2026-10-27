@@ -105,7 +105,13 @@ public class ComparatorPanelBehaviour extends ScrollOptionPanelBehaviour<Compara
         nbt.putBoolean("Advanced", advanced);
         nbt.putIntArray("Right", right);
         nbt.putIntArray("Left", left);
+    }
 
+    @Override
+    public void easyWriteSafe(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.easyWriteSafe(nbt, registries);
+        nbt.putInt("ComparatorMode", comparatorMode.ordinal());
+        nbt.putBoolean("Advanced", advanced);
     }
 
     @Override

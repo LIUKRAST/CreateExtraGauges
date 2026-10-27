@@ -83,7 +83,6 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour {
     /* DATA */
     @Override
     public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyWrite(nbt, registries, clientPacket);
         nbt.putString("Value", value);
         nbt.putString("Join", join);
         nbt.putString("Regex", regex);
@@ -91,8 +90,14 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour {
     }
 
     @Override
+    public void easyWriteSafe(CompoundTag nbt, HolderLookup.Provider registries) {
+        nbt.putString("Join", join);
+        nbt.putString("Regex", regex);
+        nbt.putString("Replacement", replacement);
+    }
+
+    @Override
     public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyRead(nbt, registries, clientPacket);
         value = nbt.getString("Value");
         join = nbt.getString("Join");
         regex = nbt.getString("Regex");

@@ -225,6 +225,12 @@ public class PassivePanelBehaviour extends OrderingPanelBehaviour implements Wid
     }
 
     @Override
+    public void easyWriteSafe(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.easyWriteSafe(nbt, registries);
+        nbt.put("Filter", getFilter().saveOptional(registries));
+    }
+
+    @Override
     public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         super.easyRead(nbt, registries, clientPacket);
         filter = FilterItemStack.of(registries, nbt.getCompound("Filter"));

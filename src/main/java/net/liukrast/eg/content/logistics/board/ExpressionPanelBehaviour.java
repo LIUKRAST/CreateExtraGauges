@@ -135,14 +135,17 @@ public class ExpressionPanelBehaviour extends AbstractPanelBehaviour {
 
     @Override
     public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyWrite(nbt, registries, clientPacket);
         nbt.putFloat("Output", output);
         nbt.putString("Expression", numberExpression);
     }
 
     @Override
+    public void easyWriteSafe(CompoundTag nbt, HolderLookup.Provider registries) {
+        nbt.putString("Expression", numberExpression);
+    }
+
+    @Override
     public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyRead(nbt, registries, clientPacket);
         output = nbt.getFloat("Output");
         numberExpression = nbt.getString("Expression");
     }

@@ -190,15 +190,19 @@ public class FilterPanelBehaviour extends AbstractPanelBehaviour implements Rend
 
     @Override
     public void easyWrite(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyWrite(nbt, registries, clientPacket);
         nbt.put("Filter", getFilter().saveOptional(registries));
-        nbt.putUUID("Freq", this.network);
+        nbt.putUUID("Freq", network);
+        nbt.put("CurrentItemStack", cachedFilter.item().saveOptional(registries));
+    }
+
+    @Override
+    public void easyWriteSafe(CompoundTag nbt, HolderLookup.Provider registries) {
+        nbt.putUUID("Freq", network);
         nbt.put("CurrentItemStack", cachedFilter.item().saveOptional(registries));
     }
 
     @Override
     public void easyRead(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        super.easyRead(nbt, registries, clientPacket);
         filter = FilterItemStack.of(registries, nbt.getCompound("Filter"));
         cachedFilter = FilterItemStack.of(registries, nbt.getCompound("CurrentItemStack"));
     }
