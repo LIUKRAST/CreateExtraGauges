@@ -35,6 +35,13 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BarrelBlockEntity;
+import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -113,6 +120,7 @@ public final class PanelBenchmark {
             case "order" -> buildConnectionOrder(level);
             case "filter" -> buildFilterSwap(level);
             case "rewrite" -> buildAddressRewrite(level);
+            case "barrel" -> buildBarrelRewrite(level);
             default -> throw new IllegalArgumentException("Unknown scenario " + SCENARIO);
         }
     }
@@ -336,6 +344,75 @@ public final class PanelBenchmark {
                     + ", package address='" + address + "' (expected 'Bobce')"
                     + ("Bobce".equals(address) ? " OK" : " MISMATCH"));
         });
+    }
+
+    private static void buildBarrelRewrite(ServerLevel level) {
+        BlockPos tankPos = new BlockPos(0, Y, 100);
+        level.setBlock(tankPos, AllBlocks.FLUID_TANK.getDefaultState(), 3);
+        BlockPos jarPackagerPos = tankPos.above();
+        Block jarPackagerBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse("create_factory_logistics:jar_packager"));
+        boolean hasFL = jarPackagerBlock != Blocks.AIR;
+        if (hasFL) {
+            BlockState state = jarPackagerBlock.defaultBlockState();
+            if (state.hasProperty(PackagerBlock.FACING)) state = state.setValue(PackagerBlock.FACING, Direction.UP);
+            level.setBlock(jarPackagerPos, state, 3);
+        }
+        BlockPos a = placeBarrelStation(level, new BlockPos(6, Y, 100), true);
+        BlockPos b = placeBarrelStation(level, new BlockPos(12, Y, 100), false);
+        BlockPos c = placeBarrelStation(level, new BlockPos(18, Y, 100), true);
+
+        sanityChecks.add(() -> {
+            ItemStack jar = ItemStack.EMPTY;
+            if (hasFL && level.getBlockEntity(tankPos) instanceof FluidTankBlockEntity tank) {
+                tank.getTankInventory().fill(new FluidStack(Fluids.WATER, 4000), IFluidHandler.FluidAction.EXECUTE);
+                if (level.getBlockEntity(jarPackagerPos) instanceof PackagerBlockEntity jarPackager) {
+                    jarPackager.activate();
+                    jar = jarPackager.heldBox.copy();
+                    jarPackager.heldBox = ItemStack.EMPTY;
+                }
+            }
+            report.add("  sanity: FL jar created=" + (jar.isEmpty() ? "no" : jar.getItem() + " isPackage=" + PackageItem.isPackage(jar)));
+            if (!jar.isEmpty()) PackageItem.addAddress(jar, "ciaoaoaoa");
+            ItemStack itemBox = PackageItem.containing(List.of(new ItemStack(Items.DIAMOND, 3)));
+            PackageItem.addAddress(itemBox, "ciaoaoaoa");
+            runBarrelStation(level, "A jar+item, gauge", a, jar.copy(), itemBox.copy());
+            runBarrelStation(level, "B jar+item, no gauge", b, jar.copy(), itemBox.copy());
+            runBarrelStation(level, "C item only, gauge", c, ItemStack.EMPTY, itemBox.copy());
+        });
+    }
+
+    private static BlockPos placeBarrelStation(ServerLevel level, BlockPos barrelPos, boolean withGauge) {
+        level.setBlock(barrelPos, Blocks.BARREL.defaultBlockState(), 3);
+        BlockPos packagerPos = barrelPos.above();
+        level.setBlock(packagerPos, AllBlocks.PACKAGER.getDefaultState().setValue(PackagerBlock.FACING, Direction.UP), 3);
+        if (withGauge) {
+            BlockPos panelPos = packagerPos.north();
+            level.setBlock(panelPos, AllBlocks.FACTORY_GAUGE.getDefaultState()
+                    .setValue(BlockStateProperties.ATTACH_FACE, AttachFace.WALL)
+                    .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH), 3);
+            var panel = (StringPanelBehaviour) placeCustomPanel(level, panelPos, FactoryPanelBlock.PanelSlot.TOP_LEFT, (PanelBlockItem) EGItems.STRING_GAUGE.get());
+            panel.setFilter("", "a", "b");
+        }
+        return packagerPos;
+    }
+
+    private static void runBarrelStation(ServerLevel level, String name, BlockPos packagerPos, ItemStack first, ItemStack second) {
+        if (level.getBlockEntity(packagerPos.below()) instanceof BarrelBlockEntity barrel) {
+            barrel.setItem(0, first);
+            barrel.setItem(1, second);
+        }
+        if (!(level.getBlockEntity(packagerPos) instanceof PackagerBlockEntity packager)) {
+            report.add("  " + name + ": packager missing");
+            return;
+        }
+        packager.activate();
+        ItemStack held = packager.heldBox;
+        StringBuilder left = new StringBuilder();
+        if (level.getBlockEntity(packagerPos.below()) instanceof BarrelBlockEntity barrel)
+            for (int i = 0; i < barrel.getContainerSize(); i++)
+                if (!barrel.getItem(i).isEmpty()) left.append(" ").append(barrel.getItem(i));
+        report.add("  " + name + ": out=" + (held.isEmpty() ? "<nothing>" : held + " addr='" + PackageItem.getAddress(held) + "'")
+                + " signAddress='" + packager.signBasedAddress + "' left in barrel:" + left);
     }
 
     private static BlockPos nextPos(int[] counter) {
