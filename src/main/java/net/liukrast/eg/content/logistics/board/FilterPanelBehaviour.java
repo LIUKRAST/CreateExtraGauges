@@ -51,6 +51,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class FilterPanelBehaviour extends AbstractPanelBehaviour implements RenderFilterSlot {
@@ -125,9 +127,7 @@ public class FilterPanelBehaviour extends AbstractPanelBehaviour implements Rend
             if(panel == null) continue;
             var by = panel.targetedBy.get(this.getPanelPosition());
             if(by == null) continue;
-            int toBeAdded = by.amount;
-            if(!panel.upTo) toBeAdded *= panel.getMaxStackSize();
-            needed+=toBeAdded;
+            needed += by.amount;
         }
         // Check if any items match that amount
         if(cachedFilter.isEmpty()) {
@@ -151,10 +151,14 @@ public class FilterPanelBehaviour extends AbstractPanelBehaviour implements Rend
             for(var panelPos : targeting) {
                 var panel = at(getWorld(), panelPos);
                 if(panel == null) continue;
-                for(int i = 0; i < panel.activeCraftingArrangement.size(); i++) {
-                    if(!ItemStack.isSameItemSameComponents(panel.activeCraftingArrangement.get(i), this.filter.item())) continue;
-                    panel.activeCraftingArrangement.set(i, stack.stack.copyWithCount(panel.activeCraftingArrangement.get(i).getCount()));
+                List<ItemStack> arrangement = new ArrayList<>(panel.activeCraftingArrangement);
+                for(int i = 0; i < arrangement.size(); i++) {
+                    if(!ItemStack.isSameItemSameComponents(arrangement.get(i), this.filter.item())) continue;
+                    arrangement.set(i, stack.stack.copyWithCount(arrangement.get(i).getCount()));
                 }
+                panel.activeCraftingArrangement = arrangement;
+                panel.blockEntity.setChanged();
+                panel.blockEntity.sendData();
             }
             this.filter = FilterItemStack.of(stack.stack.copy());
             blockEntity.setChanged();
