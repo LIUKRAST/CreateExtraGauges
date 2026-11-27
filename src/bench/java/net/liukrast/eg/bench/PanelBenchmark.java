@@ -1,6 +1,8 @@
 package net.liukrast.eg.bench;
 
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllDataComponents;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
@@ -11,6 +13,7 @@ import com.simibubi.create.content.logistics.packagerLink.PackagerLinkBlock;
 import com.simibubi.create.content.logistics.packagerLink.PackagerLinkBlockEntity;
 import net.liukrast.deployer.lib.logistics.board.PanelBlockItem;
 import net.liukrast.deployer.lib.logistics.board.ScrollOptionPanelBehaviour;
+import net.liukrast.eg.content.logistics.board.FilterPanelBehaviour;
 import net.liukrast.eg.content.logistics.board.LogicalMode;
 import net.liukrast.eg.content.logistics.board.PassivePanelBehaviour;
 import net.liukrast.eg.content.logistics.board.StringPanelBehaviour;
@@ -24,6 +27,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -104,6 +108,7 @@ public final class PanelBenchmark {
             case "stock" -> buildStockNetwork(level);
             case "logic" -> buildLogicCascade(level);
             case "order" -> buildConnectionOrder(level);
+            case "filter" -> buildFilterSwap(level);
             default -> throw new IllegalArgumentException("Unknown scenario " + SCENARIO);
         }
     }
@@ -249,6 +254,52 @@ public final class PanelBenchmark {
             target.notifiedFromInput();
             report.add("  sanity: expected='" + expected + "', live='" + live + "', after reload='" + target.value + "'"
                     + (expected.equals(live) && expected.equals(target.value) ? " OK" : " MISMATCH"));
+        });
+    }
+
+    private static void buildFilterSwap(ServerLevel level) {
+        BlockPos chestPos = new BlockPos(0, Y, 60);
+        level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 3);
+        if (level.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
+            chest.setItem(0, new ItemStack(Items.OAK_PLANKS, 2));
+            chest.setItem(1, new ItemStack(Items.BIRCH_PLANKS, 10));
+        }
+        BlockPos packagerPos = chestPos.above();
+        level.setBlock(packagerPos, AllBlocks.PACKAGER.getDefaultState().setValue(PackagerBlock.FACING, Direction.UP), 3);
+        BlockPos linkPos = packagerPos.east();
+        level.setBlock(linkPos, AllBlocks.STOCK_LINK.getDefaultState()
+                .setValue(PackagerLinkBlock.FACE, AttachFace.WALL)
+                .setValue(PackagerLinkBlock.FACING, Direction.EAST), 3);
+        if (level.getBlockEntity(linkPos) instanceof PackagerLinkBlockEntity link)
+            link.behaviour.freqId = NETWORK;
+
+        ItemStack listFilter = AllItems.FILTER.asStack();
+        listFilter.set(AllDataComponents.FILTER_ITEMS, ItemContainerContents.fromItems(List.of(
+                new ItemStack(Items.OAK_PLANKS), new ItemStack(Items.BIRCH_PLANKS))));
+
+        var filter = (FilterPanelBehaviour) placeCustomPanel(level, new BlockPos(4, Y, 60), FactoryPanelBlock.PanelSlot.TOP_LEFT, (PanelBlockItem) EGItems.FILTER_GAUGE.get());
+        filter.setFilter(listFilter);
+        filter.ponder$setFilter(new ItemStack(Items.OAK_PLANKS));
+
+        var target = placeVanillaPanel(level, new BlockPos(4, Y, 60), FactoryPanelBlock.PanelSlot.TOP_RIGHT);
+        target.setFilter(new ItemStack(Items.STICK));
+        target.count = 1;
+        target.upTo = false;
+        target.recipeAddress = "bench";
+        target.addConnection(filter.getPanelPosition());
+        target.targetedBy.get(filter.getPanelPosition()).amount = 4;
+        target.activeCraftingArrangement = new ArrayList<>(List.of(new ItemStack(Items.OAK_PLANKS, 2), ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.OAK_PLANKS, 2)));
+        FactoryPanelPosition filterPos = filter.getPanelPosition();
+        FactoryPanelPosition targetPos = target.getPanelPosition();
+
+        sanityChecks.add(() -> {
+            var liveFilter = (FilterPanelBehaviour) FactoryPanelBehaviour.at(level, filterPos);
+            var liveTarget = FactoryPanelBehaviour.at(level, targetPos);
+            boolean swapped = liveFilter.getFilter().is(Items.BIRCH_PLANKS);
+            boolean arrangement = liveTarget.activeCraftingArrangement.getFirst().is(Items.BIRCH_PLANKS);
+            report.add("  sanity: filter gauge item=" + BuiltInRegistries.ITEM.getKey(liveFilter.getFilter().getItem())
+                    + ", first arrangement slot=" + BuiltInRegistries.ITEM.getKey(liveTarget.activeCraftingArrangement.getFirst().getItem())
+                    + (swapped && arrangement ? " OK" : " MISMATCH"));
         });
     }
 
