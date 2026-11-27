@@ -161,7 +161,7 @@ dependencies {
     implementation fileTree(dir: "${rootDir}/libs", include: ['*.jar'])
 
     // Compat
-    implementation "curse.maven:create-fluidlogistic-1475079:8052709"
+    implementation "maven.modrinth:createfluidlogistic:1.3.3-mc1.21.1"
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
