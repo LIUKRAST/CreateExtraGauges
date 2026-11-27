@@ -164,8 +164,12 @@ dependencies {
         runtimeOnly("maven.modrinth:QMGO17gm:${project.findProperty("fl_version") ?: "1.6.1"}")
     }
 
-    // Compat
-    implementation "maven.modrinth:createfluidlogistic:1.3.3-mc1.21.1"
+    // Compat (Create: FluidLogistics crashes next to Create Factory Logistics, so it is left out of -PwithFL runs)
+    if (project.findProperty("withFL") == "true") {
+        compileOnly "maven.modrinth:createfluidlogistic:1.3.3-mc1.21.1"
+    } else {
+        implementation "maven.modrinth:createfluidlogistic:1.3.3-mc1.21.1"
+    }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
