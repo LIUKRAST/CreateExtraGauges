@@ -111,6 +111,10 @@ public class ExpressionPanelBehaviour extends AbstractPanelBehaviour {
 
     private float output;
     private String numberExpression = "";
+    private final DecimalFormat outputFormat = new DecimalFormat("###.##");
+    private Expression compiledExpression;
+    private String compiledSource;
+    private Set<String> compiledVariables;
 
     public ExpressionPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);
@@ -194,11 +198,7 @@ public class ExpressionPanelBehaviour extends AbstractPanelBehaviour {
                 ));
 
 
-                Expression expression = new ExpressionBuilder(numberExpression)
-                        .variables(variables.keySet())
-                        .functions(FUNCTIONS)
-                        .build();
-
+                Expression expression = compile(variables.keySet());
                 variables.forEach(expression::setVariable);
 
                 if (expression.validate().isValid()) {
@@ -215,6 +215,18 @@ public class ExpressionPanelBehaviour extends AbstractPanelBehaviour {
         notifyOutputs();
     }
 
+    private Expression compile(Set<String> variables) {
+        if (compiledExpression == null || !numberExpression.equals(compiledSource) || !variables.equals(compiledVariables)) {
+            compiledExpression = new ExpressionBuilder(numberExpression)
+                    .variables(variables)
+                    .functions(FUNCTIONS)
+                    .build();
+            compiledSource = numberExpression;
+            compiledVariables = Set.copyOf(variables);
+        }
+        return compiledExpression;
+    }
+
     public void setFilter(String numberExpression) {
         this.numberExpression = numberExpression;
         blockEntity.notifyUpdate();
@@ -223,8 +235,7 @@ public class ExpressionPanelBehaviour extends AbstractPanelBehaviour {
 
     @Override
     public MutableComponent getDisplayLinkComponent(boolean shortVersion) {
-        DecimalFormat df = new DecimalFormat("###.##");
-        return Component.literal(df.format(output));
+        return Component.literal(outputFormat.format(output));
     }
 
     @OnlyIn(Dist.CLIENT)

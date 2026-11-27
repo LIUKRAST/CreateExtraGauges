@@ -131,13 +131,6 @@ public class CounterPanelBehaviour extends NumericalScrollPanelBehaviour impleme
             else count++;
         }
         blockEntity.notifyUpdate();
-        for(FactoryPanelPosition panelPos : targeting) {
-            if(!getWorld().isLoaded(panelPos.pos()))
-                return;
-            FactoryPanelBehaviour behaviour = FactoryPanelBehaviour.at(getWorld(), panelPos);
-            if(behaviour == null) continue;
-            behaviour.checkForRedstoneInput();
-        }
         notifyOutputs();
     }
 

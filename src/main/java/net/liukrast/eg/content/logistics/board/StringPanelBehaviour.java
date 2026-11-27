@@ -4,7 +4,6 @@ import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.liukrast.deployer.lib.logistics.board.AbstractPanelBehaviour;
@@ -26,13 +25,16 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class StringPanelBehaviour extends AbstractPanelBehaviour {
+    private static CompiledRegex floatRegex;
+    private static CompiledRegex redstoneRegex;
+
     public String value, join, regex, replacement;
     private float floatValue = 0;
+    private CompiledRegex filterRegex;
 
     public StringPanelBehaviour(PanelType<?> type, FactoryPanelBlockEntity be, FactoryPanelBlock.PanelSlot slot) {
         super(type, be, slot);
@@ -42,32 +44,54 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour {
     /* IMPL */
     @Override
     public void addConnections(PanelConnectionBuilder builder) {
-        builder.registerBoth(DeployerPanelConnections.STRING.get(), () -> getDisplayLinkComponent(false).getString());
+        builder.registerBoth(DeployerPanelConnections.STRING.get(), this::currentValue);
         builder.registerOutput(DeployerPanelConnections.NUMBERS.get(), () -> floatValue);
-        builder.registerOutput(DeployerPanelConnections.REDSTONE.get(), () -> isTruthy(getDisplayLinkComponent(false).getString().toLowerCase()));
+        builder.registerOutput(DeployerPanelConnections.REDSTONE.get(), () -> isTruthy(currentValue()));
     }
 
-    private float parseFlexibleFloat(String in) {
-        if (in.isEmpty()) return 0f;
-        try {
-            Pattern pattern = Pattern.compile(ExtraGaugesConfig.STRING_TO_FLOAT_REGEX.get());
-            Matcher matcher = pattern.matcher(in);
+    private String currentValue() {
+        return value == null ? "" : value;
+    }
 
-            if (matcher.find()) {
-                try {
-                    return Float.parseFloat(matcher.group());
-                } catch (NumberFormatException e) {
-                    return 0;
-                }
-            }
-        } catch (PatternSyntaxException ignored) {}
-        return 0;
+    private static float parseFlexibleFloat(String in) {
+        if (in == null || in.isEmpty()) return 0f;
+        floatRegex = CompiledRegex.refresh(floatRegex, ExtraGaugesConfig.STRING_TO_FLOAT_REGEX.get());
+        if (floatRegex.pattern() == null) return 0f;
+        var matcher = floatRegex.pattern().matcher(in);
+        if (!matcher.find()) return 0f;
+        try {
+            return Float.parseFloat(matcher.group());
+        } catch (NumberFormatException e) {
+            return 0f;
+        }
     }
 
     public boolean isTruthy(String input) {
         if (input.isEmpty()) return false;
-        var regex = ExtraGaugesConfig.STRING_TO_REDSTONE_REGEX.get();
-        return input.toLowerCase().matches(regex);
+        redstoneRegex = CompiledRegex.refresh(redstoneRegex, ExtraGaugesConfig.STRING_TO_REDSTONE_REGEX.get());
+        return redstoneRegex.pattern() != null && redstoneRegex.pattern().matcher(input.toLowerCase()).matches();
+    }
+
+    private String applyFilter(String input) {
+        if (regex.isEmpty()) return input;
+        filterRegex = CompiledRegex.refresh(filterRegex, regex);
+        if (filterRegex.pattern() == null) return "RegexError";
+        try {
+            return filterRegex.pattern().matcher(input).replaceAll(replacement);
+        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+            return "RegexError";
+        }
+    }
+
+    private record CompiledRegex(String source, Pattern pattern) {
+        private static CompiledRegex refresh(CompiledRegex cached, String source) {
+            if (cached != null && cached.source.equals(source)) return cached;
+            try {
+                return new CompiledRegex(source, Pattern.compile(source));
+            } catch (PatternSyntaxException e) {
+                return new CompiledRegex(source, null);
+            }
+        }
     }
 
     @Override
@@ -116,28 +140,13 @@ public class StringPanelBehaviour extends AbstractPanelBehaviour {
         String res = String.join(join, result);
         int maxLength = ExtraGaugesConfig.STRING_MAX_LENGTH.get();
         if (res.length() > maxLength) res = res.substring(0, maxLength);
-
-        if (!regex.isEmpty()) {
-            try {
-                Pattern pattern = Pattern.compile(regex);
-                res = pattern.matcher(res).replaceAll(replacement);
-            } catch (PatternSyntaxException | IndexOutOfBoundsException e) {
-                res = "RegexError";
-            }
-        }
+        res = applyFilter(res);
         if (res.equals(value))
             return;
         value = res;
         floatValue = parseFlexibleFloat(value);
 
         blockEntity.notifyUpdate();
-        for (FactoryPanelPosition panelPos : targeting) {
-            if (!getWorld().isLoaded(panelPos.pos()))
-                return;
-            FactoryPanelBehaviour behaviour = FactoryPanelBehaviour.at(getWorld(), panelPos);
-            if (behaviour == null) continue;
-            behaviour.checkForRedstoneInput();
-        }
         notifyOutputs();
     }
 

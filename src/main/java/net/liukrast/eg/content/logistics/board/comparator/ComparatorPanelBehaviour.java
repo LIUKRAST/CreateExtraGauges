@@ -204,13 +204,6 @@ public class ComparatorPanelBehaviour extends ScrollOptionPanelBehaviour<Compara
         if (shouldPower != redstonePowered) return;
         redstonePowered = !shouldPower;
         blockEntity.notifyUpdate();
-        for (FactoryPanelPosition panelPos : targeting) {
-            if (!getWorld().isLoaded(panelPos.pos()))
-                return;
-            FactoryPanelBehaviour behaviour = FactoryPanelBehaviour.at(getWorld(), panelPos);
-            if (behaviour == null) continue;
-            behaviour.checkForRedstoneInput();
-        }
         notifyOutputs();
     }
     //endregion
