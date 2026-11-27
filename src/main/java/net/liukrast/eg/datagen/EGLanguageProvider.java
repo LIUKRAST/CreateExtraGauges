@@ -173,8 +173,8 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
 
         createPonder(
                 "counter_gauge", "Count inputs with the counter gauge",
-                "Counter gauges count redstone pulses",
-                "...so you don't have to.",
+                "Counter gauge will well... count redstone inputs!",
+                "...because we all know you can't even count to 10.",
                 "Every time a redstone input arrives to the gauge...",
                 "...it will add 1.",
                 "Hold right-click to set the threshold...",
