@@ -7,7 +7,9 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
+import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.content.logistics.packager.PackagerBlock;
+import com.simibubi.create.content.logistics.packager.PackagerBlockEntity;
 import com.simibubi.create.content.logistics.packagerLink.LogisticsManager;
 import com.simibubi.create.content.logistics.packagerLink.PackagerLinkBlock;
 import com.simibubi.create.content.logistics.packagerLink.PackagerLinkBlockEntity;
@@ -34,6 +36,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -109,6 +112,7 @@ public final class PanelBenchmark {
             case "logic" -> buildLogicCascade(level);
             case "order" -> buildConnectionOrder(level);
             case "filter" -> buildFilterSwap(level);
+            case "rewrite" -> buildAddressRewrite(level);
             default -> throw new IllegalArgumentException("Unknown scenario " + SCENARIO);
         }
     }
@@ -300,6 +304,37 @@ public final class PanelBenchmark {
             report.add("  sanity: filter gauge item=" + BuiltInRegistries.ITEM.getKey(liveFilter.getFilter().getItem())
                     + ", first arrangement slot=" + BuiltInRegistries.ITEM.getKey(liveTarget.activeCraftingArrangement.getFirst().getItem())
                     + (swapped && arrangement ? " OK" : " MISMATCH"));
+        });
+    }
+
+    private static void buildAddressRewrite(ServerLevel level) {
+        BlockPos chestPos = new BlockPos(0, Y, 80);
+        level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 3);
+        ItemStack box = PackageItem.containing(List.of(new ItemStack(Items.DIAMOND, 3)));
+        PackageItem.addAddress(box, "Alice");
+        if (level.getBlockEntity(chestPos) instanceof ChestBlockEntity chest)
+            chest.setItem(0, box);
+        BlockPos packagerPos = chestPos.above();
+        level.setBlock(packagerPos, AllBlocks.PACKAGER.getDefaultState().setValue(PackagerBlock.FACING, Direction.UP), 3);
+
+        BlockPos panelPos = packagerPos.north();
+        level.setBlock(panelPos, AllBlocks.FACTORY_GAUGE.getDefaultState()
+                .setValue(BlockStateProperties.ATTACH_FACE, AttachFace.WALL)
+                .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH), 3);
+        var panel = (StringPanelBehaviour) placeCustomPanel(level, panelPos, FactoryPanelBlock.PanelSlot.TOP_LEFT, (PanelBlockItem) EGItems.STRING_GAUGE.get());
+        panel.setFilter("", "Ali(.*)", "Bob$1");
+
+        sanityChecks.add(() -> {
+            if (!(level.getBlockEntity(packagerPos) instanceof PackagerBlockEntity packager)) {
+                report.add("  sanity: packager missing MISMATCH");
+                return;
+            }
+            packager.activate();
+            String address = packager.heldBox.isEmpty() ? "<no package>" : PackageItem.getAddress(packager.heldBox);
+            report.add("  sanity: factory logistics loaded=" + ModList.get().isLoaded("create_factory_logistics")
+                    + ", rewriter interaction=" + panel.hasInteraction("rewriter")
+                    + ", package address='" + address + "' (expected 'Bobce')"
+                    + ("Bobce".equals(address) ? " OK" : " MISMATCH"));
         });
     }
 
