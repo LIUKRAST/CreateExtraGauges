@@ -18,6 +18,7 @@ import net.liukrast.eg.registry.EGItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
@@ -102,6 +103,7 @@ public final class PanelBenchmark {
         switch (SCENARIO) {
             case "stock" -> buildStockNetwork(level);
             case "logic" -> buildLogicCascade(level);
+            case "order" -> buildConnectionOrder(level);
             default -> throw new IllegalArgumentException("Unknown scenario " + SCENARIO);
         }
     }
@@ -221,6 +223,32 @@ public final class PanelBenchmark {
             report.add("  sanity: logic panels=" + all.size() + ", with an input=" + connected
                     + ", string panels with value=" + strings.stream().filter(s -> s.value != null && !s.value.isEmpty()).count() + "/" + strings.size()
                     + ", last string value='" + strings.getLast().value + "'");
+        });
+    }
+
+    private static void buildConnectionOrder(ServerLevel level) {
+        PanelBlockItem stringItem = (PanelBlockItem) EGItems.STRING_GAUGE.get();
+        var slots = FactoryPanelBlock.PanelSlot.values();
+        var target = (StringPanelBehaviour) placeCustomPanel(level, new BlockPos(10, Y, 40), slots[0], stringItem);
+        String expected = "HGFEDCBA";
+        for (int i = 0; i < expected.length(); i++) {
+            BlockPos pos = new BlockPos(10 + (i * 7) % 11 - 5, Y, 40 + (i * 5) % 9 - 4);
+            if (pos.equals(target.getPanelPosition().pos())) pos = pos.above();
+            var source = (StringPanelBehaviour) placeCustomPanel(level, pos, slots[i % 4], stringItem);
+            source.setFilter("", "^$", String.valueOf(expected.charAt(i)));
+            source.value = String.valueOf(expected.charAt(i));
+            target.addConnection(source.getPanelPosition());
+        }
+
+        sanityChecks.add(() -> {
+            target.notifiedFromInput();
+            String live = target.value;
+            CompoundTag tag = new CompoundTag();
+            target.write(tag, level.registryAccess(), false);
+            target.read(tag, level.registryAccess(), false);
+            target.notifiedFromInput();
+            report.add("  sanity: expected='" + expected + "', live='" + live + "', after reload='" + target.value + "'"
+                    + (expected.equals(live) && expected.equals(target.value) ? " OK" : " MISMATCH"));
         });
     }
 
