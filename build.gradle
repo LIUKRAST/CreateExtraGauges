@@ -160,6 +160,10 @@ dependencies {
 
     implementation fileTree(dir: "${rootDir}/libs", include: ['*.jar'])
 
+    if (project.findProperty("withFL") == "true") {
+        runtimeOnly("maven.modrinth:QMGO17gm:${project.findProperty("fl_version") ?: "1.6.1"}")
+    }
+
     // Compat
     implementation "maven.modrinth:createfluidlogistic:1.3.3-mc1.21.1"
 }
