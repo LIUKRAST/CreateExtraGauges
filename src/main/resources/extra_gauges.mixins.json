@@ -16,6 +16,7 @@
     "LinkRendererMixin",
 	"PackagerBlockEntityMixin",
     "withoutfl.PackagerBlockEntitySendMixin",
+    "withfl.PackagerBlockEntityFLSendMixin",
 	"PackageRepackageHelperMixin",
 	"ServerboundConfigPacketMixin",
     "ValueSettingsClientMixin",

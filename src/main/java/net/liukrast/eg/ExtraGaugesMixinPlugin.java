@@ -10,13 +10,19 @@ import java.util.Set;
 
 public class ExtraGaugesMixinPlugin implements IMixinConfigPlugin {
     private static final String WITHOUT_FL = "net.liukrast.eg.mixin.withoutfl.";
+    private static final String WITH_FL = "net.liukrast.eg.mixin.withfl.";
     private static final String FL_MOD_ID = "create_factory_logistics";
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if(!mixinClassName.startsWith(WITHOUT_FL)) return true;
+        if(mixinClassName.startsWith(WITHOUT_FL)) return !isFactoryLogisticsLoaded();
+        if(mixinClassName.startsWith(WITH_FL)) return isFactoryLogisticsLoaded();
+        return true;
+    }
+
+    private static boolean isFactoryLogisticsLoaded() {
         var mods = LoadingModList.get();
-        return mods == null || mods.getModFileById(FL_MOD_ID) == null;
+        return mods != null && mods.getModFileById(FL_MOD_ID) != null;
     }
 
     @Override public void onLoad(String mixinPackage) {}
