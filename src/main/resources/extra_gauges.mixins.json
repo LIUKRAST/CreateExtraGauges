@@ -17,6 +17,7 @@
 	"PackagerBlockEntityMixin",
     "withoutfl.PackagerBlockEntitySendMixin",
     "withfl.PackagerBlockEntityFLSendMixin",
+    "withfl.BuiltInPackageBuilderMixin",
 	"PackageRepackageHelperMixin",
 	"ServerboundConfigPacketMixin",
     "ValueSettingsClientMixin",
