@@ -4,6 +4,7 @@
     "minVersion": "0.5.0"
   },
   "minVersion": "0.8",
+  "plugin": "net.liukrast.eg.ExtraGaugesMixinPlugin",
   "package": "net.liukrast.eg.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
@@ -14,6 +15,7 @@
     "LinkHandlerMixin",
     "LinkRendererMixin",
 	"PackagerBlockEntityMixin",
+    "withoutfl.PackagerBlockEntitySendMixin",
 	"PackageRepackageHelperMixin",
 	"ServerboundConfigPacketMixin",
     "ValueSettingsClientMixin",

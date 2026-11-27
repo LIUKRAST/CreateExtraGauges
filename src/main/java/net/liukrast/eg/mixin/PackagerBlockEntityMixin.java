@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.objectweb.asm.Opcodes;
+import net.liukrast.eg.mixinExtension.PackagerRegexData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -34,7 +35,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 @Mixin(PackagerBlockEntity.class)
-public abstract class PackagerBlockEntityMixin extends SmartBlockEntity {
+public abstract class PackagerBlockEntityMixin extends SmartBlockEntity implements PackagerRegexData {
 
     @Shadow
     public String signBasedAddress;
@@ -86,24 +87,8 @@ public abstract class PackagerBlockEntityMixin extends SmartBlockEntity {
         return null;
     }
 
-    @Inject(method = "attemptToSend", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/box/PackageItem;clearAddress(Lnet/minecraft/world/item/ItemStack;)V"))
-    private void attemptToSend(
-            List<PackagingRequest> queuedRequests,
-            CallbackInfo ci,
-            @Share("regex_result") LocalRef<String> regexResult,
-            @Local(name = "createdBox") ItemStack createdBox
-    ) {
-        if(extra_gauges$regexData == null) return;
-        try {
-            Pattern pattern = Pattern.compile(extra_gauges$regexData);
-            regexResult.set(pattern.matcher(PackageItem.getAddress(createdBox)).replaceAll(signBasedAddress));
-        } catch (PatternSyntaxException ignored) {}
-    }
-
-    @ModifyExpressionValue(method = "attemptToSend", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/logistics/packager/PackagerBlockEntity;signBasedAddress:Ljava/lang/String;", opcode = Opcodes.GETFIELD))
-    private String attemptToSend(String original, @Share("regex_result") LocalRef<String> regexResult) {
-        var res = regexResult.get();
-        if(res == null) return original;
-        return regexResult.get();
+    @Override
+    public String extra_gauges$getRegexData() {
+        return extra_gauges$regexData;
     }
 }
