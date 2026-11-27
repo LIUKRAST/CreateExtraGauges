@@ -47,6 +47,9 @@ sourceSets {
 }
 
 configurations {
+    localRuntime
+    runtimeClasspath.extendsFrom localRuntime
+    benchRuntimeClasspath.extendsFrom localRuntime
     benchImplementation.extendsFrom implementation
     benchCompileOnly.extendsFrom compileOnly
     benchRuntimeOnly.extendsFrom runtimeOnly
@@ -147,7 +150,7 @@ dependencies {
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
     implementation("com.tterrag.registrate:Registrate:${registrate_version}")
 
-    implementation(jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.0"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.5") { version { strictly "[0.5.0,)"; prefer "0.5.5" } })
     implementation(jarJar("net.objecthunter:exp4j:0.4.8"))
     additionalRuntimeClasspath 'net.objecthunter:exp4j:0.4.8'
 
@@ -156,19 +159,17 @@ dependencies {
     // compile against the JEI API but do not include it at runtime
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     // at runtime, use the full JEI jar for NeoForge
-    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+    localRuntime("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
     implementation fileTree(dir: "${rootDir}/libs", include: ['*.jar'])
 
     if (project.findProperty("withFL") == "true") {
-        runtimeOnly("maven.modrinth:QMGO17gm:${project.findProperty("fl_version") ?: "1.6.1"}")
+        localRuntime("maven.modrinth:QMGO17gm:${project.findProperty("fl_version") ?: "1.6.1"}")
     }
 
     // Compat (Create: FluidLogistics crashes next to Create Factory Logistics, so it is left out of -PwithFL runs)
-    if (project.findProperty("withFL") == "true") {
-        compileOnly "maven.modrinth:createfluidlogistic:1.3.3-mc1.21.1"
-    } else {
-        implementation "maven.modrinth:createfluidlogistic:1.3.3-mc1.21.1"
+    if (project.findProperty("withFL") != "true") {
+        localRuntime "maven.modrinth:createfluidlogistic:1.3.3-mc1.21.1"
     }
 }
 
