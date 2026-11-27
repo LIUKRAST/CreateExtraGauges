@@ -60,6 +60,9 @@ public class ExtraGaugesPonderPlugin implements PonderPlugin {
                 .add(EGItems.COMPARATOR_GAUGE.get())
                 .add(EGItems.COUNTER_GAUGE.get())
                 .add(EGItems.PASSIVE_GAUGE.get())
-                .add(EGItems.EXPRESSION_GAUGE.get());
+                .add(EGItems.EXPRESSION_GAUGE.get())
+                .add(EGItems.STRING_GAUGE.get())
+                .add(EGItems.FILTER_GAUGE.get())
+                .add(EGBlocks.DISPLAY_COLLECTOR.asItem());
     }
 }

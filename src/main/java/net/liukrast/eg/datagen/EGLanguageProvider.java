@@ -96,15 +96,15 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
         createPonder(
                 "passive_gauge", "Using Passive Gauges to optimize Automated Recipes",
                 "Passive gauges work just like §9Factory §9gauges§r...",
-                "...but you dont need to set the §9amount §rof items to produce.",
-                "When sticks are missing...",
-                "...passive gauge will try to keep in storage just the §9right §9amount§r.",
-                "Once the first recipe starts crafting, the passive gauge automatically §cstops§r."
+                "...but you don't need to set the §9amount §rof items to produce.",
+                "When the pickaxe gauge asks for sticks...",
+                "...the passive gauge crafts §9exactly §9what §9is §9needed§r.",
+                "Once the pickaxe recipe is satisfied, the passive gauge §cstops§r."
         );
 
         createPonder(
                 "expanded_factory_recipes", "Crafting items on larger auto-crafters",
-                "§9Extra §9gauges §rnow supports larger recipes to be crafted with factory gauges.",
+                "With §9Extra §9Gauges§r, factory gauges can craft on larger auto crafters.",
                 "Larger auto crafter setups are obviously needed.",
                 "But smaller recipes can also match larger auto crafter setups, by increasing the §9width §rin the §eGUI§r.",
                 "Don't get scared about your setup height, as soon as it matches the minimum required for the recipe, you're good to go!"
@@ -112,15 +112,15 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
 
         createPonder(
                 "logic_gauge", "Transmit redstone with the logic gauge",
-                "Logic gauges can transmit redstone through it's connections...",
+                "Logic gauges can transmit redstone through their connections...",
                 "...click on the Logic panel to open its menu...",
                 "...press [+] to add a connection...",
                 "...and select another gauge.",
                 "The connection can be removed by left-clicking it with a wrench.",
 
-                "Some blocks can transmit redstone to gauges, some can extract it",
+                "Some blocks, like levers, can send redstone to a gauge, others can receive it from one",
                 "The same [+] icon in the menu can be used to connect to those...",
-                "...but the arrow direction is decided by the output",
+                "...the arrow always points from the block that sends to the block that receives",
 
                 "By holding right-click, you can change the logic gate...",
                 "...and when redstone starts flowing in the gauge...",
@@ -129,23 +129,23 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
 
         createPonder(
                 "integer_gauge", "Transmit integers with the integer gauge",
-                "Int gauges can transmit integers §7(non-decimal numbers)§r through it's connections...",
+                "Int gauges can transmit integers §7(non-decimal numbers)§r through their connections...",
                 "...click on the int panel to open its menu...",
                 "...press [+] to add a connection...",
                 "...and select another gauge.",
                 "The connection can be removed by left-clicking it with a wrench.",
 
-                "Some blocks can transmit integers to gauges, some can extract them",
+                "Some blocks can send numbers to a gauge, others can receive them from one",
                 "The same [+] icon in the menu can be used to connect to those...",
-                "...but the arrow direction is decided by the output",
+                "...the arrow always points from the block that sends to the block that receives",
 
                 "By holding right-click, you can change the operation...",
-                "...and when numbers starts flowing in the gauge...",
+                "...and when numbers start flowing into the gauge...",
                 "All operations are calculated on integers, so the result will not have any decimal part",
                 "A special operation, memory, will be covered in the next ponder",
 
-                "When a redstone connection points to an int gauge...",
-                "...the output will immediately be cancelled, and 0 is returned"
+                "When an int gauge receives redstone through a connection...",
+                "...it pauses and outputs 0 until the signal stops"
         );
 
         createPonder(
@@ -173,19 +173,19 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
 
         createPonder(
                 "counter_gauge", "Count inputs with the counter gauge",
-                "Counter gauge will well... count redstone inputs!",
-                "...because we all know you can't even count to 10.",
+                "Counter gauges count redstone pulses",
+                "...so you don't have to.",
                 "Every time a redstone input arrives to the gauge...",
                 "...it will add 1.",
                 "Hold right-click to set the threshold...",
                 "...when the count reaches the threshold...",
                 "...the gauge will transmit redstone.",
-                "Counter gauge will also output the current count to panels reading numbers"
+                "Counter gauges also send the current count to gauges that read numbers"
         );
 
         createPonder(
                 "string_gauge", "Format text with the string gauge",
-                "String gauges will transfer text over it's connections",
+                "String gauges transfer text through their connections",
                 "Open the menu, click on the [+] icon...",
                 "...and click on a source you want to read text from.",
                 "Other gauges also transfer text.",
@@ -203,7 +203,7 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
 
         createPonder(
                 "string_gauge_rewrite", "Using string gauges to rewrite package addresses",
-                "When a string gauge is attached to a repackager...",
+                "When a string gauge is attached to a packager...",
                 "...it will go in rewrite mode.",
                 "Open the string gauge menu, setup a regex and a replacement...",
                 "§cHello!",
@@ -217,12 +217,12 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
                 "Open the menu and click [+] to add a connection...",
                 "...then press on the panel you want to get data from.",
                 "Some other panels can instead read data from your gauge.",
-                "Each connection flowing in the expression gauge will have it's own name...",
+                "Each connection flowing into the expression gauge gets its own name...",
                 "Set-up a mathematical expression inside the gauge...",
                 "a + log(b) - sqrt(2)",
 
-                "When a redstone connection points to an expression gauge...",
-                "...the output will immediately be cancelled, and 0 is returned"
+                "When an expression gauge receives redstone through a connection...",
+                "...it pauses and outputs 0 until the signal stops"
         );
 
         createPonder(
@@ -244,7 +244,7 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
                 "Click on the source you want to gather text from...",
                 "...and place your display collector.",
                 "Open a gauge and connect it to the display collector",
-                "After opening the display collector menu, it will now send text to gauges"
+                "Once linked, the display collector sends the text of its source to the gauge"
         );
 
     }
