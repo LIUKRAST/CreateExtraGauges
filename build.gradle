@@ -155,6 +155,7 @@ dependencies {
     additionalRuntimeClasspath 'net.objecthunter:exp4j:0.4.8'
 
     implementation("net.liukrast:deployer-1.21.1:${deployer_version}")
+    compileOnly("net.liukrast:constants_manager-${minecraft_version}:${constants_manager_version}")
 
     // compile against the JEI API but do not include it at runtime
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
