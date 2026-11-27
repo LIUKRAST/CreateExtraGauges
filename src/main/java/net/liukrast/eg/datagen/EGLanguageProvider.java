@@ -18,8 +18,8 @@ public class EGLanguageProvider extends DeployerLanguageProviderImpl {
         ExtraGauges.CONSTANTS.getElementEntries(BuiltInRegistries.ITEM)
                 .forEach(e -> add(e.getValue().getDescriptionId(), autoName(e.getKey())));
 
-        addShiftSummary(EGBlocks.LINKED_LEVER.asItem(), "Works like a redstone link but includes a lever. Connects to gauges and send an update instantly");
-        addShiftSummary(EGBlocks.LINKED_BUTTON.asItem(), "Works like a redstone link but includes a lever. Connects to gauges and send an update instantly");
+        addShiftSummary(EGBlocks.LINKED_LEVER.asItem(), "Works like a redstone link but includes a lever. Connects to gauges and sends an update instantly");
+        addShiftSummary(EGBlocks.LINKED_BUTTON.asItem(), "Works like a redstone link but includes a button. Connects to gauges and sends an update instantly");
 
         addShiftSummary(EGBlocks.REDSTONE_PORT.asItem(), "Connects real-world redstone to gauges (only ON/OFF)")
                 .addLine("When Wrenched", "Switches from input to output and viceversa");
