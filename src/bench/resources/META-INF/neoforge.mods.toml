@@ -1,0 +1,8 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+
+[[mods]]
+modId="eg_bench"
+version="0.0.0"
+displayName="Extra Gauges Benchmark"

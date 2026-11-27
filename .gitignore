@@ -3,4 +3,5 @@ build/
 .gradle/
 .idea/
 repo/
+run-bench/
 libs/

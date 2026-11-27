@@ -43,6 +43,13 @@ java {
 
 sourceSets {
     test
+    bench
+}
+
+configurations {
+    benchImplementation.extendsFrom implementation
+    benchCompileOnly.extendsFrom compileOnly
+    benchRuntimeOnly.extendsFrom runtimeOnly
 }
 
 neoForge {
@@ -81,6 +88,16 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
+        benchmark {
+            server()
+            sourceSet = sourceSets.bench
+            gameDirectory = project.file('run-bench')
+            programArgument '--nogui'
+            systemProperty 'eg.bench', 'true'
+            systemProperties.put('eg.bench.scenario', providers.gradleProperty('benchScenario').orElse('stock'))
+            systemProperties.put('eg.bench.label', providers.gradleProperty('benchLabel').orElse('unlabeled'))
+        }
+
         data {
             data()
 
@@ -114,11 +131,16 @@ neoForge {
         "${mod_id}" {
             sourceSet(sourceSets.main)
         }
+        eg_bench {
+            sourceSet(sourceSets.bench)
+        }
     }
 }
 
+neoForge.addModdingDependenciesTo(sourceSets.bench)
+
 dependencies {
-    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    benchImplementation sourceSets.main.output
     implementation("com.simibubi.create:create-${minecraft_version}:${create_version}") { transitive = false }
     implementation("net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}")
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
