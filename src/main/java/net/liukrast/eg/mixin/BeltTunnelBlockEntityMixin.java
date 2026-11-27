@@ -48,7 +48,7 @@ public abstract class BeltTunnelBlockEntityMixin extends BlockEntity implements 
     @Inject(method = "read", at = @At("HEAD"))
     private void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci) {
         if(!tag.contains("extra_gauges$targetingDisplayCollectors")) return;
-        ListTag list = tag.getList("extra_gauges$targetingDisplayCollectors", Tag.TAG_END); //TODO: CHECK
+        ListTag list = tag.get("extra_gauges$targetingDisplayCollectors") instanceof ListTag l ? l : new ListTag();
         extra_gauges$targetingDisplayCollectors.clear();
         var ops = registries.createSerializationContext(NbtOps.INSTANCE);
         for(Tag tag1 : list) {
