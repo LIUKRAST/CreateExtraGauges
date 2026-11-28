@@ -8,13 +8,32 @@ on:
         required: true
         type: boolean
         default: false
+      curseforge:
+        description: "CurseForge"
+        type: boolean
+        default: true
+      modrinth:
+        description: "Modrinth"
+        type: boolean
+        default: true
+      maven:
+        description: "Maven"
+        type: boolean
+        default: true
+      discord:
+        description: "Discord"
+        type: boolean
+        default: true
 
 jobs:
   call-shared-workflow:
     uses: LIUKRAST/LIUKRAST/.github/workflows/publish.yml@main
     with:
       major_release: ${{ inputs.major_release }}
+      curseforge: ${{ inputs.curseforge }}
+      modrinth: ${{ inputs.modrinth }}
+      maven: ${{ inputs.maven }}
+      discord: ${{ inputs.discord }}
     permissions:
       contents: write
-    # all repo secrets (MODRINTH_TOKEN, CURSEFORGE_TOKEN, SSH_HOST, SSH_KEY, DISCORD_WEBHOOK)
     secrets: inherit
