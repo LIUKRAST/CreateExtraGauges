@@ -11,10 +11,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class EGDisplayTargets {
     private EGDisplayTargets() {}
 
-    private static final DeferredRegister<DisplayTarget> DISPLAY_TARGETS = DeferredRegister.create(CreateRegistries.DISPLAY_TARGET, ExtraGauges.CONSTANTS.getModId());
+    private static final DeferredRegister<DisplayTarget> REGISTER = DeferredRegister.create(CreateRegistries.DISPLAY_TARGET, ExtraGauges.CONSTANTS.getModId());
 
     static {
-        DISPLAY_TARGETS.register("factory_panel", () -> {
+        REGISTER.register("factory_panel", () -> {
             var target = new FactoryPanelDisplayTarget();
             DisplayTarget.BY_BLOCK_ENTITY.register(AllBlockEntityTypes.FACTORY_PANEL.get(), target);
             return target;
@@ -22,6 +22,6 @@ public class EGDisplayTargets {
     }
 
     public static void register(IEventBus eventBus) {
-        DISPLAY_TARGETS.register(eventBus);
+        REGISTER.register(eventBus);
     }
 }

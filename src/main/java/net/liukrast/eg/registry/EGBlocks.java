@@ -14,15 +14,15 @@ import org.jetbrains.annotations.ApiStatus;
 
 public class EGBlocks {
     private EGBlocks() {}
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ExtraGauges.CONSTANTS.getModId());
+    public static final DeferredRegister.Blocks REGISTER = DeferredRegister.createBlocks(ExtraGauges.CONSTANTS.getModId());
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ExtraGauges.CONSTANTS.getModId());
 
-    public static final DeferredBlock<IntSelectorBlock> INT_SELECTOR = BLOCKS.register("integer_selector", () -> new IntSelectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get())));
-    public static final DeferredBlock<DisplayCollectorBlock> DISPLAY_COLLECTOR = BLOCKS.register("display_collector", () -> new DisplayCollectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.DISPLAY_LINK.get())));
-    public static final DeferredBlock<LinkedLeverBlock> LINKED_LEVER = BLOCKS.register("linked_lever", () -> new LinkedLeverBlock(BlockBehaviour.Properties.of()));
-    public static final DeferredBlock<LinkedButtonBlock> LINKED_BUTTON = BLOCKS.register("linked_button", () -> new LinkedButtonBlock(BlockBehaviour.Properties.of()));
-    public static final DeferredBlock<RedstonePortBlock> REDSTONE_PORT = BLOCKS.register("redstone_port", () -> new RedstonePortBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get()).lightLevel(state -> state.getValue(RedstonePortBlock.POWERED) ? 15 : 0)));
-    public static final DeferredBlock<RoseQuartzPortBlock> ROSE_QUARTZ_PORT = BLOCKS.register("rose_quartz_port", () -> new RoseQuartzPortBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get()).lightLevel(state -> state.getValue(RoseQuartzPortBlock.POWER) > 0 ? 15 : 0)));
+    public static final DeferredBlock<IntSelectorBlock> INT_SELECTOR = REGISTER.register("integer_selector", () -> new IntSelectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get())));
+    public static final DeferredBlock<DisplayCollectorBlock> DISPLAY_COLLECTOR = REGISTER.register("display_collector", () -> new DisplayCollectorBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.DISPLAY_LINK.get())));
+    public static final DeferredBlock<LinkedLeverBlock> LINKED_LEVER = REGISTER.register("linked_lever", () -> new LinkedLeverBlock(BlockBehaviour.Properties.of()));
+    public static final DeferredBlock<LinkedButtonBlock> LINKED_BUTTON = REGISTER.register("linked_button", () -> new LinkedButtonBlock(BlockBehaviour.Properties.of()));
+    public static final DeferredBlock<RedstonePortBlock> REDSTONE_PORT = REGISTER.register("redstone_port", () -> new RedstonePortBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get()).lightLevel(state -> state.getValue(RedstonePortBlock.POWERED) ? 15 : 0)));
+    public static final DeferredBlock<RoseQuartzPortBlock> ROSE_QUARTZ_PORT = REGISTER.register("rose_quartz_port", () -> new RoseQuartzPortBlock(BlockBehaviour.Properties.ofFullCopy(AllBlocks.ANALOG_LEVER.get()).lightLevel(state -> state.getValue(RoseQuartzPortBlock.POWER) > 0 ? 15 : 0)));
 
     static {
         ITEMS.register("integer_selector", () -> new BlockItem(INT_SELECTOR.get(), new Item.Properties()));
@@ -35,7 +35,7 @@ public class EGBlocks {
 
     @ApiStatus.Internal
     public static void register(IEventBus eventBus) {
-        BLOCKS.register(eventBus);
+        REGISTER.register(eventBus);
         ITEMS.register(eventBus);
     }
 }

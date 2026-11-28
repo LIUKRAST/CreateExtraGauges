@@ -17,11 +17,11 @@ public class EGLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        EGBlocks.BLOCKS.getEntries().stream().map(Holder::value).forEach(this::dropSelf);
+        EGBlocks.REGISTER.getEntries().stream().map(Holder::value).forEach(this::dropSelf);
     }
 
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
-        return EGBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+        return EGBlocks.REGISTER.getEntries().stream().map(Holder::value)::iterator;
     }
 }

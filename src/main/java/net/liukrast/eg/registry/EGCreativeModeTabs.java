@@ -11,10 +11,10 @@ import org.jetbrains.annotations.ApiStatus;
 public class EGCreativeModeTabs {
     private EGCreativeModeTabs() {}
 
-    private static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, ExtraGauges.CONSTANTS.getModId());
+    private static final DeferredRegister<CreativeModeTab> REGISTER = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, ExtraGauges.CONSTANTS.getModId());
 
     static {
-        CREATIVE_MODE_TAB.register("main_tab", () -> CreativeModeTab.builder()
+        REGISTER.register("main_tab", () -> CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.extra_gauges"))
                 .icon(EGItems.LOGIC_GAUGE.get()::getDefaultInstance)
                 .displayItems((pars, out) -> {
@@ -38,6 +38,6 @@ public class EGCreativeModeTabs {
 
     @ApiStatus.Internal
     public static void register(IEventBus modEventBus) {
-        CREATIVE_MODE_TAB.register(modEventBus);
+        REGISTER.register(modEventBus);
     }
 }
