@@ -17,6 +17,7 @@ Fixes
 - Display Collectors linked to brass tunnels were forgotten after the world was saved and loaded again
 - Passive Gauge tooltip
 - Linked Button tooltip said it was a lever
+- Shift summaries of Linked Lever, Linked Button, Redstone Port and Rose Quartz Port were missing
 
 Other changes
 - Requires Deployer 1.0.0
