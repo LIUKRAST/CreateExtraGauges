@@ -67,6 +67,8 @@ public final class PanelBenchmark {
 
     private static final List<String> report = new ArrayList<>();
     private static final List<Runnable> sanityChecks = new ArrayList<>();
+    private static final List<Runnable> preTick = new ArrayList<>();
+    private static final List<Runnable> postTick = new ArrayList<>();
     private static boolean measuringScenario;
     private static int tick;
     private static long tickStart;
@@ -86,13 +88,16 @@ public final class PanelBenchmark {
 
     @SubscribeEvent
     public static void onTickStart(ServerTickEvent.Pre event) {
-        if (ENABLED) tickStart = System.nanoTime();
+        if (!ENABLED) return;
+        if (measuringScenario) preTick.forEach(Runnable::run);
+        tickStart = System.nanoTime();
     }
 
     @SubscribeEvent
     public static void onTickEnd(ServerTickEvent.Post event) {
         if (!ENABLED) return;
         long duration = System.nanoTime() - tickStart;
+        if (measuringScenario) postTick.forEach(Runnable::run);
         tick++;
         int measuredIndex = tick - WARMUP_TICKS - 1;
         if (measuredIndex >= 0 && measuredIndex < MEASURED_TICKS) samples[measuredIndex] = duration;
@@ -121,6 +126,7 @@ public final class PanelBenchmark {
             case "filter" -> buildFilterSwap(level);
             case "rewrite" -> buildAddressRewrite(level);
             case "barrel" -> buildBarrelRewrite(level);
+            case "phase" -> buildPhaseProbe(level);
             default -> throw new IllegalArgumentException("Unknown scenario " + SCENARIO);
         }
     }
@@ -413,6 +419,96 @@ public final class PanelBenchmark {
                 if (!barrel.getItem(i).isEmpty()) left.append(" ").append(barrel.getItem(i));
         report.add("  " + name + ": out=" + (held.isEmpty() ? "<nothing>" : held + " addr='" + PackageItem.getAddress(held) + "'")
                 + " signAddress='" + packager.signBasedAddress + "' left in barrel:" + left);
+    }
+
+    /**
+     * Checks that the end of a long chain of gauges follows its source in the same tick:
+     * a chain fed by an oscillating NOR ring, and a chain fed by a gauge that flips once every 100 ticks.
+     */
+    private static void buildPhaseProbe(ServerLevel level) {
+        PanelBlockItem logicItem = (PanelBlockItem) EGItems.LOGIC_GAUGE.get();
+        var slots = FactoryPanelBlock.PanelSlot.values();
+        int[] next = {0};
+
+        List<FactoryPanelBehaviour> ring = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            var panel = placeCustomPanel(level, nextPos(next), slots[next[0]++ % 4], logicItem);
+            ((ScrollOptionPanelBehaviour<?>) panel).value = LogicalMode.NOR.ordinal();
+            ring.add(panel);
+        }
+        for (int i = 0; i < 3; i++)
+            ring.get((i + 1) % 3).addConnection(ring.get(i).getPanelPosition());
+        FactoryPanelBehaviour ringEnd = chain(level, logicItem, slots, next, ring.getFirst(), 30);
+
+        // A gauge with no inputs: NOR outputs true, OR outputs false
+        var steady = placeCustomPanel(level, nextPos(next), slots[next[0]++ % 4], logicItem);
+        ((ScrollOptionPanelBehaviour<?>) steady).value = LogicalMode.NOR.ordinal();
+        FactoryPanelBehaviour steadyEnd = chain(level, logicItem, slots, next, steady, 30);
+
+        // Create's own Factory Gauges powered through a redstone connection: powered while their input outputs true
+        var ringVanilla = placeVanillaPanel(level, nextPos(next), slots[next[0]++ % 4]);
+        ringVanilla.addConnection(ringEnd.getPanelPosition());
+        var steadyVanilla = placeVanillaPanel(level, nextPos(next), slots[next[0]++ % 4]);
+        steadyVanilla.addConnection(steadyEnd.getPanelPosition());
+        FactoryPanelPosition rv = ringVanilla.getPanelPosition(), sv = steadyVanilla.getPanelPosition();
+        List<Boolean> ringVan = new ArrayList<>(), steadyVan = new ArrayList<>();
+
+        FactoryPanelPosition r0 = ring.getFirst().getPanelPosition(), re = ringEnd.getPanelPosition();
+        FactoryPanelPosition s0 = steady.getPanelPosition(), se = steadyEnd.getPanelPosition();
+        List<Boolean> ringSrc = new ArrayList<>(), ringOut = new ArrayList<>(), steadySrc = new ArrayList<>(), steadyOut = new ArrayList<>();
+        int[] probeTick = {0};
+        preTick.add(() -> {
+            if (++probeTick[0] % 100 != 0) return;
+            var live = (ScrollOptionPanelBehaviour<?>) FactoryPanelBehaviour.at(level, s0);
+            live.value = live.value == LogicalMode.NOR.ordinal() ? LogicalMode.OR.ordinal() : LogicalMode.NOR.ordinal();
+            live.checkForRedstoneInput();
+        });
+        postTick.add(() -> {
+            ringSrc.add(output(level, r0));
+            ringOut.add(output(level, re));
+            steadySrc.add(output(level, s0));
+            steadyOut.add(output(level, se));
+            ringVan.add(FactoryPanelBehaviour.at(level, rv).redstonePowered);
+            steadyVan.add(FactoryPanelBehaviour.at(level, sv).redstonePowered);
+        });
+
+        sanityChecks.add(() -> {
+            report.add("  ring  -> chain of 30: " + lagReport(ringSrc, ringOut));
+            report.add("  steady-> chain of 30: " + lagReport(steadySrc, steadyOut));
+            report.add("  ring chain end -> Factory Gauge powered: " + lagReport(ringOut, ringVan));
+            report.add("  steady chain end -> Factory Gauge powered: " + lagReport(steadyOut, steadyVan));
+            int changes = 0;
+            for (int i = 1; i < ringSrc.size(); i++) if (ringSrc.get(i) != ringSrc.get(i - 1)) changes++;
+            report.add("  ring source changes=" + changes + " over " + ringSrc.size() + " ticks");
+        });
+    }
+
+    private static FactoryPanelBehaviour chain(ServerLevel level, PanelBlockItem item, FactoryPanelBlock.PanelSlot[] slots, int[] next, FactoryPanelBehaviour from, int length) {
+        FactoryPanelBehaviour previous = from;
+        for (int i = 0; i < length; i++) {
+            var panel = placeCustomPanel(level, nextPos(next), slots[next[0]++ % 4], item);
+            panel.addConnection(previous.getPanelPosition());
+            previous = panel;
+        }
+        return previous;
+    }
+
+    private static boolean output(ServerLevel level, FactoryPanelPosition pos) {
+        return !FactoryPanelBehaviour.at(level, pos).redstonePowered;
+    }
+
+    private static String lagReport(List<Boolean> source, List<Boolean> out) {
+        StringBuilder sb = new StringBuilder();
+        for (int lag = 0; lag <= 3; lag++) {
+            int same = 0, total = 0;
+            for (int i = lag; i < out.size(); i++, total++) if (out.get(i).equals(source.get(i - lag))) same++;
+            sb.append("lag").append(lag).append("=").append(same).append("/").append(total).append(" ");
+        }
+        List<Integer> misses = new ArrayList<>();
+        for (int i = 0; i < out.size(); i++) if (!out.get(i).equals(source.get(i))) misses.add(i);
+        if (!misses.isEmpty() && misses.size() < out.size() / 2)
+            sb.append("lag0 misses at ticks ").append(misses.getFirst()).append("..").append(misses.getLast()).append(" (").append(misses.size()).append(") ");
+        return sb.toString().trim();
     }
 
     private static BlockPos nextPos(int[] counter) {
