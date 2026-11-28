@@ -22,4 +22,5 @@ Fixes
 Other changes
 - Requires Deployer 1.0.0
 - Clearer Ponder texts; String Gauge, Filter Gauge and Display Collector are listed under High Logistics
+- New Traditional Chinese localisation
 - Updated Chinese (simplified) and Italian localisation
